@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/common")
 
 public class CommonController {
     private final BookService bookService;
