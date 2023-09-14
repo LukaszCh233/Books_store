@@ -1,0 +1,538 @@
+2023-09-06 14:32:52,794 [main] INFO  c.e.Book_Store.BookStoreApplication - Starting BookStoreApplication using Java 19.0.2 with PID 12900 (C:\Users\chwie\Projects\Books_store\target\classes started by chwie in C:\Users\chwie\Projects\Books_store)
+2023-09-06 14:32:52,799 [main] INFO  c.e.Book_Store.BookStoreApplication - No active profile set, falling back to 1 default profile: "default"
+2023-09-06 14:32:53,601 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-09-06 14:32:53,603 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2023-09-06 14:32:53,647 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.BasketRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 14:32:53,648 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.BookRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 14:32:53,650 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.CategoryRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 14:32:53,652 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.CustomerLoginRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 14:32:53,654 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.CustomerRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 14:32:53,655 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.OrderRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 14:32:53,656 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 48 ms. Found 0 JDBC repository interfaces.
+2023-09-06 14:32:53,672 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-09-06 14:32:53,673 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-09-06 14:32:53,740 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 61 ms. Found 6 JPA repository interfaces.
+2023-09-06 14:32:54,961 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8084 (http)
+2023-09-06 14:32:54,969 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8084"]
+2023-09-06 14:32:54,972 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2023-09-06 14:32:54,973 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.12]
+2023-09-06 14:32:55,110 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2023-09-06 14:32:55,112 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2255 ms
+2023-09-06 14:32:55,300 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-09-06 14:32:55,359 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.2.7.Final
+2023-09-06 14:32:55,360 [main] INFO  org.hibernate.cfg.Environment - HHH000406: Using bytecode reflection optimizer
+2023-09-06 14:32:55,486 [main] INFO  o.h.b.i.BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+2023-09-06 14:32:55,623 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2023-09-06 14:32:55,640 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2023-09-06 14:32:55,946 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@745926c3
+2023-09-06 14:32:55,948 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2023-09-06 14:32:56,265 [main] INFO  o.h.b.i.BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+2023-09-06 14:32:56,944 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-09-06 14:32:57,049 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-09-06 14:32:57,383 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2023-09-06 14:32:57,935 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-09-06 14:32:57,953 [main] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 5c4d5f7b-fe53-4415-b485-3f36745686e2
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2023-09-06 14:32:58,246 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@28806954, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7ff26b29, org.springframework.security.web.context.SecurityContextHolderFilter@14501070, org.springframework.security.web.header.HeaderWriterFilter@23bf19c9, org.springframework.security.web.csrf.CsrfFilter@7ebf5bf, org.springframework.security.web.authentication.logout.LogoutFilter@6018a6a2, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@4a577b99, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@3fc92211, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@24e0bdb, org.springframework.security.web.access.ExceptionTranslationFilter@93cc5eb, org.springframework.security.web.access.intercept.AuthorizationFilter@4973dacf]
+2023-09-06 14:32:58,487 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8084"]
+2023-09-06 14:32:58,511 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8084 (http) with context path ''
+2023-09-06 14:32:58,518 [main] INFO  c.e.Book_Store.BookStoreApplication - Started BookStoreApplication in 6.099 seconds (process running for 6.684)
+2023-09-06 14:33:22,612 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-09-06 14:33:22,615 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2023-09-06 14:33:22,625 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2023-09-06 14:33:25,966 [main] INFO  c.e.Book_Store.BookStoreApplication - Starting BookStoreApplication using Java 19.0.2 with PID 33492 (C:\Users\chwie\Projects\Books_store\target\classes started by chwie in C:\Users\chwie\Projects\Books_store)
+2023-09-06 14:33:25,969 [main] INFO  c.e.Book_Store.BookStoreApplication - No active profile set, falling back to 1 default profile: "default"
+2023-09-06 14:33:26,707 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-09-06 14:33:26,708 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2023-09-06 14:33:26,744 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.BasketRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 14:33:26,746 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.BookRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 14:33:26,747 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.CategoryRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 14:33:26,748 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.CustomerLoginRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 14:33:26,749 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.CustomerRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 14:33:26,750 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.OrderRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 14:33:26,751 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 37 ms. Found 0 JDBC repository interfaces.
+2023-09-06 14:33:26,762 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-09-06 14:33:26,763 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-09-06 14:33:26,815 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 47 ms. Found 6 JPA repository interfaces.
+2023-09-06 14:33:27,477 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8084 (http)
+2023-09-06 14:33:27,485 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8084"]
+2023-09-06 14:33:27,488 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2023-09-06 14:33:27,488 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.12]
+2023-09-06 14:33:27,589 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2023-09-06 14:33:27,590 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1561 ms
+2023-09-06 14:33:27,759 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-09-06 14:33:27,818 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.2.7.Final
+2023-09-06 14:33:27,820 [main] INFO  org.hibernate.cfg.Environment - HHH000406: Using bytecode reflection optimizer
+2023-09-06 14:33:27,943 [main] INFO  o.h.b.i.BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+2023-09-06 14:33:28,109 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2023-09-06 14:33:28,123 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2023-09-06 14:33:28,418 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@63cf578f
+2023-09-06 14:33:28,420 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2023-09-06 14:33:28,735 [main] INFO  o.h.b.i.BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+2023-09-06 14:33:29,335 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-09-06 14:33:29,441 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-09-06 14:33:29,774 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2023-09-06 14:33:30,305 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-09-06 14:33:30,325 [main] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: c685be39-f834-4cf6-a02f-71d72c9d21bc
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2023-09-06 14:33:30,596 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@532782f5, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3c2d4274, org.springframework.security.web.context.SecurityContextHolderFilter@405d123c, org.springframework.security.web.header.HeaderWriterFilter@2ea8f277, org.springframework.security.web.csrf.CsrfFilter@67cc5a38, org.springframework.security.web.authentication.logout.LogoutFilter@4a577b99, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7e3c5ef1, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@2a10a99b, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@18b8518b, org.springframework.security.web.access.ExceptionTranslationFilter@ae4a043, org.springframework.security.web.access.intercept.AuthorizationFilter@109fff4a]
+2023-09-06 14:33:30,840 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8084"]
+2023-09-06 14:33:30,861 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8084 (http) with context path ''
+2023-09-06 14:33:30,869 [main] INFO  c.e.Book_Store.BookStoreApplication - Started BookStoreApplication in 5.271 seconds (process running for 5.826)
+2023-09-06 14:33:40,263 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-09-06 14:33:40,266 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2023-09-06 14:33:40,273 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2023-09-06 14:33:45,290 [main] INFO  c.e.Book_Store.BookStoreApplication - Starting BookStoreApplication using Java 19.0.2 with PID 31344 (C:\Users\chwie\Projects\Books_store\target\classes started by chwie in C:\Users\chwie\Projects\Books_store)
+2023-09-06 14:33:45,293 [main] INFO  c.e.Book_Store.BookStoreApplication - No active profile set, falling back to 1 default profile: "default"
+2023-09-06 14:33:45,989 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-09-06 14:33:45,990 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2023-09-06 14:33:46,025 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.BasketRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 14:33:46,026 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.BookRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 14:33:46,028 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.CategoryRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 14:33:46,029 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.CustomerLoginRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 14:33:46,030 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.CustomerRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 14:33:46,031 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.OrderRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 14:33:46,031 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 37 ms. Found 0 JDBC repository interfaces.
+2023-09-06 14:33:46,045 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-09-06 14:33:46,046 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-09-06 14:33:46,104 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 53 ms. Found 6 JPA repository interfaces.
+2023-09-06 14:33:46,738 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8084 (http)
+2023-09-06 14:33:46,744 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8084"]
+2023-09-06 14:33:46,747 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2023-09-06 14:33:46,747 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.12]
+2023-09-06 14:33:46,848 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2023-09-06 14:33:46,849 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1502 ms
+2023-09-06 14:33:47,015 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-09-06 14:33:47,070 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.2.7.Final
+2023-09-06 14:33:47,072 [main] INFO  org.hibernate.cfg.Environment - HHH000406: Using bytecode reflection optimizer
+2023-09-06 14:33:47,203 [main] INFO  o.h.b.i.BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+2023-09-06 14:33:47,347 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2023-09-06 14:33:47,361 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2023-09-06 14:33:47,671 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4dd1548e
+2023-09-06 14:33:47,673 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2023-09-06 14:33:47,991 [main] INFO  o.h.b.i.BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+2023-09-06 14:33:48,643 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-09-06 14:33:48,732 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-09-06 14:33:49,077 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2023-09-06 14:33:49,597 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-09-06 14:33:49,617 [main] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 351a5b20-b066-4ae1-993c-583d1a472435
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2023-09-06 14:33:49,886 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@2aa85cc4, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@466fd19b, org.springframework.security.web.context.SecurityContextHolderFilter@50c442a5, org.springframework.security.web.header.HeaderWriterFilter@4f7a2262, org.springframework.security.web.csrf.CsrfFilter@70a81b4e, org.springframework.security.web.authentication.logout.LogoutFilter@5abf9a76, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@3fc92211, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@31aec04a, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@348d1a5e, org.springframework.security.web.access.ExceptionTranslationFilter@12939937, org.springframework.security.web.access.intercept.AuthorizationFilter@7ff26b29]
+2023-09-06 14:33:50,131 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8084"]
+2023-09-06 14:33:50,152 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8084 (http) with context path ''
+2023-09-06 14:33:50,162 [main] INFO  c.e.Book_Store.BookStoreApplication - Started BookStoreApplication in 5.247 seconds (process running for 5.792)
+2023-09-06 14:33:50,366 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-09-06 14:33:50,369 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2023-09-06 14:33:50,378 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2023-09-06 14:33:53,991 [main] INFO  c.e.Book_Store.BookStoreApplication - Starting BookStoreApplication using Java 19.0.2 with PID 28552 (C:\Users\chwie\Projects\Books_store\target\classes started by chwie in C:\Users\chwie\Projects\Books_store)
+2023-09-06 14:33:53,994 [main] INFO  c.e.Book_Store.BookStoreApplication - No active profile set, falling back to 1 default profile: "default"
+2023-09-06 14:33:54,707 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-09-06 14:33:54,708 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2023-09-06 14:33:54,747 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.BasketRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 14:33:54,749 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.BookRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 14:33:54,750 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.CategoryRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 14:33:54,751 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.CustomerLoginRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 14:33:54,752 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.CustomerRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 14:33:54,753 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.OrderRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 14:33:54,754 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 41 ms. Found 0 JDBC repository interfaces.
+2023-09-06 14:33:54,768 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-09-06 14:33:54,769 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-09-06 14:33:54,824 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 50 ms. Found 6 JPA repository interfaces.
+2023-09-06 14:33:55,456 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8084 (http)
+2023-09-06 14:33:55,463 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8084"]
+2023-09-06 14:33:55,466 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2023-09-06 14:33:55,466 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.12]
+2023-09-06 14:33:55,570 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2023-09-06 14:33:55,572 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1515 ms
+2023-09-06 14:33:55,735 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-09-06 14:33:55,788 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.2.7.Final
+2023-09-06 14:33:55,790 [main] INFO  org.hibernate.cfg.Environment - HHH000406: Using bytecode reflection optimizer
+2023-09-06 14:33:55,921 [main] INFO  o.h.b.i.BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+2023-09-06 14:33:56,052 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2023-09-06 14:33:56,067 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2023-09-06 14:33:56,357 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4dd1548e
+2023-09-06 14:33:56,358 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2023-09-06 14:33:56,668 [main] INFO  o.h.b.i.BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+2023-09-06 14:33:57,286 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-09-06 14:33:57,391 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-09-06 14:33:57,725 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2023-09-06 14:33:58,224 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-09-06 14:33:58,241 [main] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: a292097a-9937-4eba-9e01-a2139e58fbe8
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2023-09-06 14:33:58,513 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@2aa85cc4, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@466fd19b, org.springframework.security.web.context.SecurityContextHolderFilter@50c442a5, org.springframework.security.web.header.HeaderWriterFilter@4f7a2262, org.springframework.security.web.csrf.CsrfFilter@70a81b4e, org.springframework.security.web.authentication.logout.LogoutFilter@5abf9a76, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@3fc92211, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@31aec04a, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@348d1a5e, org.springframework.security.web.access.ExceptionTranslationFilter@12939937, org.springframework.security.web.access.intercept.AuthorizationFilter@7ff26b29]
+2023-09-06 14:33:58,753 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8084"]
+2023-09-06 14:33:58,776 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8084 (http) with context path ''
+2023-09-06 14:33:58,785 [main] INFO  c.e.Book_Store.BookStoreApplication - Started BookStoreApplication in 5.172 seconds (process running for 5.73)
+2023-09-06 14:34:46,592 [main] INFO  c.e.Book_Store.BookStoreApplication - Starting BookStoreApplication using Java 19.0.2 with PID 7048 (C:\Users\chwie\Projects\Books_store\target\classes started by chwie in C:\Users\chwie\Projects\Books_store)
+2023-09-06 14:34:46,596 [main] INFO  c.e.Book_Store.BookStoreApplication - No active profile set, falling back to 1 default profile: "default"
+2023-09-06 14:34:47,347 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-09-06 14:34:47,348 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2023-09-06 14:34:47,381 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.BasketRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 14:34:47,383 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.BookRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 14:34:47,384 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.CategoryRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 14:34:47,385 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.CustomerLoginRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 14:34:47,386 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.CustomerRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 14:34:47,387 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.OrderRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 14:34:47,387 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 36 ms. Found 0 JDBC repository interfaces.
+2023-09-06 14:34:47,399 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-09-06 14:34:47,401 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-09-06 14:34:47,446 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 41 ms. Found 6 JPA repository interfaces.
+2023-09-06 14:34:48,124 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8084 (http)
+2023-09-06 14:34:48,131 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8084"]
+2023-09-06 14:34:48,134 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2023-09-06 14:34:48,135 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.12]
+2023-09-06 14:34:48,238 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2023-09-06 14:34:48,239 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1580 ms
+2023-09-06 14:34:48,432 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-09-06 14:34:48,490 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.2.7.Final
+2023-09-06 14:34:48,492 [main] INFO  org.hibernate.cfg.Environment - HHH000406: Using bytecode reflection optimizer
+2023-09-06 14:34:48,622 [main] INFO  o.h.b.i.BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+2023-09-06 14:34:48,778 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2023-09-06 14:34:48,794 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2023-09-06 14:34:49,103 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4dd1548e
+2023-09-06 14:34:49,105 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2023-09-06 14:34:49,431 [main] INFO  o.h.b.i.BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+2023-09-06 14:34:50,120 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-09-06 14:34:50,229 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-09-06 14:34:50,618 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2023-09-06 14:34:51,160 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-09-06 14:34:51,175 [main] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 30bd1255-dede-439a-b760-d93f22a173e1
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2023-09-06 14:34:51,445 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@2aa85cc4, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@466fd19b, org.springframework.security.web.context.SecurityContextHolderFilter@50c442a5, org.springframework.security.web.header.HeaderWriterFilter@4f7a2262, org.springframework.security.web.csrf.CsrfFilter@70a81b4e, org.springframework.security.web.authentication.logout.LogoutFilter@5abf9a76, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@3fc92211, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@31aec04a, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@348d1a5e, org.springframework.security.web.access.ExceptionTranslationFilter@12939937, org.springframework.security.web.access.intercept.AuthorizationFilter@7ff26b29]
+2023-09-06 14:34:51,695 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8084"]
+2023-09-06 14:34:51,700 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'
+2023-09-06 14:34:51,708 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-09-06 14:34:51,711 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2023-09-06 14:34:51,720 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2023-09-06 14:34:51,721 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8084"]
+2023-09-06 14:34:51,722 [main] INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
+2023-09-06 14:34:51,727 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8084"]
+2023-09-06 14:34:51,728 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Destroying ProtocolHandler ["http-nio-8084"]
+2023-09-06 14:34:51,736 [main] INFO  o.s.b.a.l.ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2023-09-06 14:34:51,759 [main] ERROR o.s.b.d.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8084 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8084 or configure this application to listen on another port.
+
+2023-09-06 14:37:06,802 [main] INFO  c.e.Book_Store.BookStoreApplication - Starting BookStoreApplication using Java 19.0.2 with PID 29936 (C:\Users\chwie\Projects\Books_store\target\classes started by chwie in C:\Users\chwie\Projects\Books_store)
+2023-09-06 14:37:06,806 [main] INFO  c.e.Book_Store.BookStoreApplication - No active profile set, falling back to 1 default profile: "default"
+2023-09-06 14:37:07,522 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-09-06 14:37:07,523 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2023-09-06 14:37:07,560 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.BasketRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 14:37:07,562 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.BookRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 14:37:07,563 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.CategoryRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 14:37:07,564 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.CustomerLoginRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 14:37:07,565 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.CustomerRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 14:37:07,566 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.OrderRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 14:37:07,567 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 40 ms. Found 0 JDBC repository interfaces.
+2023-09-06 14:37:07,579 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-09-06 14:37:07,580 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-09-06 14:37:07,637 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 51 ms. Found 6 JPA repository interfaces.
+2023-09-06 14:37:08,326 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8084 (http)
+2023-09-06 14:37:08,337 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8084"]
+2023-09-06 14:37:08,340 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2023-09-06 14:37:08,340 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.12]
+2023-09-06 14:37:08,446 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2023-09-06 14:37:08,447 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1582 ms
+2023-09-06 14:37:08,602 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-09-06 14:37:08,656 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.2.7.Final
+2023-09-06 14:37:08,658 [main] INFO  org.hibernate.cfg.Environment - HHH000406: Using bytecode reflection optimizer
+2023-09-06 14:37:08,788 [main] INFO  o.h.b.i.BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+2023-09-06 14:37:08,937 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2023-09-06 14:37:08,951 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2023-09-06 14:37:09,224 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4dd1548e
+2023-09-06 14:37:09,227 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2023-09-06 14:37:09,542 [main] INFO  o.h.b.i.BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+2023-09-06 14:37:10,218 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-09-06 14:37:10,318 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-09-06 14:37:10,657 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2023-09-06 14:37:11,165 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-09-06 14:37:11,182 [main] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 55208f14-bc01-48be-bb0a-ce6e0cd804b2
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2023-09-06 14:37:11,447 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@50c442a5, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@4eb313ed, org.springframework.security.web.context.SecurityContextHolderFilter@4fb1bffd, org.springframework.security.web.header.HeaderWriterFilter@37a74cf4, org.springframework.security.web.csrf.CsrfFilter@6ed78a5e, org.springframework.security.web.authentication.logout.LogoutFilter@7cc966a9, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7b842e79, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@50c9b080, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@3fc92211, org.springframework.security.web.access.ExceptionTranslationFilter@57bc7f67, org.springframework.security.web.access.intercept.AuthorizationFilter@4f7a2262]
+2023-09-06 14:37:11,687 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8084"]
+2023-09-06 14:37:11,691 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'
+2023-09-06 14:37:11,693 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-09-06 14:37:11,695 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2023-09-06 14:37:11,702 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2023-09-06 14:37:11,704 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8084"]
+2023-09-06 14:37:11,704 [main] INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
+2023-09-06 14:37:11,709 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8084"]
+2023-09-06 14:37:11,710 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Destroying ProtocolHandler ["http-nio-8084"]
+2023-09-06 14:37:11,716 [main] INFO  o.s.b.a.l.ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2023-09-06 14:37:11,734 [main] ERROR o.s.b.d.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8084 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8084 or configure this application to listen on another port.
+
+2023-09-06 14:37:43,863 [main] INFO  c.e.Book_Store.BookStoreApplication - Starting BookStoreApplication using Java 19.0.2 with PID 9616 (C:\Users\chwie\Projects\Books_store\target\classes started by chwie in C:\Users\chwie\Projects\Books_store)
+2023-09-06 14:37:43,867 [main] INFO  c.e.Book_Store.BookStoreApplication - No active profile set, falling back to 1 default profile: "default"
+2023-09-06 14:37:44,599 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-09-06 14:37:44,600 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2023-09-06 14:37:44,635 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.BasketRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 14:37:44,637 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.BookRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 14:37:44,638 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.CategoryRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 14:37:44,639 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.CustomerLoginRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 14:37:44,640 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.CustomerRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 14:37:44,641 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.OrderRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 14:37:44,642 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 37 ms. Found 0 JDBC repository interfaces.
+2023-09-06 14:37:44,653 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-09-06 14:37:44,654 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-09-06 14:37:44,708 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 49 ms. Found 6 JPA repository interfaces.
+2023-09-06 14:37:45,353 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8085 (http)
+2023-09-06 14:37:45,362 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8085"]
+2023-09-06 14:37:45,366 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2023-09-06 14:37:45,366 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.12]
+2023-09-06 14:37:45,471 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2023-09-06 14:37:45,472 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1543 ms
+2023-09-06 14:37:45,648 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-09-06 14:37:45,708 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.2.7.Final
+2023-09-06 14:37:45,710 [main] INFO  org.hibernate.cfg.Environment - HHH000406: Using bytecode reflection optimizer
+2023-09-06 14:37:45,849 [main] INFO  o.h.b.i.BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+2023-09-06 14:37:45,990 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2023-09-06 14:37:46,006 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2023-09-06 14:37:46,302 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4dd1548e
+2023-09-06 14:37:46,304 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2023-09-06 14:37:46,643 [main] INFO  o.h.b.i.BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+2023-09-06 14:37:47,269 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-09-06 14:37:47,363 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-09-06 14:37:47,742 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2023-09-06 14:37:48,338 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-09-06 14:37:48,366 [main] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 9c74a5d2-be32-43d7-a0f8-be587200a603
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2023-09-06 14:37:48,630 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@50c442a5, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@4eb313ed, org.springframework.security.web.context.SecurityContextHolderFilter@4fb1bffd, org.springframework.security.web.header.HeaderWriterFilter@37a74cf4, org.springframework.security.web.csrf.CsrfFilter@6ed78a5e, org.springframework.security.web.authentication.logout.LogoutFilter@7cc966a9, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7b842e79, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@50c9b080, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@3fc92211, org.springframework.security.web.access.ExceptionTranslationFilter@57bc7f67, org.springframework.security.web.access.intercept.AuthorizationFilter@4f7a2262]
+2023-09-06 14:37:48,862 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8085"]
+2023-09-06 14:37:48,887 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8085 (http) with context path ''
+2023-09-06 14:37:48,897 [main] INFO  c.e.Book_Store.BookStoreApplication - Started BookStoreApplication in 5.414 seconds (process running for 5.973)
+2023-09-06 14:38:53,352 [http-nio-8085-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-09-06 14:38:53,352 [http-nio-8085-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2023-09-06 14:38:53,356 [http-nio-8085-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 4 ms
+2023-09-06 14:38:53,366 [http-nio-8085-exec-1] DEBUG o.s.security.web.FilterChainProxy - Securing POST /customer/toBasket/1/2
+2023-09-06 14:38:53,434 [http-nio-8085-exec-1] DEBUG o.s.security.web.csrf.CsrfFilter - Invalid CSRF token found for http://localhost:8085/customer/toBasket/1/2
+2023-09-06 14:38:53,434 [http-nio-8085-exec-1] DEBUG o.s.s.w.a.AccessDeniedHandlerImpl - Responding with 403 status code
+2023-09-06 14:38:53,439 [http-nio-8085-exec-1] DEBUG o.s.security.web.FilterChainProxy - Securing POST /error
+2023-09-06 14:38:53,444 [http-nio-8085-exec-1] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2023-09-06 14:38:53,445 [http-nio-8085-exec-1] DEBUG o.s.s.w.a.Http403ForbiddenEntryPoint - Pre-authenticated entry point called. Rejecting access
+2023-09-06 14:40:11,549 [http-nio-8085-exec-4] DEBUG o.s.security.web.FilterChainProxy - Securing POST /customer/login
+2023-09-06 14:40:11,551 [http-nio-8085-exec-4] DEBUG o.s.security.web.FilterChainProxy - Secured POST /customer/login
+2023-09-06 14:40:11,828 [http-nio-8085-exec-4] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2023-09-06 14:40:52,378 [http-nio-8085-exec-6] DEBUG o.s.security.web.FilterChainProxy - Securing GET /customer/loggedCustomer
+2023-09-06 14:40:52,379 [http-nio-8085-exec-6] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2023-09-06 14:40:52,382 [http-nio-8085-exec-6] DEBUG o.s.s.w.s.HttpSessionRequestCache - Saved request http://localhost:8085/customer/loggedCustomer?continue to session
+2023-09-06 14:40:52,382 [http-nio-8085-exec-6] DEBUG o.s.s.w.a.Http403ForbiddenEntryPoint - Pre-authenticated entry point called. Rejecting access
+2023-09-06 14:40:52,382 [http-nio-8085-exec-6] DEBUG o.s.security.web.FilterChainProxy - Securing GET /error
+2023-09-06 14:40:52,383 [http-nio-8085-exec-6] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2023-09-06 14:40:52,384 [http-nio-8085-exec-6] DEBUG o.s.s.w.s.HttpSessionRequestCache - Saved request http://localhost:8085/error?continue to session
+2023-09-06 14:40:52,384 [http-nio-8085-exec-6] DEBUG o.s.s.w.a.Http403ForbiddenEntryPoint - Pre-authenticated entry point called. Rejecting access
+2023-09-06 14:51:10,512 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-09-06 14:51:10,514 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2023-09-06 14:51:10,522 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2023-09-06 14:51:14,912 [main] INFO  c.e.Book_Store.BookStoreApplication - Starting BookStoreApplication using Java 19.0.2 with PID 11248 (C:\Users\chwie\Projects\Books_store\target\classes started by chwie in C:\Users\chwie\Projects\Books_store)
+2023-09-06 14:51:14,915 [main] INFO  c.e.Book_Store.BookStoreApplication - No active profile set, falling back to 1 default profile: "default"
+2023-09-06 14:51:15,650 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-09-06 14:51:15,651 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2023-09-06 14:51:15,687 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.BasketRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 14:51:15,688 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.BookRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 14:51:15,689 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.CategoryRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 14:51:15,690 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.CustomerLoginRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 14:51:15,691 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.CustomerRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 14:51:15,692 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.OrderRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 14:51:15,693 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 37 ms. Found 0 JDBC repository interfaces.
+2023-09-06 14:51:15,705 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-09-06 14:51:15,705 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-09-06 14:51:15,751 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 41 ms. Found 6 JPA repository interfaces.
+2023-09-06 14:51:16,393 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8085 (http)
+2023-09-06 14:51:16,399 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8085"]
+2023-09-06 14:51:16,401 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2023-09-06 14:51:16,401 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.12]
+2023-09-06 14:51:16,494 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2023-09-06 14:51:16,496 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1521 ms
+2023-09-06 14:51:16,698 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-09-06 14:51:16,754 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.2.7.Final
+2023-09-06 14:51:16,756 [main] INFO  org.hibernate.cfg.Environment - HHH000406: Using bytecode reflection optimizer
+2023-09-06 14:51:16,900 [main] INFO  o.h.b.i.BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+2023-09-06 14:51:17,041 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2023-09-06 14:51:17,057 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2023-09-06 14:51:17,426 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4dd1548e
+2023-09-06 14:51:17,428 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2023-09-06 14:51:17,753 [main] INFO  o.h.b.i.BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+2023-09-06 14:51:18,376 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-09-06 14:51:18,478 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-09-06 14:51:18,788 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2023-09-06 14:51:19,284 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-09-06 14:51:19,303 [main] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: e2f3da8b-283b-44ed-afd2-396a3d2bab16
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2023-09-06 14:51:19,571 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@117bfeb8, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@4781bb01, org.springframework.security.web.context.SecurityContextHolderFilter@2cee1bcf, org.springframework.security.web.header.HeaderWriterFilter@427c9a13, org.springframework.security.web.csrf.CsrfFilter@504216ff, org.springframework.security.web.authentication.logout.LogoutFilter@3ef7064b, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@50c9b080, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@405d123c, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@31aec04a, org.springframework.security.web.access.ExceptionTranslationFilter@745c25ed, org.springframework.security.web.access.intercept.AuthorizationFilter@4eb313ed]
+2023-09-06 14:51:19,829 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8085"]
+2023-09-06 14:51:19,852 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8085 (http) with context path ''
+2023-09-06 14:51:19,860 [main] INFO  c.e.Book_Store.BookStoreApplication - Started BookStoreApplication in 5.302 seconds (process running for 5.897)
+2023-09-06 14:51:39,562 [http-nio-8085-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-09-06 14:51:39,562 [http-nio-8085-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2023-09-06 14:51:39,564 [http-nio-8085-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2023-09-06 14:51:39,574 [http-nio-8085-exec-1] DEBUG o.s.security.web.FilterChainProxy - Securing POST /customer/login
+2023-09-06 14:51:39,596 [http-nio-8085-exec-1] DEBUG o.s.security.web.FilterChainProxy - Secured POST /customer/login
+2023-09-06 14:51:39,891 [http-nio-8085-exec-1] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2023-09-06 14:52:00,780 [http-nio-8085-exec-3] DEBUG o.s.security.web.FilterChainProxy - Securing GET /customer/loggedCustomer
+2023-09-06 14:52:00,782 [http-nio-8085-exec-3] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2023-09-06 14:52:00,828 [http-nio-8085-exec-3] DEBUG o.s.s.w.s.HttpSessionRequestCache - Saved request http://localhost:8085/customer/loggedCustomer?continue to session
+2023-09-06 14:52:00,828 [http-nio-8085-exec-3] DEBUG o.s.s.w.a.Http403ForbiddenEntryPoint - Pre-authenticated entry point called. Rejecting access
+2023-09-06 14:52:00,831 [http-nio-8085-exec-3] DEBUG o.s.security.web.FilterChainProxy - Securing GET /error
+2023-09-06 14:52:00,834 [http-nio-8085-exec-3] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2023-09-06 14:52:00,835 [http-nio-8085-exec-3] DEBUG o.s.s.w.s.HttpSessionRequestCache - Saved request http://localhost:8085/error?continue to session
+2023-09-06 14:52:00,835 [http-nio-8085-exec-3] DEBUG o.s.s.w.a.Http403ForbiddenEntryPoint - Pre-authenticated entry point called. Rejecting access
+2023-09-06 14:58:17,972 [http-nio-8085-exec-6] DEBUG o.s.security.web.FilterChainProxy - Securing GET /customer/loggedCustomer
+2023-09-06 14:58:17,973 [http-nio-8085-exec-6] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2023-09-06 14:58:17,975 [http-nio-8085-exec-6] DEBUG o.s.s.w.s.HttpSessionRequestCache - Saved request http://localhost:8085/customer/loggedCustomer?continue to session
+2023-09-06 14:58:17,975 [http-nio-8085-exec-6] DEBUG o.s.s.w.a.Http403ForbiddenEntryPoint - Pre-authenticated entry point called. Rejecting access
+2023-09-06 14:58:17,975 [http-nio-8085-exec-6] DEBUG o.s.security.web.FilterChainProxy - Securing GET /error
+2023-09-06 14:58:17,976 [http-nio-8085-exec-6] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2023-09-06 14:58:17,977 [http-nio-8085-exec-6] DEBUG o.s.s.w.s.HttpSessionRequestCache - Saved request http://localhost:8085/error?continue to session
+2023-09-06 14:58:17,977 [http-nio-8085-exec-6] DEBUG o.s.s.w.a.Http403ForbiddenEntryPoint - Pre-authenticated entry point called. Rejecting access
+2023-09-06 14:58:25,311 [http-nio-8085-exec-7] DEBUG o.s.security.web.FilterChainProxy - Securing GET /customer/loggedCustomer
+2023-09-06 14:58:25,312 [http-nio-8085-exec-7] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2023-09-06 14:58:25,313 [http-nio-8085-exec-7] DEBUG o.s.s.w.s.HttpSessionRequestCache - Saved request http://localhost:8085/customer/loggedCustomer?continue to session
+2023-09-06 14:58:25,313 [http-nio-8085-exec-7] DEBUG o.s.s.w.a.Http403ForbiddenEntryPoint - Pre-authenticated entry point called. Rejecting access
+2023-09-06 14:58:25,313 [http-nio-8085-exec-7] DEBUG o.s.security.web.FilterChainProxy - Securing GET /error
+2023-09-06 14:58:25,315 [http-nio-8085-exec-7] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2023-09-06 14:58:25,315 [http-nio-8085-exec-7] DEBUG o.s.s.w.s.HttpSessionRequestCache - Saved request http://localhost:8085/error?continue to session
+2023-09-06 14:58:25,315 [http-nio-8085-exec-7] DEBUG o.s.s.w.a.Http403ForbiddenEntryPoint - Pre-authenticated entry point called. Rejecting access
+2023-09-06 15:22:15,542 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=14m48s666ms921µs900ns).
+2023-09-06 15:22:36,451 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=14m48s655ms541µs200ns).
+2023-09-06 15:23:19,257 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-09-06 15:23:19,259 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2023-09-06 15:23:19,265 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2023-09-06 15:31:28,900 [main] INFO  c.e.Book_Store.BookStoreApplication - Starting BookStoreApplication using Java 19.0.2 with PID 29464 (C:\Users\chwie\Projects\Books_store\target\classes started by chwie in C:\Users\chwie\Projects\Books_store)
+2023-09-06 15:31:28,903 [main] INFO  c.e.Book_Store.BookStoreApplication - No active profile set, falling back to 1 default profile: "default"
+2023-09-06 15:31:29,646 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-09-06 15:31:29,647 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2023-09-06 15:31:29,685 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.BasketRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 15:31:29,687 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.BookRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 15:31:29,688 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.CategoryRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 15:31:29,689 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.CustomerLoginRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 15:31:29,690 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.CustomerRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 15:31:29,691 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.Book_Store.repository.OrderRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2023-09-06 15:31:29,692 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 39 ms. Found 0 JDBC repository interfaces.
+2023-09-06 15:31:29,704 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-09-06 15:31:29,705 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-09-06 15:31:29,749 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 40 ms. Found 6 JPA repository interfaces.
+2023-09-06 15:31:30,410 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8085 (http)
+2023-09-06 15:31:30,418 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8085"]
+2023-09-06 15:31:30,421 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2023-09-06 15:31:30,421 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.12]
+2023-09-06 15:31:30,517 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2023-09-06 15:31:30,518 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1561 ms
+2023-09-06 15:31:30,692 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-09-06 15:31:30,746 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.2.7.Final
+2023-09-06 15:31:30,748 [main] INFO  org.hibernate.cfg.Environment - HHH000406: Using bytecode reflection optimizer
+2023-09-06 15:31:30,876 [main] INFO  o.h.b.i.BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+2023-09-06 15:31:31,014 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2023-09-06 15:31:31,031 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2023-09-06 15:31:31,321 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@75dd0f94
+2023-09-06 15:31:31,322 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2023-09-06 15:31:31,679 [main] INFO  o.h.b.i.BytecodeProviderInitiator - HHH000021: Bytecode provider name : bytebuddy
+2023-09-06 15:31:32,295 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-09-06 15:31:32,387 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-09-06 15:31:32,724 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2023-09-06 15:31:33,229 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-09-06 15:31:33,244 [main] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 0637a87a-face-4fd3-9c7c-8ee73e5345bc
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2023-09-06 15:31:33,502 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@50c442a5, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@4eb313ed, org.springframework.security.web.context.SecurityContextHolderFilter@4fb1bffd, org.springframework.security.web.header.HeaderWriterFilter@37a74cf4, org.springframework.security.web.csrf.CsrfFilter@6ed78a5e, org.springframework.security.web.authentication.logout.LogoutFilter@7cc966a9, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7b842e79, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@50c9b080, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@3fc92211, org.springframework.security.web.access.ExceptionTranslationFilter@57bc7f67, org.springframework.security.web.access.intercept.AuthorizationFilter@4f7a2262]
+2023-09-06 15:31:33,751 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8085"]
+2023-09-06 15:31:33,778 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8085 (http) with context path ''
+2023-09-06 15:31:33,786 [main] INFO  c.e.Book_Store.BookStoreApplication - Started BookStoreApplication in 5.257 seconds (process running for 5.824)
+2023-09-06 15:31:53,872 [http-nio-8085-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-09-06 15:31:53,872 [http-nio-8085-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2023-09-06 15:31:53,874 [http-nio-8085-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2023-09-06 15:31:53,884 [http-nio-8085-exec-2] DEBUG o.s.security.web.FilterChainProxy - Securing GET /customer/loggedCustomer
+2023-09-06 15:31:53,908 [http-nio-8085-exec-2] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2023-09-06 15:31:53,966 [http-nio-8085-exec-2] DEBUG o.s.s.w.s.HttpSessionRequestCache - Saved request http://localhost:8085/customer/loggedCustomer?continue to session
+2023-09-06 15:31:53,966 [http-nio-8085-exec-2] DEBUG o.s.s.w.a.Http403ForbiddenEntryPoint - Pre-authenticated entry point called. Rejecting access
+2023-09-06 15:31:53,971 [http-nio-8085-exec-2] DEBUG o.s.security.web.FilterChainProxy - Securing GET /error
+2023-09-06 15:31:53,974 [http-nio-8085-exec-2] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2023-09-06 15:31:53,975 [http-nio-8085-exec-2] DEBUG o.s.s.w.s.HttpSessionRequestCache - Saved request http://localhost:8085/error?continue to session
+2023-09-06 15:31:53,975 [http-nio-8085-exec-2] DEBUG o.s.s.w.a.Http403ForbiddenEntryPoint - Pre-authenticated entry point called. Rejecting access
+2023-09-06 15:31:56,315 [http-nio-8085-exec-3] DEBUG o.s.security.web.FilterChainProxy - Securing GET /customer/loggedCustomer
+2023-09-06 15:31:56,316 [http-nio-8085-exec-3] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2023-09-06 15:31:56,316 [http-nio-8085-exec-3] DEBUG o.s.s.w.s.HttpSessionRequestCache - Saved request http://localhost:8085/customer/loggedCustomer?continue to session
+2023-09-06 15:31:56,317 [http-nio-8085-exec-3] DEBUG o.s.s.w.a.Http403ForbiddenEntryPoint - Pre-authenticated entry point called. Rejecting access
+2023-09-06 15:31:56,317 [http-nio-8085-exec-3] DEBUG o.s.security.web.FilterChainProxy - Securing GET /error
+2023-09-06 15:31:56,319 [http-nio-8085-exec-3] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2023-09-06 15:31:56,320 [http-nio-8085-exec-3] DEBUG o.s.s.w.s.HttpSessionRequestCache - Saved request http://localhost:8085/error?continue to session
+2023-09-06 15:31:56,320 [http-nio-8085-exec-3] DEBUG o.s.s.w.a.Http403ForbiddenEntryPoint - Pre-authenticated entry point called. Rejecting access
+2023-09-06 15:31:57,024 [http-nio-8085-exec-5] DEBUG o.s.security.web.FilterChainProxy - Securing GET /customer/loggedCustomer
+2023-09-06 15:31:57,026 [http-nio-8085-exec-5] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2023-09-06 15:31:57,027 [http-nio-8085-exec-5] DEBUG o.s.s.w.s.HttpSessionRequestCache - Saved request http://localhost:8085/customer/loggedCustomer?continue to session
+2023-09-06 15:31:57,027 [http-nio-8085-exec-5] DEBUG o.s.s.w.a.Http403ForbiddenEntryPoint - Pre-authenticated entry point called. Rejecting access
+2023-09-06 15:31:57,029 [http-nio-8085-exec-5] DEBUG o.s.security.web.FilterChainProxy - Securing GET /error
+2023-09-06 15:31:57,031 [http-nio-8085-exec-5] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2023-09-06 15:31:57,032 [http-nio-8085-exec-5] DEBUG o.s.s.w.s.HttpSessionRequestCache - Saved request http://localhost:8085/error?continue to session
+2023-09-06 15:31:57,032 [http-nio-8085-exec-5] DEBUG o.s.s.w.a.Http403ForbiddenEntryPoint - Pre-authenticated entry point called. Rejecting access
+2023-09-06 15:31:57,706 [http-nio-8085-exec-4] DEBUG o.s.security.web.FilterChainProxy - Securing GET /customer/loggedCustomer
+2023-09-06 15:31:57,706 [http-nio-8085-exec-4] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2023-09-06 15:31:57,708 [http-nio-8085-exec-4] DEBUG o.s.s.w.s.HttpSessionRequestCache - Saved request http://localhost:8085/customer/loggedCustomer?continue to session
+2023-09-06 15:31:57,708 [http-nio-8085-exec-4] DEBUG o.s.s.w.a.Http403ForbiddenEntryPoint - Pre-authenticated entry point called. Rejecting access
+2023-09-06 15:31:57,708 [http-nio-8085-exec-4] DEBUG o.s.security.web.FilterChainProxy - Securing GET /error
+2023-09-06 15:31:57,709 [http-nio-8085-exec-4] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2023-09-06 15:31:57,710 [http-nio-8085-exec-4] DEBUG o.s.s.w.s.HttpSessionRequestCache - Saved request http://localhost:8085/error?continue to session
+2023-09-06 15:31:57,710 [http-nio-8085-exec-4] DEBUG o.s.s.w.a.Http403ForbiddenEntryPoint - Pre-authenticated entry point called. Rejecting access
+2023-09-06 15:34:28,442 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-09-06 15:34:28,444 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2023-09-06 15:34:28,452 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.

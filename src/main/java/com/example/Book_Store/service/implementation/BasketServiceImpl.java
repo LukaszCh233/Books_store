@@ -19,4 +19,9 @@ public class BasketServiceImpl implements BasketService {
     public Basket findByIdBook(Long id) {
         return basketRepository.findByIdBook(id);
     }
+
+    @Override
+    public Basket saveBasket(Basket basket) {
+        return basketRepository.save(basket);
+    }
 }
