@@ -10,6 +10,10 @@ public interface CustomerLoginService {
     boolean existsByEmailAndPassword(String email, String password);
 
     CustomerLogin findByEmailAndPassword(String email, String password);
+
     CustomerLogin findByEmail(String email);
+
     CustomerLogin findPasswordByEmail(String email);
+
+
 }

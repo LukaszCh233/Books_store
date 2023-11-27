@@ -10,7 +10,8 @@ import org.springframework.stereotype.Service;
 public class CustomerLoginServiceImpl implements CustomerLoginService {
 
     CustomerLoginRepository customerLoginRepository;
-@Autowired
+
+    @Autowired
     public CustomerLoginServiceImpl(CustomerLoginRepository customerLoginRepository) {
         this.customerLoginRepository = customerLoginRepository;
     }
@@ -27,12 +28,12 @@ public class CustomerLoginServiceImpl implements CustomerLoginService {
 
     @Override
     public boolean existsByEmailAndPassword(String email, String password) {
-        return customerLoginRepository.existsByEmailAndPassword(email,password);
+        return customerLoginRepository.existsByEmailAndPassword(email, password);
     }
 
     @Override
     public CustomerLogin findByEmailAndPassword(String email, String password) {
-        return customerLoginRepository.findByEmailAndPassword(email,password);
+        return customerLoginRepository.findByEmailAndPassword(email, password);
     }
 
     @Override
@@ -44,4 +45,5 @@ public class CustomerLoginServiceImpl implements CustomerLoginService {
     public CustomerLogin findPasswordByEmail(String email) {
         return customerLoginRepository.findPasswordByEmail(email);
     }
+
 }

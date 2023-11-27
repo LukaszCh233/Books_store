@@ -1,62 +1,81 @@
 package com.example.Book_Store.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "customers")
 @Getter
 @Setter
-public class Customer {
+@NoArgsConstructor
+@AllArgsConstructor
+public class Customer implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idCustomer")
-    private Long id;
+    private Integer id;
     @Column(name = "name")
     private String name;
     @Column(name = "lastName")
     private String lastName;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "email")
+    @JoinColumn(name = "email", referencedColumnName = "email")
     private CustomerLogin customerLogin;
     @Column(name = "number")
     private int number;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role")
+    private Role role;
 
-    public Customer() {
-    }
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> authorities = new ArrayList<>();
 
-    public Customer(Long id, String name, String lastName, CustomerLogin customerLogin, int number) {
-        this.id = id;
-        this.name = name;
-        this.lastName = lastName;
-        this.customerLogin = customerLogin;
-        this.number = number;
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + role.name()));
+
+
+        return authorities;
     }
 
     @Override
-    public String toString() {
-        return "Customer{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", customerLogin=" + customerLogin +
-                ", number=" + number +
-                '}';
+    public String getPassword() {
+        return customerLogin.getPassword();
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Customer customer)) return false;
-        return number == customer.number && Objects.equals(id, customer.id) && Objects.equals(name, customer.name) && Objects.equals(lastName, customer.lastName) && Objects.equals(customerLogin, customer.customerLogin);
+    public String getUsername() {
+        return customerLogin.getEmail();
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(id, name, lastName, customerLogin, number);
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }
+
 
