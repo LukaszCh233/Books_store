@@ -3,20 +3,21 @@ package com.example.Book_Store.service.implementation;
 import com.example.Book_Store.entities.Book;
 import com.example.Book_Store.repository.BookRepository;
 import com.example.Book_Store.service.BookService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public class BookServiceImpl implements BookService {
-    BookRepository bookRepository;
-    @Autowired
+   private final BookRepository bookRepository;
+
     public BookServiceImpl(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
     }
 
     @Override
-    public Book findBookById(Long id) {
+    public Book findBookById(Integer id) {
         return bookRepository.findBookById(id);
     }
 
@@ -31,7 +32,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<Book> findByCategoryId(Long id) {
+    public List<Book> findByCategoryId(Integer id) {
         return bookRepository.findByCategoryId(id);
     }
 
@@ -41,18 +42,28 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void deleteBookById(Long id) {
+    public void deleteBookById(Integer id) {
     bookRepository.deleteBookById(id);
     }
 
     @Override
     public void deleteBookByTitle(String title) {
-    bookRepository.deleteBookByTitle(title);
+bookRepository.deleteBookByTitle(title);
     }
 
     @Override
-    public boolean existsBookById(Long id) {
-        return bookRepository.existsBookById(id);
+    public void deleteAllBooks() {
+        bookRepository.deleteAll();
+    }
+
+    @Override
+    public boolean existsBookById(Integer id) {
+        return bookRepository.existsById(id);
+    }
+
+    @Override
+    public boolean existsBookByTitle(String title) {
+        return bookRepository.existsByTitle(title);
     }
 
     @Override

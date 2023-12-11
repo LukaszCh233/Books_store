@@ -1,18 +1,22 @@
 package com.example.Book_Store.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
     @Entity
     @Table(name = "books")
     @Getter
     @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
     public class Book {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "id")
-        private Long id;
+        private Integer id;
         @Column(name = "title")
         private String title;
         @Column(name = "author")
@@ -27,19 +31,6 @@ import lombok.Setter;
         @JoinColumn(name = "category")
         private Category category;
 
-
-        public Book() {
-        }
-
-        public Book(Long id, String title, String author, double price, int quantity, Status status, Category category) {
-            this.id = id;
-            this.title = title;
-            this.author = author;
-            this.price = price;
-            this.quantity = quantity;
-            this.status = status;
-            this.category = category;
-        }
 
         @PrePersist
         public void setDefaultStatusIfAvailable() {
