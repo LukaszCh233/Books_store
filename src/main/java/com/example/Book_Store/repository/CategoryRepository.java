@@ -4,11 +4,14 @@ import com.example.Book_Store.entities.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
-public interface CategoryRepository extends JpaRepository<Category, Long> {
-    Category findCategoryById(Long id);
+public interface CategoryRepository extends JpaRepository<Category, Integer> {
+    Optional<Category> findCategoryById(Integer id);
 
-    Category findCategoryByName(String name);
+    Optional<Category> findCategoryByName(String name);
 
-    void deleteCategoryById(Long id);
+    void deleteCategoryById(Integer id);
+    boolean existsById(Integer id);
 }
