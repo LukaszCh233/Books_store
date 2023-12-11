@@ -8,26 +8,28 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
-public interface BookRepository extends JpaRepository<Book, Long> {
+public interface BookRepository extends JpaRepository<Book, Integer> {
 
-    Book findBookById(Long id);
+    Book findBookById(Integer id);
 
     Book findByTitle(String title);
 
     List<Book> findByCategoryName(String name);
 
-    List<Book> findByCategoryId(Long id);
+    List<Book> findByCategoryId(Integer id);
 
     @Modifying
     @Query("SELECT b FROM Book b WHERE b.title LIKE %:partialTitle%")
     List<Book> findByPartialTitle(@Param("partialTitle") String partialTitle);
 
-    void deleteBookById(Long id);
+    void deleteBookById(Integer id);
 
     void deleteBookByTitle(String title);
 
-    boolean existsBookById(Long id);
+    boolean existsById(Integer id);
+    boolean existsByTitle(String title);
 }
 
