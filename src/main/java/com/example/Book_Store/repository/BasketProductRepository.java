@@ -7,4 +7,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BasketProductRepository extends JpaRepository<BasketProducts, Integer> {
+    void deleteById(Integer id);
+    BasketProducts findBasketProductById(Integer id);
+
 }

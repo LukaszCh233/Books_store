@@ -18,4 +18,27 @@ public class BasketProductServiceImpl implements BasketProductService {
     public BasketProducts saveBasketProduct(BasketProducts basketProducts) {
         return basketProductRepository.save(basketProducts);
     }
+
+    @Override
+    public void deleteById(Integer id) {
+
+        basketProductRepository.deleteById(id);
+    }
+
+    @Override
+    public BasketProducts updateBasketProduct(BasketProducts basketProducts) {
+        return basketProductRepository.save(basketProducts);
+    }
+
+    @Override
+    public BasketProducts findBasketProductById(Integer id) {
+        return basketProductRepository.findBasketProductById(id);
+    }
+
+    @Override
+    public void deleteBasketProducts() {
+        basketProductRepository.deleteAll();
+    }
+
+
 }
