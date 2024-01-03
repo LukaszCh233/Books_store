@@ -5,9 +5,12 @@ import com.example.Book_Store.entities.Order;
 import org.aspectj.weaver.ast.Or;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface OrderService {
-    Order findOrderById(Long id);
+    Order findOrderById(Integer id);
     List<Order> findAllOrders();
-    Order sendOrder(Order order);
+
+    boolean orderExistsById(Integer id);
+    Order saveOrder(Order order);
 }

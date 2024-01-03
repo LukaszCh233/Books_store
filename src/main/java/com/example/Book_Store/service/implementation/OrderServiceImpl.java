@@ -7,18 +7,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OrderServiceImpl implements OrderService {
 
     OrderRepository orderRepository;
+
     @Autowired
     public OrderServiceImpl(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
+
+
     }
 
     @Override
-    public Order findOrderById(Long id) {
+    public Order findOrderById(Integer id) {
         return orderRepository.findOrderById(id);
     }
 
@@ -27,8 +31,15 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.findAll();
     }
 
+
+
     @Override
-    public Order sendOrder(Order order) {
+    public boolean orderExistsById(Integer id) {
+        return orderRepository.existsById(id);
+    }
+
+    @Override
+    public Order saveOrder(Order order) {
         return orderRepository.save(order);
     }
 }
