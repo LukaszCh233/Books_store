@@ -1,20 +1,25 @@
 package com.example.Book_Store.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "orders")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idOrder")
-    private Long id;
+    private Integer id;
     @ManyToOne
     @JoinColumn(name = "idCustomer")
     private Customer customer;
@@ -24,16 +29,7 @@ public class Order {
     private Double price;
     @Column(name = "status")
     private Status status;
-
-    public Order() {
-    }
-
-    public Order(Long id, Customer customer, LocalDate orderData, Double price, Status status) {
-        this.id = id;
-        this.customer = customer;
-        this.orderData = orderData;
-        this.price = price;
-        this.status = status;
-    }
+    @OneToMany(mappedBy = "order", orphanRemoval = true)
+    private List<OrderedBooks> orderedBooks;
 }
 
