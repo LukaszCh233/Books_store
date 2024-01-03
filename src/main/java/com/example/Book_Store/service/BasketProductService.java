@@ -7,4 +7,9 @@ import org.springframework.stereotype.Service;
 public interface BasketProductService {
 
     BasketProducts saveBasketProduct(BasketProducts basketProducts);
+    void deleteById(Integer id);
+    BasketProducts updateBasketProduct(BasketProducts basketProducts);
+    BasketProducts findBasketProductById(Integer id);
+    void deleteBasketProducts();
+
 }
