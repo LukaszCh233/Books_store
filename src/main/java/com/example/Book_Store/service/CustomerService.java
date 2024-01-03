@@ -14,4 +14,5 @@ public interface CustomerService {
     List<Customer> findAllCustomers();
 
     Customer createCustomer(Customer customer);
+    Customer findByName(String name);
 }

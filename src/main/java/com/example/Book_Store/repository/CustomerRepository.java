@@ -12,6 +12,7 @@ import java.util.Optional;
 public interface CustomerRepository extends JpaRepository<Customer, Integer> {
     @Query("SELECT c FROM Customer c JOIN c.customerLogin cl WHERE cl.email = :email")
     Optional<Customer> findByEmail(@Param("email") String email);
+    Customer findByName(String name);
 }
 
 

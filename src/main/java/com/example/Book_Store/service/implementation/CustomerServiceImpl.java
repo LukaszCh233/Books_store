@@ -39,4 +39,9 @@ public class CustomerServiceImpl implements CustomerService {
         customer.getCustomerLogin().setPassword(encodedPassword);
         return customerRepository.save(customer);
     }
+
+    @Override
+    public Customer findByName(String name) {
+        return customerRepository.findByName(name);
+    }
 }
