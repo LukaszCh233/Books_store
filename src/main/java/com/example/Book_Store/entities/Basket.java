@@ -1,10 +1,13 @@
 package com.example.Book_Store.entities;
 
+import com.example.Book_Store.controller.BasketDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,8 +23,12 @@ public class Basket {
     private Integer idBasket;
     @Column
     private Integer userId;
-    @Column double totalPrice;
+    @Column
+    double totalPrice;
     @OneToMany(mappedBy = "basket", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BasketProducts> basketProducts;
 }
+
+
+
 

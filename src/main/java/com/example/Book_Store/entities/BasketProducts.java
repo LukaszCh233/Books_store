@@ -39,7 +39,7 @@ public class BasketProducts {
 
     public void updateTotalPrice() {
         if (basket != null) {
-            basket.setTotalPrice(basket.getTotalPrice() + (price * quantity));
+            basket.setTotalPrice((price * quantity));
         }
     }
 }

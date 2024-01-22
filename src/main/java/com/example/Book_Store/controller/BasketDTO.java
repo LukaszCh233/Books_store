@@ -45,7 +45,5 @@ public class BasketDTO {
             this.basketProducts.add(basketProductsDTO);
         }
     }
-
-
 }
 
