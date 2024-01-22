@@ -31,7 +31,6 @@ import lombok.Setter;
         @JoinColumn(name = "category")
         private Category category;
 
-
         @PrePersist
         public void setDefaultStatusIfAvailable() {
             if (quantity > 0) {
