@@ -8,7 +8,7 @@ import java.util.Optional;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Integer> {
-    Order findOrderById(Integer id);
+
     boolean existsById(Integer id);
 
 }

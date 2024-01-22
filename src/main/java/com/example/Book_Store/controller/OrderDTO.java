@@ -30,7 +30,6 @@ public class OrderDTO {
             this.orderedBooks = new ArrayList<>();
             for (OrderedBooks orderedBooks : orderedBooksList) {
                 OrderedBooksDTO orderedBooksDTO = new OrderedBooksDTO();
-                orderedBooksDTO.setId(orderedBooks.getId());
                 orderedBooksDTO.setIdBook(orderedBooks.getIdBook());
                 orderedBooksDTO.setQuantity(orderedBooks.getQuantity());
                 this.orderedBooks.add(orderedBooksDTO);
@@ -39,15 +38,10 @@ public class OrderDTO {
 
     @Data
     public static class CustomerDTO{
-
         private Integer id;
-
         private String name;
-
         private String lastName;
-
         private String email;
-
         private int number;
 
 
@@ -55,7 +49,6 @@ public class OrderDTO {
     @Data
     public static class OrderedBooksDTO{
 
-        private Integer id;
         private Integer idBook;
         private Integer quantity;
     }
