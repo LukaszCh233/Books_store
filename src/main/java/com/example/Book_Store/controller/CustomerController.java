@@ -1,99 +1,107 @@
 package com.example.Book_Store.controller;
 
 import ch.qos.logback.classic.Logger;
-import com.example.Book_Store.entities.*;
-import com.example.Book_Store.service.*;
-import com.example.Book_Store.service.implementation.JwtTokenServiceImpl;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
-import jakarta.annotation.security.PermitAll;
+import com.example.Book_Store.service.implementation.*;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.crypto.SecretKey;
+import java.security.Principal;
+
 
 @RestController
 @RequestMapping("/customer")
 public class CustomerController {
-    private final BookService bookService;
-    private final CategoryService categoryService;
-    private final CustomerService customerService;
-    private final OrderService orderService;
-    private final CustomerLoginService customerLoginService;
-    private final BasketService basketService;
-    private final JwtTokenServiceImpl jwtTokenService;
+    private final BookServiceImpl bookService;
+    private final CustomerServiceImpl customerService;
+    private final OrderServiceImpl orderService;
+    private final BasketServiceImpl basketService;
+    private final BasketProductServiceImpl basketProductService;
+    private final OrderedBooksServiceImpl orderedBooksService;
     private final Logger logger = (Logger) LoggerFactory.getLogger(CustomerController.class);
 
 
     @Autowired
-    public CustomerController(BookService bookService, CategoryService categoryService,
-                              CustomerService customerService, OrderService orderService,
-                              CustomerLoginService customerLoginService,BasketService basketService, JwtTokenServiceImpl jwtTokenService) {
+    public CustomerController(BookServiceImpl bookService, CustomerServiceImpl customerService, OrderServiceImpl orderService,
+                              BasketServiceImpl basketService, BasketProductServiceImpl basketProductService, OrderedBooksServiceImpl orderedBooksService) {
         this.bookService = bookService;
-        this.categoryService = categoryService;
         this.customerService = customerService;
         this.orderService = orderService;
-        this.customerLoginService = customerLoginService;
         this.basketService = basketService;
-        this.jwtTokenService = jwtTokenService;
+        this.basketProductService = basketProductService;
+        this.orderedBooksService = orderedBooksService;
     }
 
-    @GetMapping("/loggedCustomer")
-    public ResponseEntity<Customer> getDataLoggedCustomer(@RequestHeader ("Authorization") String token ) {
+    @PostMapping("/toBasket/{idBook}/{quantity}")
+    public ResponseEntity<String> addBookToBasket(@PathVariable Integer idBook, @PathVariable Integer quantity, Principal principal) {
 
-        String email = jwtTokenService.extractEmailFromToken(token);
-
-        if (email != null) {
-            Customer loggedCustomer = customerService.findByEmail(email);
-            if (loggedCustomer != null) {
-                logger.info("Klient o adresie e-mail {} został pomyślnie uwierzytelniony.", email);
-
-                return new ResponseEntity<>(loggedCustomer, HttpStatus.OK);
-            }
-        }
-        logger.error("Błąd podczas uwierzytelniania klienta z adresem e-mail: {}", token);
-
-        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-
+        basketService.addBookToBasket(idBook, quantity, principal);
+        return ResponseEntity.ok("book added to basket");
     }
-    @PostMapping("/toBasket/{id}/{quantity}")
-    public ResponseEntity<String> addBookById(@RequestHeader ("Authorization") String token, @PathVariable Long id, @PathVariable int quantity) {
-        logger.debug("Received a request to add a book with ID {} to the basket.", id);
-
-        if (jwtTokenService.isAuthenticated(token)) {
 
 
-            Book checkBook = bookService.findBookById(id);
+    /*  @PostMapping("/order")
+      public ResponseEntity<?> orderBooks(Principal principal) {
 
-            if (checkBook != null && checkBook.getQuantity() >= quantity) {
-                logger.debug("Found the book with ID {}. Available quantity: {}", id, checkBook.getQuantity());
+          String username = principal.getName();
+          Customer customer = customerService.findByEmail(username)
+                  .orElseThrow(() -> new ResourceNotFoundException("Customer not found"));
+          Basket basket = Optional.ofNullable(basketService.findBasketByUserId(customer.getId()))
+          .orElseThrow(() -> new ResourceNotFoundException("Basket does not exist for the customer"));
 
-                checkBook.setQuantity(checkBook.getQuantity() - quantity);
-                Basket basket = new Basket(null, checkBook.getId(), checkBook.getTitle(), checkBook.getPrice(), quantity);
-                basketService.saveBasket(basket);
-                if (checkBook.getQuantity() > 0) {
-                    checkBook.setStatus(Status.AVAILABLE);
-                } else {
-                    checkBook.setStatus(Status.LACK);
-                }
-                bookService.updateBook(checkBook);
-                logger.info("Book with ID {} added to the basket successfully.", id);
+          if (!basket.getBasketProducts().isEmpty()) {
+              Order order = new Order();
+              order.setCustomer(customer);
+              order.setOrderData(LocalDate.now());
+              order.setOrderedBooks(new ArrayList<>());
 
-                return new ResponseEntity<>("Book has benn added to basket", HttpStatus.OK);
-            } else {
-                logger.warn("The book with ID {} does not exist or is not available in sufficient quantity.", id);
+              double totalPrice = basket.getBasketProducts().stream().mapToDouble(BasketProducts::getPrice)
+                      .sum();
+              order.setPrice(totalPrice);
+              orderService.saveOrder(order);
 
-                return new ResponseEntity<>("The book does not exist or is not available in sufficient quantity.", HttpStatus.NOT_FOUND);
-            }
-        }
-        logger.warn("Unauthorized access with token: {}", token);
+              List<OrderedBooks> orderedBooksList = basket.getBasketProducts().stream().map(basketProducts -> {
+                          OrderedBooks orderedBooks = new OrderedBooks();
+                          orderedBooks.setOrder(order);
+                          orderedBooks.setIdBook(basketProducts.getIdBook());
+                          orderedBooks.setQuantity(basketProducts.getQuantity());
+                          return orderedBooks;
+                      })
+                      .collect(Collectors.toList());
+              orderedBooksService.saveOrderedBooks(orderedBooksList);
+              order.setOrderedBooks(orderedBooksList);
+              order.setStatus(Status.ORDERED);
+              orderService.saveOrder(order);
+              for (OrderedBooks orderedBooks : orderedBooksList) {
+                  Book book = bookService.findBookById(orderedBooks.getIdBook());
+                  int newQuantity = book.getQuantity() - orderedBooks.getQuantity();
+                  book.setQuantity(newQuantity);
+                  bookService.updateBook(book);
+              }
+              basketService.deleteBasketById(basket.getIdBasket());
+          }
+          return ResponseEntity.ok("order is completed");
+      }
 
-        return new ResponseEntity<>("Unauthorized", HttpStatus.UNAUTHORIZED);
+     */
+    @DeleteMapping("/deleteBasket")
+    public ResponseEntity<?> clearBasket(Principal principal) {
 
+        basketService.deleteBasketById(principal);
+        return ResponseEntity.ok("Basket deleted successfully");
+    }
+
+    @GetMapping("/getBasket")
+    public ResponseEntity<?> displayBasket(Principal principal) {
+
+        BasketDTO basketDTO = basketService.findBasketDTOByUserId(principal);
+        return ResponseEntity.ok(basketDTO);
+    }
+
+    @PutMapping("/updateBasket/{id}/{quantity}")
+    public ResponseEntity<?> updateBasket(@PathVariable Integer id, @PathVariable Integer quantity, Principal principal) {
+        basketService.updateBasket(id, quantity, principal);
+        return ResponseEntity.ok("Quantity update");
     }
 }
