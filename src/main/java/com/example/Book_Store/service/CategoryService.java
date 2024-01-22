@@ -6,16 +6,16 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CategoryService {
-    Optional<Category> findCategoryById(Integer id);
+    Category findCategoryById(Integer id);
 
-    Optional<Category> findCategoryByName(String name);
+    Category findCategoryByName(String name);
 
     void deleteCategoryById(Integer id);
 
     Category createCategory(Category category);
-    List<Category> getAllCategories();
+    List<Category> findAllCategories();
     void deleteAllCategories();
-    Category updateCategory(Category category);
+    Category updateCategory(Integer id, Category category);
     boolean categoryExistsById(Integer id);
 
 }
