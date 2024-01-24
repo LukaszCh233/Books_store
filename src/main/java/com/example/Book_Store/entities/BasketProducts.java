@@ -37,9 +37,4 @@ public class BasketProducts {
     @Column
     private Integer quantity;
 
-    public void updateTotalPrice() {
-        if (basket != null) {
-            basket.setTotalPrice((price * quantity));
-        }
-    }
 }

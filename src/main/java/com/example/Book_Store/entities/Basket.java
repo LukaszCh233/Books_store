@@ -1,13 +1,11 @@
 package com.example.Book_Store.entities;
 
-import com.example.Book_Store.controller.BasketDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -27,7 +25,17 @@ public class Basket {
     double totalPrice;
     @OneToMany(mappedBy = "basket", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BasketProducts> basketProducts;
+
+    public void updateTotalPrice(Basket basket) {
+        if (basket != null && basket.getBasketProducts() != null) {
+            double totalPrice = basket.getBasketProducts().stream()
+                    .mapToDouble(product -> product.getPrice() * product.getQuantity())
+                    .sum();
+            basket.setTotalPrice(totalPrice);
+        }
+    }
 }
+
 
 
 
