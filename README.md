@@ -42,11 +42,13 @@ git clone https://github.com/LukaszCh233/Books_store.git
 cd Books_store
 
 ## Configure Database
+```bash
 spring.datasource.url=jdbc:mysql://localhost:3306/books_store
 spring.datasource.username=your_username
 spring.datasource.password=your_password
 server.port=8085
 
+```
 1. Open MySQL MySQL Workbench
 2. Login to the administrator user of MySql
 3. Use your username and password from configuration
