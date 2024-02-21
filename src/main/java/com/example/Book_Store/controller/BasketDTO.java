@@ -1,11 +1,7 @@
 package com.example.Book_Store.controller;
 
-import com.example.Book_Store.entities.Basket;
 import com.example.Book_Store.entities.BasketProducts;
-import com.example.Book_Store.entities.OrderedBooks;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
-import lombok.*;
+import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,25 +9,11 @@ import java.util.List;
 @Data
 public class BasketDTO {
 
+    private double totalPrice;
     private Integer idBasket;
     private Integer userId;
-    double totalPrice;
     private List<BasketProductsDTO> basketProducts;
-    @Data
-    public static class BasketProductsDTO{
-        private Integer id;
 
-        private Integer idBook;
-
-        private String name;
-
-        private String author;
-
-        private Double price;
-
-        private Integer quantity;
-
-    }
     public void setBasketProducts(List<BasketProducts> basketProductsList) {
         this.basketProducts = new ArrayList<>();
         for (BasketProducts basketProducts : basketProductsList) {
@@ -44,6 +26,22 @@ public class BasketDTO {
             basketProductsDTO.setAuthor(basketProducts.getAuthor());
             this.basketProducts.add(basketProductsDTO);
         }
+    }
+
+    @Data
+    public static class BasketProductsDTO {
+        private Integer id;
+
+        private Integer idBook;
+
+        private String name;
+
+        private String author;
+
+        private Double price;
+
+        private Integer quantity;
+
     }
 }
 

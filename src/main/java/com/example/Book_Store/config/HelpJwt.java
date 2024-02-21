@@ -7,6 +7,7 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
@@ -15,9 +16,9 @@ import java.util.function.Function;
 
 @Service
 public class HelpJwt {
-    public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
+
     private static final long jwtExpiration = 3600000L;
-    private static final long refreshExpiration = 604800000L;
+
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);

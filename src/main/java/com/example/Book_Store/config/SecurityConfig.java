@@ -22,12 +22,14 @@ public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final JwtAuthenticationEntryPoint point;
     private final PasswordEncoder passwordEncoder;
+
     @Autowired
     public SecurityConfig(UserDetailsService userDetailsService, JwtAuthenticationFilter jwtAuthenticationFilter, JwtAuthenticationEntryPoint point, PasswordEncoder passwordEncoder) {
         this.userDetailsService = userDetailsService;
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
         this.point = point;
         this.passwordEncoder = passwordEncoder;
+
     }
 
     @Bean
@@ -45,6 +47,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated())
                 .exceptionHandling(ex -> ex.authenticationEntryPoint(point))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
         http.addFilterAfter(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
@@ -62,5 +65,6 @@ public class SecurityConfig {
         return configuration.getAuthenticationManager();
 
     }
+
 }
 

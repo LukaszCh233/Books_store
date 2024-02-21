@@ -6,12 +6,11 @@ import com.example.Book_Store.service.BasketProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.security.Principal;
-
 @Service
 public class BasketProductServiceImpl implements BasketProductService {
     private final BasketProductRepository basketProductRepository;
-@Autowired
+
+    @Autowired
     public BasketProductServiceImpl(BasketProductRepository basketProductRepository) {
         this.basketProductRepository = basketProductRepository;
     }

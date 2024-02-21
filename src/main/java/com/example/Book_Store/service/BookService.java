@@ -7,7 +7,7 @@ import java.util.List;
 public interface BookService {
     Book findBookById(Integer id);
 
-    Book findByTitle(String title);
+    List<Book> findByTitle(String title);
 
     List<Book> findByCategoryName(String name);
 
@@ -18,10 +18,6 @@ public interface BookService {
     void deleteBookByTitle(String title);
 
     void deleteAllBooks();
-
-    boolean existsBookById(Integer id);
-
-    boolean existsBookByTitle(String title);
 
     Book createBook(Book book);
 

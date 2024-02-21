@@ -5,8 +5,8 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.stereotype.Service;
+
 import javax.crypto.SecretKey;
 import java.util.Date;
 
@@ -15,8 +15,8 @@ public class JwtTokenServiceImpl {
     private static final Logger logger = LoggerFactory.getLogger(JwtTokenServiceImpl.class);
 
 
-   private final SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-     long TOKEN_EXPIRATION_TIME = 3600000;
+    private final SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    long TOKEN_EXPIRATION_TIME = 3600000;
 
     public String generateJwtToken(Customer customer) {
 

@@ -6,13 +6,14 @@ import com.example.Book_Store.config.JwtTokenServiceImpl;
 import com.example.Book_Store.entities.Admin;
 import com.example.Book_Store.entities.Customer;
 import com.example.Book_Store.entities.CustomerLogin;
+import com.example.Book_Store.exceptions.IncorrectPasswordException;
 import com.example.Book_Store.service.CustomerLoginService;
 import com.example.Book_Store.service.implementation.AdminServiceImpl;
 import com.example.Book_Store.service.implementation.CustomerLoginServiceImpl;
 import com.example.Book_Store.service.implementation.CustomerServiceImpl;
+import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,7 +21,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/access")
@@ -63,10 +63,10 @@ public class RegisterLoginController {
     @PostMapping("/customerLog")
     ResponseEntity<?> loginCustomer(@RequestBody CustomerLogin customer) {
         Customer registerCustomer = customerService.findByEmail(customer.getEmail()).orElseThrow(()
-                -> new ResourceNotFoundException("Customer not exists"));
+                -> new EntityNotFoundException("Customer not exists"));
 
         if (!passwordEncoder.matches(customer.getPassword(), registerCustomer.getPassword())) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Incorrect email or password");
+            throw new IncorrectPasswordException("Incorrect email or password");
         }
         String jwtToken = helpJwt.generateToken(registerCustomer);
         logger.info("User logged in successfully: {}", registerCustomer.getCustomerLogin().getEmail());
@@ -77,14 +77,13 @@ public class RegisterLoginController {
     ResponseEntity<?> loginAdmin(@RequestBody Admin admin) {
 
         Admin registeredAdmin = adminService.findByEmail(admin.getEmail()).orElseThrow(()
-                -> new ResourceNotFoundException("Admin not exists"));
+                -> new EntityNotFoundException("Admin not exists"));
 
         if (!passwordEncoder.matches(admin.getPassword(), registeredAdmin.getPassword())) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Incorrect email or password");
+            throw new IncorrectPasswordException("Incorrect email or password");
         }
         String jwtToken = helpJwt.generateToken(registeredAdmin);
         logger.info("User logged in successfully: {}", registeredAdmin.getEmail());
         return ResponseEntity.ok(jwtToken);
-
     }
 }

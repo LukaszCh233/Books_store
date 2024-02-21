@@ -11,14 +11,10 @@ import java.util.List;
 @Service
 public class OrderedBooksServiceImpl implements OrderedBooksService {
     private final OrderedBooksRepository orderedBooksRepository;
-@Autowired
+
+    @Autowired
     public OrderedBooksServiceImpl(OrderedBooksRepository orderedBooksRepository) {
         this.orderedBooksRepository = orderedBooksRepository;
-    }
-
-    @Override
-    public OrderedBooks saveOrderedBooks(OrderedBooks orderedBooks) {
-        return orderedBooksRepository.save(orderedBooks);
     }
 
     @Override

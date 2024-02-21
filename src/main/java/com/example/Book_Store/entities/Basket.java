@@ -15,14 +15,14 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Basket {
+    @Column
+    Double totalPrice;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Integer idBasket;
     @Column
     private Integer userId;
-    @Column
-    double totalPrice;
     @OneToMany(mappedBy = "basket", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BasketProducts> basketProducts;
 

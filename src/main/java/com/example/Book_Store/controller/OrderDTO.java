@@ -1,9 +1,9 @@
 package com.example.Book_Store.controller;
 
-import com.example.Book_Store.entities.*;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
-import lombok.*;
+import com.example.Book_Store.entities.Customer;
+import com.example.Book_Store.entities.OrderedBooks;
+import com.example.Book_Store.entities.Status;
+import lombok.Data;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -17,6 +17,7 @@ public class OrderDTO {
     private Double price;
     private Status status;
     private List<OrderedBooksDTO> orderedBooks;
+
     public void setCustomer(Customer customer) {
         this.customer = new CustomerDTO();
         this.customer.setId(customer.getId());
@@ -26,18 +27,19 @@ public class OrderDTO {
         this.customer.setNumber(customer.getNumber());
 
     }
-        public void setOrderedBooks(List<OrderedBooks> orderedBooksList) {
-            this.orderedBooks = new ArrayList<>();
-            for (OrderedBooks orderedBooks : orderedBooksList) {
-                OrderedBooksDTO orderedBooksDTO = new OrderedBooksDTO();
-                orderedBooksDTO.setIdBook(orderedBooks.getIdBook());
-                orderedBooksDTO.setQuantity(orderedBooks.getQuantity());
-                this.orderedBooks.add(orderedBooksDTO);
-            }
+
+    public void setOrderedBooks(List<OrderedBooks> orderedBooksList) {
+        this.orderedBooks = new ArrayList<>();
+        for (OrderedBooks orderedBooks : orderedBooksList) {
+            OrderedBooksDTO orderedBooksDTO = new OrderedBooksDTO();
+            orderedBooksDTO.setIdBook(orderedBooks.getIdBook());
+            orderedBooksDTO.setQuantity(orderedBooks.getQuantity());
+            this.orderedBooks.add(orderedBooksDTO);
+        }
     }
 
     @Data
-    public static class CustomerDTO{
+    public static class CustomerDTO {
         private Integer id;
         private String name;
         private String lastName;
@@ -46,8 +48,9 @@ public class OrderDTO {
 
 
     }
+
     @Data
-    public static class OrderedBooksDTO{
+    public static class OrderedBooksDTO {
 
         private Integer idBook;
         private Integer quantity;

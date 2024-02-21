@@ -7,7 +7,5 @@ import java.util.List;
 
 @Service
 public interface OrderedBooksService {
-    OrderedBooks saveOrderedBooks(OrderedBooks orderedBooks);
-
     List<OrderedBooks> saveOrderedBooks(List<OrderedBooks> orderedBooksList);
 }
