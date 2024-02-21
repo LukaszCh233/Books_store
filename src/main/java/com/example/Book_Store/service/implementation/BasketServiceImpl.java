@@ -2,16 +2,15 @@ package com.example.Book_Store.service.implementation;
 
 import com.example.Book_Store.controller.BasketDTO;
 import com.example.Book_Store.entities.*;
+import com.example.Book_Store.exceptions.NotEnoughBooksException;
 import com.example.Book_Store.repository.BasketProductRepository;
 import com.example.Book_Store.repository.BasketRepository;
 import com.example.Book_Store.repository.BookRepository;
 import com.example.Book_Store.repository.CustomerRepository;
 import com.example.Book_Store.service.BasketService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
 import java.util.ArrayList;
@@ -35,26 +34,17 @@ public class BasketServiceImpl implements BasketService {
     }
 
     @Override
-    public Basket findByIdBook(Integer id) {
-        return null;
-    }
-
-    @Override
-    public Basket saveBasket(Basket basket) {
-        return basketRepository.save(basket);
-    }
-
-    @Override
     public void addBookToBasket(Integer idBook, Integer quantity, Principal principal) {
-
         String username = principal.getName();
-        Customer customer = customerRepository.findByEmail(username).orElseThrow(() -> new ResourceNotFoundException("Customer not found"));
-        Book selectedBook = bookRepository.findById(idBook).orElseThrow(() -> new ResourceNotFoundException("not found Book"));
+        Customer customer = customerRepository.findByEmail(username).orElseThrow(() -> new EntityNotFoundException("Customer not found"));
+
+        Book selectedBook = bookRepository.findById(idBook).orElseThrow(() -> new EntityNotFoundException("not found Book"));
+
         if (selectedBook.getStatus().equals(Status.LACK)) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, " Book is unavailable");
+            throw new NotEnoughBooksException(" Book is unavailable" + idBook);
         }
         if (selectedBook.getQuantity() < quantity) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "There are no such number of books");
+            throw new NotEnoughBooksException("There are not enough copies of the book with ID: " + idBook);
         }
         Basket basket = Optional.ofNullable(basketRepository.findBasketByUserId(customer.getId()))
                 .orElseGet(() -> {
@@ -63,67 +53,70 @@ public class BasketServiceImpl implements BasketService {
                     newBasket.setBasketProducts(new ArrayList<>());
                     return newBasket;
                 });
+        basketRepository.save(basket);
         BasketProducts basketProducts = new BasketProducts();
         basketProducts.setBasket(basket);
         basketProducts.setIdBook(selectedBook.getId());
         basketProducts.setName(selectedBook.getTitle());
         basketProducts.setAuthor(selectedBook.getAuthor());
         basketProducts.setQuantity(quantity);
-        basketProducts.setPrice(selectedBook.getPrice() * quantity);
+        basketProducts.setPrice(selectedBook.getPrice());
         basket.getBasketProducts().add(basketProducts);
 
         basketProductRepository.save(basketProducts);
         basketRepository.save(basket);
+
     }
 
     @Override
-    public BasketDTO findBasketDTOByUserId(Principal principal) {
+    public BasketDTO findBasketDTOByUserPrincipal(Principal principal) {
         String username = principal.getName();
-        Customer customer = customerRepository.findByEmail(username).orElseThrow(() -> new ResourceNotFoundException("Customer not found"));
-        Basket basket = Optional.ofNullable(basketRepository.findBasketByUserId(customer.getId())).orElseThrow(() -> new ResourceNotFoundException("Basket is empty"));
+        Customer customer = customerRepository.findByEmail(username).orElseThrow(() -> new EntityNotFoundException("Customer not found"));
+        Basket basket = Optional.ofNullable(basketRepository.findBasketByUserId(customer.getId())).orElseThrow(() -> new EntityNotFoundException("Basket is empty"));
+        basket.updateTotalPrice(basket);
         return mapBasketToBasketDTO(basket);
     }
 
     @Override
-    public Basket findBasketByUserId(Principal principal) {
+    public Basket findBasketByUserPrincipal(Principal principal) {
         String username = principal.getName();
-        Customer customer = customerRepository.findByEmail(username).orElseThrow(() -> new ResourceNotFoundException("Customer not found"));
-        return Optional.ofNullable(basketRepository.findBasketByUserId(customer.getId())).orElseThrow(() -> new ResourceNotFoundException("Basket is empty"));
+        Customer customer = customerRepository.findByEmail(username).orElseThrow(() -> new EntityNotFoundException("Customer not found"));
+        return Optional.ofNullable(basketRepository.findBasketByUserId(customer.getId())).orElseThrow(() -> new EntityNotFoundException("Basket not exists"));
     }
 
     @Override
     public void deleteBasketById(Principal principal) {
-       Basket basket = findBasketByUserId(principal);
+
+        Basket basket = findBasketByUserPrincipal(principal);
 
         basketRepository.deleteById(basket.getIdBasket());
     }
 
     @Override
     public void updateBasket(Integer productId, Integer quantity, Principal principal) {
+        Basket basket = findBasketByUserPrincipal(principal);
 
-        Basket basket = findBasketByUserId(principal);
+        BasketProducts basketProducts = Optional.ofNullable(basketProductRepository.findBasketProductById(productId))
+                .orElseThrow(() -> new EntityNotFoundException("Book not found"));
 
-        BasketProducts updateBasketProduct = Optional.ofNullable(basketProductRepository.findBasketProductById(productId))
-                .orElseThrow(() -> new ResourceNotFoundException("Book not found"));
-
-        updateBasketProductQuantity(updateBasketProduct, quantity);
-        handleZeroOrNegativeQuantity(updateBasketProduct);
+        updateBasketProductQuantity(basketProducts, quantity);
+        handleZeroOrNegativeQuantity(basketProducts);
+        basket.updateTotalPrice(basket);
 
         basketRepository.save(basket);
     }
 
-
-
     private void updateBasketProductQuantity(BasketProducts basketProduct, Integer quantity) {
         Book selectedBook = bookRepository.findById(basketProduct.getIdBook())
-                .orElseThrow(() -> new ResourceNotFoundException("Not found Book"));
+                .orElseThrow(() -> new EntityNotFoundException("Not found Book"));
 
         if (selectedBook.getQuantity() < quantity) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "There are not enough books available");
+            throw new NotEnoughBooksException("There are not enough books available");
         }
 
         basketProduct.setQuantity(quantity);
         basketProduct.setPrice(selectedBook.getPrice() * quantity);
+
         basketProductRepository.save(basketProduct);
     }
 

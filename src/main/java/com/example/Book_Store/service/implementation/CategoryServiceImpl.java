@@ -2,10 +2,11 @@ package com.example.Book_Store.service.implementation;
 
 import com.example.Book_Store.entities.Book;
 import com.example.Book_Store.entities.Category;
+import com.example.Book_Store.exceptions.OperationNotAllowedException;
 import com.example.Book_Store.repository.BookRepository;
 import com.example.Book_Store.repository.CategoryRepository;
 import com.example.Book_Store.service.CategoryService;
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
     private final BookRepository bookRepository;
 
-    public CategoryServiceImpl(CategoryRepository categoryRepository,BookRepository bookRepository) {
+    public CategoryServiceImpl(CategoryRepository categoryRepository, BookRepository bookRepository) {
         this.categoryRepository = categoryRepository;
         this.bookRepository = bookRepository;
     }
@@ -24,22 +25,23 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Category findCategoryById(Integer id) {
         return categoryRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Category not found"));
     }
 
 
     @Override
     public Category findCategoryByName(String name) {
         return Optional.ofNullable(categoryRepository.findCategoryByName(name))
-                .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Category not found"));
     }
 
     @Override
     public void deleteCategoryById(Integer id) {
-        if (!categoryExistsById(id)) throw new ResourceNotFoundException("Category not found");
+        findCategoryById(id);
         List<Book> categoryBooks = bookRepository.findByCategoryId(id);
-        if (!categoryBooks.isEmpty()) throw new ResourceNotFoundException("You cant delete category. Category contain books");
-        categoryRepository.deleteCategoryById(id);
+        if (!categoryBooks.isEmpty())
+            throw new OperationNotAllowedException("You can not delete category. Category contain books");
+        categoryRepository.deleteById(id);
     }
 
     @Override
@@ -49,25 +51,24 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<Category> findAllCategories() {
-        List<Category> categories = findAllCategories();
+        List<Category> categories = categoryRepository.findAll();
         if (categories.isEmpty()) {
-            throw new ResourceNotFoundException("Category list is empty");
+            throw new EntityNotFoundException("Category list is empty");
         }
-        return categoryRepository.findAll();
+        return categories;
     }
 
     @Override
     public void deleteAllCategories() {
-        List<Category> allCategories = findAllCategories();
-        if (allCategories.isEmpty()) {
-            throw new ResourceNotFoundException("Category list is empty");
-        }
+
+        findAllCategories();
         List<Book> booksInCategory = bookRepository.findAll();
         if (!booksInCategory.isEmpty()) {
-            throw new ResourceNotFoundException("You cant delete categories, Categories contains books");
+            throw new OperationNotAllowedException("You cant delete categories. Categories contains books");
         }
         categoryRepository.deleteAll();
     }
+
 
     @Override
     public Category updateCategory(Integer id, Category updatedCategory) {

@@ -2,18 +2,20 @@ package com.example.Book_Store.service.implementation;
 
 import com.example.Book_Store.controller.OrderDTO;
 import com.example.Book_Store.entities.*;
+import com.example.Book_Store.exceptions.OperationNotAllowedException;
 import com.example.Book_Store.repository.CustomerRepository;
 import com.example.Book_Store.repository.OrderRepository;
 import com.example.Book_Store.repository.OrderedBooksRepository;
 import com.example.Book_Store.service.OrderService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -39,7 +41,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderDTO findOrderById(Integer id) {
-        Order order = orderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Order not found"));
+        Order order = orderRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Order not found"));
         return mapOrderToOrderDTO(order);
     }
 
@@ -58,7 +60,7 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderDTO> findAllOrders() {
         List<Order> orders = orderRepository.findAll();
         if (orders.isEmpty()) {
-            throw new ResourceNotFoundException("Orders list is empty");
+            throw new EntityNotFoundException("Orders list is empty");
         }
 
         return orders.stream()
@@ -67,15 +69,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public boolean orderExistsById(Integer id) {
-        return orderRepository.existsById(id);
-    }
-
-    @Override
     public Order updateOrderStatus(Integer id) {
-        Order order = orderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Order not found"));
+        Order order = orderRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Order not found"));
+
         if (order.getStatus() == Status.SENT) {
-            throw new ResourceNotFoundException("Order with this ID has already been sent");
+            throw new OperationNotAllowedException("Order with this ID has already been sent");
         }
         order.setStatus(Status.SENT);
         return orderRepository.save(order);
@@ -83,13 +81,13 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order saveOrder(Order order, Principal principal) {
-        Basket basket = basketService.findBasketByUserId(principal);
+        Basket basket = basketService.findBasketByUserPrincipal(principal);
 
-        if (basket.getBasketProducts().isEmpty()) {
-            throw new ResourceNotFoundException("Basket is empty");
+        if (basket.getBasketProducts() == null || basket.getBasketProducts().isEmpty()) {
+            throw new EntityNotFoundException("Basket is empty");
         }
         Customer customer = customerRepository.findById(basket.getUserId())
-                .orElseThrow(() -> new ResourceNotFoundException("Customer not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Customer not found"));
 
         order.setCustomer(customer);
         order.setOrderData(LocalDate.now());
@@ -100,14 +98,13 @@ public class OrderServiceImpl implements OrderService {
         order.setPrice(totalPrice);
         orderRepository.save(order);
 
-
         List<OrderedBooks> orderedBooksList = basket.getBasketProducts().stream().map(basketProducts -> {
             OrderedBooks orderedBooks = new OrderedBooks();
             orderedBooks.setOrder(order);
             orderedBooks.setIdBook(basketProducts.getIdBook());
             orderedBooks.setQuantity(basketProducts.getQuantity());
             return orderedBooks;
-        }).toList();
+        }).collect(Collectors.toList());
 
         orderedBooksRepository.saveAll(orderedBooksList);
         order.setOrderedBooks(orderedBooksList);
