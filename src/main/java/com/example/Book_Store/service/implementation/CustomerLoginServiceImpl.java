@@ -17,33 +17,8 @@ public class CustomerLoginServiceImpl implements CustomerLoginService {
     }
 
     @Override
-    public boolean existsByEmail(String email) {
-        return customerLoginRepository.existsByEmail(email);
-    }
-
-    @Override
-    public boolean existsByPassword(String password) {
-        return customerLoginRepository.existsByPassword(password);
-    }
-
-    @Override
-    public boolean existsByEmailAndPassword(String email, String password) {
-        return customerLoginRepository.existsByEmailAndPassword(email, password);
-    }
-
-    @Override
-    public CustomerLogin findByEmailAndPassword(String email, String password) {
-        return customerLoginRepository.findByEmailAndPassword(email, password);
-    }
-
-    @Override
     public CustomerLogin findByEmail(String email) {
         return customerLoginRepository.findByEmail(email);
-    }
-
-    @Override
-    public CustomerLogin findPasswordByEmail(String email) {
-        return customerLoginRepository.findPasswordByEmail(email);
     }
 
 }

@@ -24,3 +24,10 @@ hs_err_pid*
 replay_pid*
 
 target/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.iws.xml
+*.ipr

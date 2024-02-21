@@ -19,11 +19,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/admin")
 public class AdministratorController {
+    private static final Logger logger = LoggerFactory.getLogger(AdministratorController.class);
     private final BookServiceImpl bookService;
     private final CategoryServiceImpl categoryService;
     private final CustomerServiceImpl customerService;
     private final OrderServiceImpl orderService;
-    private static final Logger logger = LoggerFactory.getLogger(AdministratorController.class);
 
     @Autowired
     public AdministratorController(BookServiceImpl bookService, CategoryServiceImpl categoryService,
@@ -35,7 +35,7 @@ public class AdministratorController {
     }
 
     @PostMapping("/addCategory")
-    public ResponseEntity<?> createCategory(@RequestBody Category category) {
+    public ResponseEntity<Category> createCategory(@RequestBody Category category) {
 
         Category createdCategory = categoryService.createCategory(category);
         logger.info("Created a new category with ID {}.", createdCategory.getId());
@@ -43,7 +43,7 @@ public class AdministratorController {
     }
 
     @GetMapping("/getCategory/{id}")
-    public ResponseEntity<?> getCategoryById(@PathVariable Integer id) {
+    public ResponseEntity<Category> getCategoryById(@PathVariable Integer id) {
 
         Category category = categoryService.findCategoryById(id);
         logger.info("Category {} is present. Category details: {}", id, category);
@@ -51,7 +51,7 @@ public class AdministratorController {
     }
 
     @PutMapping("/updateCategory/{id}")
-    public ResponseEntity<?> updateCategory(@PathVariable Integer id, @RequestBody Category category) {
+    public ResponseEntity<Category> updateCategory(@PathVariable Integer id, @RequestBody Category category) {
 
         Category updateCategory = categoryService.updateCategory(id, category);
         logger.info("Category with ID {} has been updated.", id);
@@ -77,7 +77,7 @@ public class AdministratorController {
     }
 
     @PostMapping("/addBook")
-    public ResponseEntity<?> addBook(@RequestBody Book book) {
+    public ResponseEntity<Book> addBook(@RequestBody Book book) {
 
         Book addBook = bookService.createBook(book);
         logger.info("Added a new book with ID {}.", addBook.getId());
@@ -110,7 +110,7 @@ public class AdministratorController {
     }
 
     @PutMapping("/updateBook/{id}")
-    public ResponseEntity<?> updateBook(@PathVariable Integer id, @RequestBody Book book) {
+    public ResponseEntity<Book> updateBook(@PathVariable Integer id, @RequestBody Book book) {
 
         Book updateBook = bookService.updateBook(id, book);
         logger.info("Book with ID {} has been updated.", id);
@@ -141,7 +141,7 @@ public class AdministratorController {
         return ResponseEntity.ok(orderDTO);
     }
 
-    @PutMapping("/sendOrders/{id}")
+    @PutMapping("/sendOrder/{id}")
     public ResponseEntity<?> sendOrder(@PathVariable Integer id) {
 
         Order order = orderService.updateOrderStatus(id);

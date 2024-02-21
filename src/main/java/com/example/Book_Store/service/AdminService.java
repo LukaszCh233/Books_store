@@ -9,8 +9,6 @@ import java.util.Optional;
 public interface AdminService {
     Admin createAdmin(Admin admin);
 
-    boolean existsByEmail(String email);
-
     Optional<Admin> findByEmail(String email);
 
 }
