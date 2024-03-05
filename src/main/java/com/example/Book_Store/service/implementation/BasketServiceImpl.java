@@ -85,7 +85,7 @@ public class BasketServiceImpl implements BasketService {
     }
 
     @Override
-    public void deleteBasketById(Principal principal) {
+    public void deleteBasketByPrincipal(Principal principal) {
 
         Basket basket = findBasketByUserPrincipal(principal);
 

@@ -14,7 +14,7 @@ public interface BasketService {
 
     Basket findBasketByUserPrincipal(Principal principal);
 
-    void deleteBasketById(Principal principal);
+    void deleteBasketByPrincipal(Principal principal);
 
     void updateBasket(Integer productId, Integer quantity, Principal principal);
 }
