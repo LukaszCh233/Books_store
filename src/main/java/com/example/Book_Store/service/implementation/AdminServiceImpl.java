@@ -6,6 +6,7 @@ import com.example.Book_Store.entities.Role;
 import com.example.Book_Store.exceptions.ExistsException;
 import com.example.Book_Store.repository.AdminRepository;
 import com.example.Book_Store.service.AdminService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,7 @@ public class AdminServiceImpl implements AdminService {
     private final AdminRepository adminRepository;
     private final PasswordEncoder passwordEncoder;
 
+    @Autowired
     public AdminServiceImpl(AdminRepository adminRepository, PasswordEncoder passwordEncoder) {
         this.adminRepository = adminRepository;
         this.passwordEncoder = passwordEncoder;

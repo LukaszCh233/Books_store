@@ -2,14 +2,11 @@ package com.example.Book_Store.controller;
 
 import ch.qos.logback.classic.Logger;
 import com.example.Book_Store.config.HelpJwt;
-import com.example.Book_Store.config.JwtTokenServiceImpl;
 import com.example.Book_Store.entities.Admin;
 import com.example.Book_Store.entities.Customer;
 import com.example.Book_Store.entities.CustomerLogin;
 import com.example.Book_Store.exceptions.IncorrectPasswordException;
-import com.example.Book_Store.service.CustomerLoginService;
 import com.example.Book_Store.service.implementation.AdminServiceImpl;
-import com.example.Book_Store.service.implementation.CustomerLoginServiceImpl;
 import com.example.Book_Store.service.implementation.CustomerServiceImpl;
 import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.LoggerFactory;
@@ -27,19 +24,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class RegisterLoginController {
     private final HelpJwt helpJwt;
     private final Logger logger = (Logger) LoggerFactory.getLogger(RegisterLoginController.class);
-    CustomerLoginService customerLoginService;
     CustomerServiceImpl customerService;
     AdminServiceImpl adminService;
-    JwtTokenServiceImpl jwtTokenService;
     PasswordEncoder passwordEncoder;
 
     @Autowired
-    public RegisterLoginController(HelpJwt helpJwt, CustomerLoginServiceImpl customerLoginService, CustomerServiceImpl customerService, AdminServiceImpl adminService, JwtTokenServiceImpl jwtTokenService, PasswordEncoder passwordEncoder) {
+    public RegisterLoginController(HelpJwt helpJwt, CustomerServiceImpl customerService, AdminServiceImpl adminService, PasswordEncoder passwordEncoder) {
         this.helpJwt = helpJwt;
-        this.customerLoginService = customerLoginService;
         this.customerService = customerService;
         this.adminService = adminService;
-        this.jwtTokenService = jwtTokenService;
         this.passwordEncoder = passwordEncoder;
     }
 

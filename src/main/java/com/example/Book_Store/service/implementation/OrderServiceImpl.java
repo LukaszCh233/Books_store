@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -60,7 +61,7 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderDTO> findAllOrders() {
         List<Order> orders = orderRepository.findAll();
         if (orders.isEmpty()) {
-            throw new EntityNotFoundException("Orders list is empty");
+            return Collections.emptyList();
         }
 
         return orders.stream()
@@ -117,7 +118,7 @@ public class OrderServiceImpl implements OrderService {
             book.setQuantity(newQuantity);
             bookService.updateBook(book.getId(), book);
         }
-        basketService.deleteBasketById(principal);
+        basketService.deleteBasketByPrincipal(principal);
         return orderRepository.save(order);
     }
 }

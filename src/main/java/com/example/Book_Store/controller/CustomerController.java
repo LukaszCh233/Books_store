@@ -1,10 +1,8 @@
 package com.example.Book_Store.controller;
 
-import ch.qos.logback.classic.Logger;
 import com.example.Book_Store.entities.Order;
 import com.example.Book_Store.service.implementation.BasketServiceImpl;
 import com.example.Book_Store.service.implementation.OrderServiceImpl;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,17 +14,12 @@ import java.security.Principal;
 @RequestMapping("/customer")
 public class CustomerController {
 
-
     private final OrderServiceImpl orderService;
     private final BasketServiceImpl basketService;
 
-
-    private final Logger logger = (Logger) LoggerFactory.getLogger(CustomerController.class);
-
-
     @Autowired
     public CustomerController(OrderServiceImpl orderService, BasketServiceImpl basketService) {
-        
+
         this.orderService = orderService;
         this.basketService = basketService;
 
@@ -43,13 +36,13 @@ public class CustomerController {
     public ResponseEntity<?> orderBooks(Order order, Principal principal) {
 
         orderService.saveOrder(order, principal);
-        return ResponseEntity.ok("order is completed");
+        return ResponseEntity.ok("Order is completed");
     }
 
     @DeleteMapping("/deleteBasket")
     public ResponseEntity<?> deleteBasket(Principal principal) {
 
-        basketService.deleteBasketById(principal);
+        basketService.deleteBasketByPrincipal(principal);
         return ResponseEntity.ok("Basket deleted successfully");
     }
 
@@ -62,6 +55,7 @@ public class CustomerController {
 
     @PutMapping("/updateBasket/{id}/{quantity}")
     public ResponseEntity<?> updateBasket(@PathVariable Integer id, @PathVariable Integer quantity, Principal principal) {
+
         basketService.updateBasket(id, quantity, principal);
         return ResponseEntity.ok("Quantity update");
     }
@@ -69,7 +63,7 @@ public class CustomerController {
     @DeleteMapping("/logout")
     public ResponseEntity<?> logoutDeleteBasket(Principal principal) {
 
-        basketService.deleteBasketById(principal);
+        basketService.deleteBasketByPrincipal(principal);
         return ResponseEntity.ok("Logout successful");
     }
 }

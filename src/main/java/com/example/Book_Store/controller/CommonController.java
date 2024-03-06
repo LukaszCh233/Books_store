@@ -66,6 +66,7 @@ public class CommonController {
     public ResponseEntity<Book> displayBookById(@PathVariable Integer id) {
 
         Book findBook = bookService.findBookById(id);
+
         logger.info("Book with ID '{}' exists", id);
         return ResponseEntity.ok(findBook);
     }
@@ -74,6 +75,7 @@ public class CommonController {
     public ResponseEntity<List<Book>> displayBooksByCategoryName(@PathVariable String name) {
 
         List<Book> books = bookService.findByCategoryName(name);
+
         logger.info("Books exists in this category");
         return ResponseEntity.ok(books);
     }
@@ -82,6 +84,7 @@ public class CommonController {
     public ResponseEntity<List<Book>> displayBooksByCategoryId(@PathVariable Integer id) {
 
         List<Book> books = bookService.findByCategoryId(id);
+
         logger.info("Books exists in this category");
         return ResponseEntity.ok(books);
     }

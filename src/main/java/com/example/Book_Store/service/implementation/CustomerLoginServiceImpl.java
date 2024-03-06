@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class CustomerLoginServiceImpl implements CustomerLoginService {
 
-    CustomerLoginRepository customerLoginRepository;
+   private final CustomerLoginRepository customerLoginRepository;
 
     @Autowired
     public CustomerLoginServiceImpl(CustomerLoginRepository customerLoginRepository) {

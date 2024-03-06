@@ -72,6 +72,7 @@ public class BasketServiceImpl implements BasketService {
     public BasketDTO findBasketDTOByUserPrincipal(Principal principal) {
         String username = principal.getName();
         Customer customer = customerRepository.findByEmail(username).orElseThrow(() -> new EntityNotFoundException("Customer not found"));
+
         Basket basket = Optional.ofNullable(basketRepository.findBasketByUserId(customer.getId())).orElseThrow(() -> new EntityNotFoundException("Basket is empty"));
         basket.updateTotalPrice(basket);
         return mapBasketToBasketDTO(basket);
@@ -113,9 +114,7 @@ public class BasketServiceImpl implements BasketService {
         if (selectedBook.getQuantity() < quantity) {
             throw new NotEnoughBooksException("There are not enough books available");
         }
-
         basketProduct.setQuantity(quantity);
-        basketProduct.setPrice(selectedBook.getPrice() * quantity);
 
         basketProductRepository.save(basketProduct);
     }

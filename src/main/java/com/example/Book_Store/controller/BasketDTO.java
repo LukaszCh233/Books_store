@@ -41,7 +41,6 @@ public class BasketDTO {
         private Double price;
 
         private Integer quantity;
-
     }
 }
 

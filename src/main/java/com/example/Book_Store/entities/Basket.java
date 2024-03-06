@@ -23,7 +23,7 @@ public class Basket {
     private Integer idBasket;
     @Column
     private Integer userId;
-    @OneToMany(mappedBy = "basket", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "basket", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<BasketProducts> basketProducts;
 
     public void updateTotalPrice(Basket basket) {

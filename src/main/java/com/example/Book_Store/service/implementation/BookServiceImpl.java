@@ -2,8 +2,10 @@ package com.example.Book_Store.service.implementation;
 
 import com.example.Book_Store.entities.Book;
 import com.example.Book_Store.repository.BookRepository;
+import com.example.Book_Store.repository.CategoryRepository;
 import com.example.Book_Store.service.BookService;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,9 +13,12 @@ import java.util.List;
 @Service
 public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
+    private final CategoryRepository categoryRepository;
 
-    public BookServiceImpl(BookRepository bookRepository) {
+    @Autowired
+    public BookServiceImpl(BookRepository bookRepository, CategoryRepository categoryRepository) {
         this.bookRepository = bookRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     @Override
@@ -51,26 +56,29 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void deleteBookById(Integer id) {
-
         Book bookToDelete = bookRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Book not found with id: " + id));
+
         bookRepository.delete(bookToDelete);
     }
 
     @Override
     public void deleteBookByTitle(String title) {
-        findByTitle(title);
-        bookRepository.deleteBookByTitle(title);
+        List<Book> bookToDelete = findByTitle(title);
+
+        bookRepository.deleteAll(bookToDelete);
     }
 
     @Override
     public void deleteAllBooks() {
-
+        findAllBooks();
         bookRepository.deleteAll();
     }
 
     @Override
     public Book createBook(Book book) {
+        categoryRepository.findById(book.getCategory().getId())
+                .orElseThrow(() -> new EntityNotFoundException("Invalid category ID"));
 
         return bookRepository.save(book);
     }

@@ -29,7 +29,7 @@ public class Order {
     private Double price;
     @Column(name = "status")
     private Status status;
-    @OneToMany(mappedBy = "order", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy = "order", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, fetch = FetchType.EAGER)
     private List<OrderedBooks> orderedBooks;
 }
 

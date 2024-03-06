@@ -7,6 +7,7 @@ import com.example.Book_Store.repository.BookRepository;
 import com.example.Book_Store.repository.CategoryRepository;
 import com.example.Book_Store.service.CategoryService;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +18,7 @@ public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
     private final BookRepository bookRepository;
 
+    @Autowired
     public CategoryServiceImpl(CategoryRepository categoryRepository, BookRepository bookRepository) {
         this.categoryRepository = categoryRepository;
         this.bookRepository = bookRepository;
@@ -60,7 +62,6 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void deleteAllCategories() {
-
         findAllCategories();
         List<Book> booksInCategory = bookRepository.findAll();
         if (!booksInCategory.isEmpty()) {
@@ -73,7 +74,9 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Category updateCategory(Integer id, Category updatedCategory) {
         Category presentCategory = findCategoryById(id);
+
         presentCategory.setName(updatedCategory.getName());
+
         return categoryRepository.save(presentCategory);
     }
 
