@@ -1,132 +1,135 @@
 package com.example.Book_Store.serviceTests;
 
 import com.example.Book_Store.entities.*;
-import com.example.Book_Store.repository.BasketProductRepository;
-import com.example.Book_Store.repository.BasketRepository;
-import com.example.Book_Store.repository.BookRepository;
-import com.example.Book_Store.repository.CustomerRepository;
+import com.example.Book_Store.repository.*;
 import com.example.Book_Store.service.implementation.BasketServiceImpl;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.security.Principal;
-import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 public class BasketServiceTest {
 
-    @Mock
-    private BasketRepository basketRepository;
-    @InjectMocks
-    private BasketServiceImpl basketService;
-    @Mock
-    private BookRepository bookRepository;
-    @Mock
-    private CustomerRepository customerRepository;
-    @Mock
-    private BasketProductRepository basketProductRepository;
+    private final OrderRepository orderRepository;
+    private final BasketRepository basketRepository;
+    private final BasketServiceImpl basketService;
+    private final BookRepository bookRepository;
+    private final CustomerRepository customerRepository;
+    private final BasketProductRepository basketProductRepository;
 
-    @Test
-    void shouldAddBookToBasket_Successfully_Test() {
-        Integer idBook = 1;
-        Integer quantity = 3;
-        Principal principal = Mockito.mock(Principal.class);
+    @Autowired
+    public BasketServiceTest(OrderRepository orderRepository, BasketRepository basketRepository, BasketServiceImpl basketService,
+                             BookRepository bookRepository, CustomerRepository customerRepository, BasketProductRepository basketProductRepository) {
+        this.orderRepository = orderRepository;
+        this.basketRepository = basketRepository;
+        this.basketService = basketService;
+        this.bookRepository = bookRepository;
+        this.customerRepository = customerRepository;
+        this.basketProductRepository = basketProductRepository;
+    }
 
-        when(principal.getName()).thenReturn("testEmail");
-
-        CustomerLogin customerLogin = new CustomerLogin("testEmail", "testPassword");
-        Customer customer = new Customer(1, "TestName", "TestLastName", customerLogin, 123456, null);
-        Category category = new Category(1, "testCategory");
-        Book selectedBook = new Book(1, "Test Book", "Test Author", 10.0, 10, Status.AVAILABLE, category);
-
-        when(customerRepository.findByEmail("testEmail")).thenReturn(Optional.of(customer));
-        when(bookRepository.findById(idBook)).thenReturn(Optional.of(selectedBook));
-        when(basketRepository.findBasketByUserId(customer.getId())).thenReturn(null);
-
-        assertDoesNotThrow(() -> basketService.addBookToBasket(idBook, quantity, principal));
-
-        verify(customerRepository, times(1)).findByEmail("testEmail");
-        verify(bookRepository, times(1)).findById(idBook);
-        verify(basketRepository, times(2)).save(Mockito.any(Basket.class));
-        verify(basketProductRepository, times(1)).save(Mockito.any(BasketProducts.class));
+    @BeforeEach
+    public void setUp() {
+        orderRepository.deleteAll();
+        basketRepository.deleteAll();
+        customerRepository.deleteAll();
     }
 
     @Test
-    void shouldFindBasketByUserId_Successfully() {
+    void shouldAddBookToBasket_Successfully() {
+        // Given
+        CustomerLogin customerLogin = new CustomerLogin("testEm1ai", "testPassword");
+        Customer customer = new Customer(null, "TestName", "TestLastName", customerLogin, 123456, null);
 
-        Principal principal = Mockito.mock(Principal.class);
-        when(principal.getName()).thenReturn("testEmail");
+        Book book = new Book(null, "Test Book", "Test Author", 10.0, 10, Status.AVAILABLE, null);
 
+        customerRepository.save(customer);
+        bookRepository.save(book);
+
+        // When
+        basketService.addBookToBasket(book.getId(), 3, new TestPrincipal(customerLogin.getEmail()));
+
+        // Then
+        Basket basket = basketService.findBasketByUserPrincipal(new TestPrincipal(customerLogin.getEmail()));
+
+        assertNotNull(basket);
+        assertEquals(3, basket.getBasketProducts().get(0).getQuantity());
+    }
+
+    @Test
+    void shouldFindBasketByUserPrincipal_Successfully() {
+        //Given
         CustomerLogin customerLogin = new CustomerLogin("testEmail", "testPassword");
-        Customer customer = new Customer(1, "TestName", "TestLastName", customerLogin, 123456, null);
 
-        Basket basket = new Basket(100.0, 1, customer.getId(), null);
+        Customer customer = new Customer(null, "TestName", "TestLastName", customerLogin, 123456, null);
 
-        when(customerRepository.findByEmail("testEmail")).thenReturn(Optional.of(customer));
-        when(basketRepository.findBasketByUserId(customer.getId())).thenReturn(basket);
+        customerRepository.save(customer);
 
+        Basket basket = new Basket(100.0, null, customer.getId(), null);
 
-        Basket resultBasket = basketService.findBasketByUserPrincipal(principal);
+        basketRepository.save(basket);
 
-        verify(customerRepository, times(1)).findByEmail("testEmail");
-        verify(basketRepository, times(1)).findBasketByUserId(customer.getId());
+        //When
+        Basket resultBasket = basketService.findBasketByUserPrincipal(new TestPrincipal(customer.getCustomerLogin().getEmail()));
 
+        //Then
         assertNotNull(resultBasket);
-        assertEquals(customer.getId(), resultBasket.getUserId());
+        assertEquals(basket.getUserId(), resultBasket.getUserId());
+        assertEquals(basket.getIdBasket(), resultBasket.getIdBasket());
     }
 
     @Test
     void shouldDeleteBasketSuccessfully() {
+        //Given
         String userEmail = "testEmail";
-        Principal principal = mock(Principal.class);
-        when(principal.getName()).thenReturn(userEmail);
 
-        Customer customer = new Customer(1, "TestName", "TestLastName", new CustomerLogin(userEmail, "testPassword"), 123456, null);
-        when(customerRepository.findByEmail(userEmail)).thenReturn(Optional.of(customer));
+        Customer customer = new Customer(null, "TestName", "TestLastName", new CustomerLogin(userEmail, "testPassword"), 123456, null);
 
-        Basket basket = new Basket(100.0, 1, customer.getId(), null);
-        when(basketRepository.findBasketByUserId(customer.getId())).thenReturn(basket);
+        customerRepository.save(customer);
 
-        basketService.deleteBasketById(principal);
+        Basket basket = new Basket(100.0, null, customer.getId(), null);
 
-        verify(customerRepository, times(1)).findByEmail(userEmail);
-        verify(basketRepository, times(1)).findBasketByUserId(customer.getId());
-        verify(basketRepository, times(1)).deleteById(basket.getIdBasket());
+        basketRepository.save(basket);
+
+        //When
+        basketService.deleteBasketByPrincipal(new TestPrincipal(customer.getCustomerLogin().getEmail()));
+
+        //Then
+        Basket foundBasket = basketRepository.findBasketByUserId(customer.getId());
+
+        assertNull(foundBasket);
     }
 
     @Test
     void shouldUpdateBasketProduct_Test() {
+        // Given
+        Customer customer = new Customer(null, "TestName", "TestLastName", new CustomerLogin("userEmail", "testPassword"), 123456, null);
 
-        Principal principal = mock(Principal.class);
-        when(principal.getName()).thenReturn("userEmail");
-        Customer customer = new Customer(1, "TestName", "TestLastName", new CustomerLogin("userEmail", "testPassword"), 123456, null);
+        customerRepository.save(customer);
 
-        when(customerRepository.findByEmail("userEmail")).thenReturn(Optional.of(customer));
-        Basket basket = new Basket();
-        when(basketRepository.findBasketByUserId(customer.getId())).thenReturn(basket);
+        Book selectedBook = new Book(null, null, null, 10.0, 100, Status.AVAILABLE, null);
 
-        BasketProducts basketProducts = new BasketProducts(1, null, 1, null, null, 20.0, 2);
-        when(basketProductRepository.findBasketProductById(1)).thenReturn(basketProducts);
+        bookRepository.save(selectedBook);
 
-        Book selectedBook = new Book(1, null, null, 10.0, 100, Status.AVAILABLE, null);
+        Basket basket = new Basket(60.0, null, customer.getId(), null);
 
-        when(bookRepository.findById(basketProducts.getIdBook())).thenReturn(Optional.of(selectedBook));
+        basketRepository.save(basket);
 
-        basketService.updateBasket(1, 3, principal);
+        BasketProducts basketProducts = new BasketProducts(null, basket, selectedBook.getId(), null, null, 20.0, 3);
 
+        basketProductRepository.save(basketProducts);
+
+        // When
+        basketService.updateBasket(basketProducts.getId(), 3, new TestPrincipal(customer.getCustomerLogin().getEmail()));
+
+        // Then
         assertEquals(3, basketProducts.getQuantity());
-        assertEquals(30.0, basketProducts.getPrice());
-
-        verify(basketProductRepository, times(1)).save(basketProducts);
-        verify(basketRepository, times(1)).save(basket);
+        assertEquals(20.0, basketProducts.getPrice());
     }
 }
 

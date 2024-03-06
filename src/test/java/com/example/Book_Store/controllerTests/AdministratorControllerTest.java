@@ -43,8 +43,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("test")
 public class AdministratorControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
     @MockBean
     CategoryServiceImpl categoryService;
     @MockBean
@@ -55,22 +53,15 @@ public class AdministratorControllerTest {
     OrderServiceImpl orderService;
     @Autowired
     WebApplicationContext context;
-    @MockBean
-    private PasswordEncoder passwordEncoder;
-    @MockBean
-    private HelpJwt helpJwt;
+    @Autowired
+    private MockMvc mockMvc;
+
     @BeforeEach
     public void setup() {
         mockMvc = MockMvcBuilders
                 .webAppContextSetup(context)
                 .apply(springSecurity())
                 .build();
-    }
-
-    @Retention(RetentionPolicy.RUNTIME)
-    @WithMockUser(username = "admin", roles = {"ADMIN"})
-    public @interface WithMockAdmin {
-
     }
 
     @WithMockAdmin
@@ -277,6 +268,12 @@ public class AdministratorControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
+    }
+
+    @Retention(RetentionPolicy.RUNTIME)
+    @WithMockUser(username = "admin", roles = {"ADMIN"})
+    public @interface WithMockAdmin {
+
     }
 }
 

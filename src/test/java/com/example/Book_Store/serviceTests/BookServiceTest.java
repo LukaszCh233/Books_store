@@ -4,277 +4,310 @@ import com.example.Book_Store.entities.Book;
 import com.example.Book_Store.entities.Category;
 import com.example.Book_Store.entities.Status;
 import com.example.Book_Store.repository.BookRepository;
+import com.example.Book_Store.repository.CategoryRepository;
 import com.example.Book_Store.service.implementation.BookServiceImpl;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 public class BookServiceTest {
 
-    @Mock
-    private BookRepository bookRepository;
+    private final CategoryRepository categoryRepository;
+    private final BookRepository bookRepository;
+    private final BookServiceImpl bookService;
 
-    @InjectMocks
-    private BookServiceImpl bookService;
+    @Autowired
+    public BookServiceTest(CategoryRepository categoryRepository, BookRepository bookRepository, BookServiceImpl bookService) {
+        this.categoryRepository = categoryRepository;
+        this.bookRepository = bookRepository;
+        this.bookService = bookService;
+    }
+
+    @BeforeEach
+    public void setUp() {
+        bookRepository.deleteAll();
+        categoryRepository.deleteAll();
+    }
 
     @Test
     void shouldFindBookById_ExistingBook_Test() {
-        Category category = new Category(1, "testCategory");
-        int bookId = 1;
-        Book mockBook = new Book(bookId, "TestBook", "TestAuthor", 10.0, 10, Status.AVAILABLE, category);
+        // Given
+        Category category = new Category(null, "testCategory");
 
-        when(bookRepository.findById(bookId)).thenReturn(Optional.of(mockBook));
+        Book book = new Book(null, "TestBook", "TestAuthor", 10.0, 10, Status.AVAILABLE, category);
 
-        Book resultBook = bookService.findBookById(bookId);
+        categoryRepository.save(category);
+        bookRepository.save(book);
 
-        verify(bookRepository, times(1)).findById(bookId);
+        // When
+        Book foundBook = bookService.findBookById(book.getId());
 
-        assertEquals(mockBook, resultBook);
-
+        // Then
+        assertEquals(book.getId(), foundBook.getId());
+        assertEquals(book.getTitle(), foundBook.getTitle());
+        assertEquals(book.getAuthor(), foundBook.getAuthor());
+        assertEquals(book.getQuantity(), foundBook.getQuantity());
     }
 
     @Test
     void shouldFindBookById_NotExistingBook_Test() {
-        int notExistingBookId = 99;
-
-        when(bookRepository.findById(notExistingBookId)).thenReturn(Optional.empty());
+        int notExistingBookId = 1;
 
         assertThrows(EntityNotFoundException.class, () -> bookService.findBookById(notExistingBookId));
-
-        verify(bookRepository, times(1)).findById(notExistingBookId);
     }
 
     @Test
     void shouldFindBookByName_ExistingBook_Test() {
-        Category category = new Category(1, "testCategory");
+        //Given
+        Category category = new Category(null, "testCategory");
         String bookName = "TestBook";
-        Book mockBook = new Book(1, bookName, "TestAuthor", 10.0, 10, Status.AVAILABLE, category);
+        Book book = new Book(null, bookName, "TestAuthor", 10.0, 10, Status.AVAILABLE, category);
 
-        when(bookRepository.findBooksByBookTitle(bookName)).thenReturn(Collections.singletonList(mockBook));
+        categoryRepository.save(category);
+        bookRepository.save(book);
 
-        List<Book> resultBook = bookService.findByTitle(bookName);
+        //When
+        List<Book> foundBooks = bookService.findByTitle(bookName);
 
-        verify(bookRepository, times(1)).findBooksByBookTitle(bookName);
-
-        assertIterableEquals(Collections.singletonList(mockBook), resultBook);
+        //Then
+        assertEquals(1, foundBooks.size());
+        assertEquals(book.getTitle(), foundBooks.get(0).getTitle());
+        assertEquals(book.getAuthor(), foundBooks.get(0).getAuthor());
+        assertEquals(book.getPrice(), foundBooks.get(0).getPrice());
     }
 
     @Test
     void shouldFindBookByName_NotExistingBook_Test() {
         String notExistingBookName = "TestBook";
 
-        when(bookRepository.findBooksByBookTitle(notExistingBookName)).thenReturn(Collections.emptyList());
-
         assertThrows(EntityNotFoundException.class, () -> bookService.findByTitle(notExistingBookName));
-
-        verify(bookRepository, times(1)).findBooksByBookTitle(notExistingBookName);
     }
 
     @Test
     void shouldFindBookByCategoryName_ExistingBook_Test() {
-        Category category = new Category(1, "testCategory");
-        List<Book> mockBooks = Arrays.asList(
-                new Book(1, "Book1", "Author1", 10.0, 10, Status.AVAILABLE, category),
-                new Book(2, "Book2", "Author2", 15.0, 15, Status.AVAILABLE, category)
+        //Given
+        Category category = new Category(null, "testCategory");
+        List<Book> books = Arrays.asList(
+                new Book(null, "Book1", "Author1", 10.0, 10, Status.AVAILABLE, category),
+                new Book(null, "Book2", "Author2", 15.0, 15, Status.AVAILABLE, category)
         );
-        when(bookRepository.findByCategoryName(category.getName())).thenReturn(mockBooks);
 
-        List<Book> resultBooks = bookService.findByCategoryName(category.getName());
+        categoryRepository.save(category);
+        bookRepository.saveAll(books);
 
-        verify(bookRepository, times(1)).findByCategoryName(category.getName());
+        //When
+        List<Book> foundBooks = bookService.findByCategoryName(category.getName());
 
-        assertIterableEquals(mockBooks, resultBooks);
+        //Then
+        assertEquals(2, foundBooks.size());
+        assertEquals(books.get(0).getId(), foundBooks.get(0).getId());
+        assertEquals(books.get(0).getTitle(), foundBooks.get(0).getTitle());
+        assertEquals(books.get(0).getAuthor(), foundBooks.get(0).getAuthor());
+        assertEquals(books.get(1).getId(), foundBooks.get(1).getId());
+        assertEquals(books.get(1).getTitle(), foundBooks.get(1).getTitle());
+        assertEquals(books.get(1).getAuthor(), foundBooks.get(1).getAuthor());
     }
 
 
     @Test
     void shouldFindBookByCategoryName_NotExistingBook_Test() {
-        Category category = new Category(1, "testCategory");
-
-        when(bookRepository.findByCategoryName(category.getName())).thenReturn(Collections.emptyList());
+        Category category = new Category(null, "testCategory");
 
         assertThrows(EntityNotFoundException.class, () -> bookService.findByCategoryName(category.getName()));
-
-        verify(bookRepository, times(1)).findByCategoryName(category.getName());
     }
 
     @Test
     void shouldFindBookByCategoryId_ExistingBook_Test() {
-        Category category = new Category(1, "testCategory");
-        List<Book> mockBooks = Arrays.asList(
-                new Book(1, "Book1", "Author1", 10.0, 10, Status.AVAILABLE, category),
-                new Book(2, "Book2", "Author2", 15.0, 15, Status.AVAILABLE, category)
+        //Given
+        Category category = new Category(null, "testCategory");
+        List<Book> books = Arrays.asList(
+                new Book(null, "Book1", "Author1", 10.0, 10, Status.AVAILABLE, category),
+                new Book(null, "Book2", "Author2", 15.0, 15, Status.AVAILABLE, category)
         );
-        when(bookRepository.findByCategoryId(category.getId())).thenReturn(mockBooks);
 
-        List<Book> resultBooks = bookService.findByCategoryId(category.getId());
+        categoryRepository.save(category);
+        bookRepository.saveAll(books);
 
-        verify(bookRepository, times(1)).findByCategoryId(category.getId());
+        //When
+        List<Book> foundBooks = bookService.findByCategoryId(category.getId());
 
-        assertIterableEquals(mockBooks, resultBooks);
+        //Then
+        assertEquals(2, foundBooks.size());
+        assertEquals(books.get(0).getId(), foundBooks.get(0).getId());
+        assertEquals(books.get(0).getTitle(), foundBooks.get(0).getTitle());
+        assertEquals(books.get(0).getAuthor(), foundBooks.get(0).getAuthor());
+        assertEquals(books.get(1).getId(), foundBooks.get(1).getId());
+        assertEquals(books.get(1).getTitle(), foundBooks.get(1).getTitle());
+        assertEquals(books.get(1).getAuthor(), foundBooks.get(1).getAuthor());
     }
 
     @Test
     void shouldFindBookByCategoryId_NotExistingBook_Test() {
         Category category = new Category(1, "testCategory");
 
-        when(bookRepository.findByCategoryId(category.getId())).thenReturn(Collections.emptyList());
-
         assertThrows(EntityNotFoundException.class, () -> bookService.findByCategoryId(category.getId()));
 
-        verify(bookRepository, times(1)).findByCategoryId(category.getId());
     }
 
     @Test
     void shouldFindAllBooks_EmptyList_Test() {
-        when(bookRepository.findAll()).thenReturn(Collections.emptyList());
 
-        assertThrows(EntityNotFoundException.class, () -> bookService.findAllBooks());
-
-        verify(bookRepository, times(1)).findAll();
+        assertThrows(EntityNotFoundException.class, bookService::findAllBooks);
     }
 
     @Test
     void shouldFindAllBooks_NonEmptyList_Test() {
-        Category category = new Category(1, "testCategory");
+        //Given
+        Category category = new Category(null, "testCategory");
 
-        List<Book> mockBooks = Arrays.asList(
-                new Book(1, "Book1", "Author1", 10.0, 10, Status.AVAILABLE, category),
-                new Book(2, "Book2", "Author2", 15.0, 15, Status.AVAILABLE, category));
+        List<Book> books = Arrays.asList(
+                new Book(null, "Book1", "Author1", 10.0, 10, Status.AVAILABLE, category),
+                new Book(null, "Book2", "Author2", 15.0, 15, Status.AVAILABLE, category));
 
-        when(bookRepository.findAll()).thenReturn(mockBooks);
+        categoryRepository.save(category);
+        bookRepository.saveAll(books);
 
-        List<Book> resultBooks = bookService.findAllBooks();
+        //When
+        List<Book> foundBooks = bookService.findAllBooks();
 
-        verify(bookRepository, times(1)).findAll();
-
-        assertIterableEquals(mockBooks, resultBooks);
+        //Then
+        assertEquals(2, foundBooks.size());
+        assertEquals(books.get(0).getId(), foundBooks.get(0).getId());
+        assertEquals(books.get(0).getTitle(), foundBooks.get(0).getTitle());
+        assertEquals(books.get(0).getAuthor(), foundBooks.get(0).getAuthor());
+        assertEquals(books.get(1).getId(), foundBooks.get(1).getId());
+        assertEquals(books.get(1).getTitle(), foundBooks.get(1).getTitle());
+        assertEquals(books.get(1).getAuthor(), foundBooks.get(1).getAuthor());
     }
 
     @Test
     void shouldDeleteAllBooks_EmptyList_Test() {
 
-        when(bookRepository.findAll()).thenReturn(Collections.emptyList());
-
-        assertDoesNotThrow(() -> bookService.deleteAllBooks());
-
-        verify(bookRepository, times(1)).deleteAll();
+        assertThrows(EntityNotFoundException.class, bookService::deleteAllBooks);
     }
 
     @Test
     void deleteAllBooks_NotEmptyList_Test() {
-        Category category = new Category(1, "testCategory");
-        List<Book> mockBooks = Arrays.asList(
-                new Book(1, "Book1", "Author1", 10.0, 10, Status.AVAILABLE, category),
-                new Book(2, "Book2", "Author2", 15.0, 15, Status.AVAILABLE, category)
+        ///Given
+        Category category = new Category(null, "testCategory");
+        List<Book> books = Arrays.asList(
+                new Book(null, "Book1", "Author1", 10.0, 10, Status.AVAILABLE, category),
+                new Book(null, "Book2", "Author2", 15.0, 15, Status.AVAILABLE, category)
         );
 
-        when(bookRepository.findAll()).thenReturn(mockBooks);
+        categoryRepository.save(category);
+        bookRepository.saveAll(books);
 
-        assertDoesNotThrow(() -> bookService.deleteAllBooks());
+        //When
+        bookService.deleteAllBooks();
 
-        verify(bookRepository, times(1)).deleteAll();
+        //Then
+        List<Book> foundBooks = bookRepository.findAll();
+
+        assertTrue(foundBooks.isEmpty());
     }
 
     @Test
     void deleteBookById_ExistingBook_Test() {
-        int bookId = 1;
-        Category category = new Category(1, "testCategory");
-        Book mockBook = new Book(bookId, "TestBook", "TestAuthor", 10.0, 10, Status.AVAILABLE, category);
+        //Given
+        Category category = new Category(null, "testCategory");
+        Book book = new Book(null, "TestBook", "TestAuthor", 10.0, 10, Status.AVAILABLE, category);
 
-        when(bookRepository.findById(bookId)).thenReturn(Optional.of(mockBook));
+        categoryRepository.save(category);
+        bookRepository.save(book);
 
-        assertDoesNotThrow(() -> bookService.deleteBookById(bookId));
-
-        verify(bookRepository, times(1)).findById(bookId);
-        verify(bookRepository, times(1)).delete(mockBook);
+        //When
+        bookService.deleteBookById(book.getId());
+        Optional<Book> foundBook = bookRepository.findById(book.getId());
+        //Then
+        assertTrue(foundBook.isEmpty());
     }
 
     @Test
     void deleteBookById_NotExistingBook_Test() {
         int nonExistingBookId = 2;
 
-        when(bookRepository.findById(nonExistingBookId)).thenReturn(Optional.empty());
-
         assertThrows(EntityNotFoundException.class, () -> bookService.deleteBookById(nonExistingBookId));
 
-        verify(bookRepository, times(1)).findById(nonExistingBookId);
-        verify(bookRepository, times(0)).delete(any());
     }
 
+    @Transactional
     @Test
     void deleteBookByTitle_ExistingBook_Test() {
+        //Given
+        Category category = new Category(null, "testCategory");
+
         String bookTitle = "TestBook";
-        Book mockBook = new Book(1, bookTitle, "TestAuthor", 10.0, 10, Status.AVAILABLE, new Category(1, "TestCategory"));
+        Book book = new Book(null, bookTitle, "TestAuthor", 10.0, 10, Status.AVAILABLE, category);
 
-        when(bookRepository.findBooksByBookTitle(bookTitle)).thenReturn(Collections.singletonList(mockBook));
+        categoryRepository.save(category);
+        bookRepository.save(book);
 
-        assertDoesNotThrow(() -> bookService.deleteBookByTitle(bookTitle));
+        //When
+        bookService.deleteBookByTitle(bookTitle);
 
-        verify(bookRepository, times(1)).findBooksByBookTitle(bookTitle);
-        verify(bookRepository, times(1)).deleteBookByTitle(bookTitle);
+        //Then
+        List<Book> foundBooks = bookRepository.findAll();
+
+        assertTrue(foundBooks.isEmpty());
     }
 
     @Test
     void deleteBookByTitle_NotExistingBook_Test() {
         String notExistingBookTitle = "NonExistingBook";
 
-        when(bookRepository.findBooksByBookTitle(notExistingBookTitle)).thenReturn(Collections.emptyList());
-
         assertThrows(EntityNotFoundException.class, () -> bookService.deleteBookByTitle(notExistingBookTitle));
-
-        verify(bookRepository, times(1)).findBooksByBookTitle(notExistingBookTitle);
-        verify(bookRepository, times(0)).deleteBookByTitle(notExistingBookTitle);
     }
 
     @Test
     void updateBook_ExistingBook_Test() {
-        int bookId = 1;
-        Category category = new Category(1, "testCategory");
-        Book existingBook = new Book(bookId, "OldTitle", "OldAuthor", 10.0, 5, Status.AVAILABLE, category);
-        Book updatedBook = new Book(bookId, "NewTitle", "NewAuthor", 15.0, 8, Status.AVAILABLE, category);
+        //Given
+        Category category = new Category(null, "testCategory");
+        Book existingBook = new Book(null, "OldTitle", "OldAuthor", 10.0, 5, Status.AVAILABLE, category);
+        Book updatedBook = new Book(null, "NewTitle", "NewAuthor", 15.0, 8, Status.AVAILABLE, category);
 
-        when(bookRepository.findById(bookId)).thenReturn(Optional.of(existingBook));
-        when(bookRepository.save(any(Book.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        categoryRepository.save(category);
+        bookRepository.save(existingBook);
 
-        Book resultBook = bookService.updateBook(bookId, updatedBook);
+        //When
+        Book resultBook = bookService.updateBook(existingBook.getId(), updatedBook);
 
-        assertEquals(bookId, resultBook.getId());
+        //Then
+        assertEquals(existingBook.getId(), resultBook.getId());
         assertEquals("NewTitle", resultBook.getTitle());
         assertEquals("NewAuthor", resultBook.getAuthor());
         assertEquals(15.0, resultBook.getPrice());
         assertEquals(8, resultBook.getQuantity());
         assertEquals(Status.AVAILABLE, resultBook.getStatus());
-        assertEquals(1, resultBook.getCategory().getId());
+        assertEquals(existingBook.getCategory().getId(), resultBook.getCategory().getId());
         assertEquals("testCategory", resultBook.getCategory().getName());
-
-        verify(bookRepository, times(1)).findById(bookId);
-        verify(bookRepository, times(1)).save(any(Book.class));
     }
 
     @Test
     void createBook_Test() {
-        Category category = new Category(1, "TestCategory");
+        //Given
+        Category category = new Category(null, "TestCategory");
 
-        Book savedBook = new Book(1, "NewTitle", "NewAuthor", 15.0, 8, Status.AVAILABLE, category);
+        Book savedBook = new Book(null, "NewTitle", "NewAuthor", 15.0, 8, Status.AVAILABLE, category);
 
-        when(bookRepository.save(savedBook)).thenReturn(savedBook);
+        categoryRepository.save(category);
 
+        //When
         Book resultBook = bookService.createBook(savedBook);
 
+        //Then
         assertEquals(savedBook.getId(), resultBook.getId());
         assertEquals("NewTitle", resultBook.getTitle());
         assertEquals("NewAuthor", resultBook.getAuthor());
@@ -282,7 +315,5 @@ public class BookServiceTest {
         assertEquals(8, resultBook.getQuantity());
         assertEquals(Status.AVAILABLE, resultBook.getStatus());
         assertEquals(category, resultBook.getCategory());
-
-        verify(bookRepository, times(1)).save(savedBook);
     }
 }

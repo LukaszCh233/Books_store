@@ -37,25 +37,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 public class CustomerControllerTest {
-    @Autowired
-    private MockMvc mockMvc;
-    @MockBean
-    CategoryServiceImpl categoryService;
-    @MockBean
-    BookServiceImpl bookService;
-    @MockBean
-    CustomerServiceImpl customerService;
+
     @MockBean
     OrderServiceImpl orderService;
     @MockBean
     BasketServiceImpl basketService;
-
     @Autowired
     WebApplicationContext context;
-    @MockBean
-    private PasswordEncoder passwordEncoder;
-    @MockBean
-    private HelpJwt helpJwt;
+    @Autowired
+    private MockMvc mockMvc;
 
     @BeforeEach
     public void setup() {
@@ -63,12 +53,6 @@ public class CustomerControllerTest {
                 .webAppContextSetup(context)
                 .apply(springSecurity())
                 .build();
-    }
-
-    @Retention(RetentionPolicy.RUNTIME)
-    @WithMockUser(username = "customer", roles = {"CUSTOMER"})
-    public @interface WithMockCustomer {
-
     }
 
     @WithMockCustomer
@@ -100,7 +84,7 @@ public class CustomerControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().string("order is completed"));
+                .andExpect(content().string("Order is completed"));
     }
 
     @WithMockCustomer
@@ -108,7 +92,7 @@ public class CustomerControllerTest {
     void shouldDeleteBasket_test() throws Exception {
         Principal principal = mock(Principal.class);
 
-        doNothing().when(basketService).deleteBasketById(principal);
+        doNothing().when(basketService).deleteBasketByPrincipal(principal);
 
         mockMvc.perform(MockMvcRequestBuilders.delete("/customer/deleteBasket")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -121,7 +105,6 @@ public class CustomerControllerTest {
     @Test
     void shouldDisplayBasket_Test() throws Exception {
 
-        Principal principal = mock(Principal.class);
         BasketDTO mockBasketDTO = new BasketDTO();
         mockBasketDTO.setIdBasket(1);
         mockBasketDTO.setBasketProducts(new ArrayList<>());
@@ -143,7 +126,6 @@ public class CustomerControllerTest {
         Principal principal = mock(Principal.class);
         Basket basket = new Basket();
         BasketProducts basketProducts = new BasketProducts(1, basket, 1, null, null, 10.0, 10);
-        BasketProducts updateBasketProduct = new BasketProducts(null, basket, 1, null, null, 10.0, 5);
 
         doNothing().when(basketService).updateBasket(basketProducts.getId(), 5, principal);
 
@@ -152,6 +134,12 @@ public class CustomerControllerTest {
                         .content("{\"quantity\":\"5\"}")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
+    }
+
+    @Retention(RetentionPolicy.RUNTIME)
+    @WithMockUser(username = "customer", roles = {"CUSTOMER"})
+    public @interface WithMockCustomer {
+
     }
 }
 

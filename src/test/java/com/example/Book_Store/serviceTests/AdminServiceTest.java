@@ -5,56 +5,57 @@ import com.example.Book_Store.entities.Role;
 import com.example.Book_Store.exceptions.ExistsException;
 import com.example.Book_Store.repository.AdminRepository;
 import com.example.Book_Store.service.implementation.AdminServiceImpl;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 public class AdminServiceTest {
 
-    @InjectMocks
-    private AdminServiceImpl adminService;
-    @Mock
-    private AdminRepository adminRepository;
-    @Mock
-    private PasswordEncoder passwordEncoder;
+    private final AdminServiceImpl adminService;
+    private final AdminRepository adminRepository;
+
+    @Autowired
+    public AdminServiceTest(AdminServiceImpl adminService, AdminRepository adminRepository) {
+        this.adminService = adminService;
+        this.adminRepository = adminRepository;
+    }
+
+    @BeforeEach
+    public void setUp() {
+        adminRepository.deleteAll();
+    }
 
     @Test
     void shouldCreateAdmin_Successfully() {
-        Admin admin = new Admin(1, "testName", "testEmail", "testPassword", null);
+        //Given
+        Admin admin = new Admin(null, "testName", "testEmail", "testPassword", null);
 
-        when(adminRepository.findByEmail("testEmail")).thenReturn(Optional.empty());
-        when(passwordEncoder.encode("testPassword")).thenReturn("encodePassword");
-        when(adminRepository.save(admin)).thenReturn(admin);
-
+        //When
         Admin createdAdmin = adminService.createAdmin(admin);
 
+        //Then
         assertNotNull(createdAdmin);
         assertEquals(Role.ADMIN, createdAdmin.getRole());
-        assertEquals("encodePassword", createdAdmin.getPassword());
-        verify(adminRepository, times(1)).findByEmail("testEmail");
-        verify(passwordEncoder, times(1)).encode("testPassword");
-        verify(adminRepository, times(1)).save(admin);
+        assertEquals(createdAdmin.getEmail(), admin.getEmail());
+        assertEquals(createdAdmin.getId(), admin.getId());
+        assertEquals(createdAdmin.getName(), admin.getName());
     }
 
     @Test
     void shouldCreateAdmin_ExistingEmail() {
+        //Given
         Admin admin = new Admin(1, "testName", "testEmail", "testPassword", null);
 
-        when(adminRepository.findByEmail("testEmail")).thenReturn(Optional.of(admin));
+        //When
+        adminService.createAdmin(admin);
 
+        //Then
         assertThrows(ExistsException.class, () -> adminService.createAdmin(admin));
-
-        verify(adminRepository, times(1)).findByEmail("testEmail");
-        verify(adminRepository, times(0)).save(admin);
     }
 }

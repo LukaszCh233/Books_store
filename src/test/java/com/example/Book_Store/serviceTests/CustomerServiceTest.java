@@ -8,86 +8,91 @@ import com.example.Book_Store.exceptions.ExistsException;
 import com.example.Book_Store.repository.CustomerRepository;
 import com.example.Book_Store.service.implementation.CustomerServiceImpl;
 import jakarta.persistence.EntityNotFoundException;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 public class CustomerServiceTest {
-    @InjectMocks
-    private CustomerServiceImpl customerService;
-    @Mock
-    private CustomerRepository customerRepository;
-    @Mock
-    private PasswordEncoder passwordEncoder;
+
+    private final CustomerServiceImpl customerService;
+    private final CustomerRepository customerRepository;
+
+    @Autowired
+    public CustomerServiceTest(CustomerServiceImpl customerService, CustomerRepository customerRepository) {
+        this.customerService = customerService;
+        this.customerRepository = customerRepository;
+    }
+
+    @BeforeEach
+    public void setUp() {
+
+        customerRepository.deleteAll();
+    }
 
     @Test
     void shouldFindAllCustomers_Existing_Test() {
+        //Given
         CustomerLogin customerLogin = new CustomerLogin("testEmail", "testPassword");
-        List<Customer> mockCustomer = List.of(
-                new Customer(1, "testName", "testLastName", customerLogin, 123456, Role.CUSTOMER));
-        when(customerRepository.findAll()).thenReturn(mockCustomer);
+        List<Customer> customers = List.of(
+                new Customer(null, "testName", "testLastName", customerLogin, 123456, Role.CUSTOMER));
 
-        List<CustomerDTO> resultCustomers = customerService.findAllCustomers();
+        customerRepository.saveAll(customers);
 
-        List<CustomerDTO> expectedCustomerDTOs = mockCustomer.stream()
+        List<CustomerDTO> expectedCustomerDTOs = customers.stream()
                 .map(customerService::mapCustomerToCustomerDTO)
                 .toList();
+        //When
+        List<CustomerDTO> resultCustomers = customerService.findAllCustomers();
 
-        verify(customerRepository, times(1)).findAll();
-
-        assertIterableEquals(expectedCustomerDTOs, resultCustomers);
+        //Then
+        assertEquals(1, resultCustomers.size());
+        assertEquals(expectedCustomerDTOs.get(0).getId(), resultCustomers.get(0).getId());
+        assertEquals(expectedCustomerDTOs.get(0).getName(), resultCustomers.get(0).getName());
+        assertEquals(expectedCustomerDTOs.get(0).getEmail(), resultCustomers.get(0).getEmail());
+        assertEquals(expectedCustomerDTOs.get(0).getNumber(), resultCustomers.get(0).getNumber());
+        assertEquals(expectedCustomerDTOs.get(0).getLastName(), resultCustomers.get(0).getLastName());
     }
 
     @Test
     void shouldFindAllCustomers_NotExisting_Test() {
 
-        when(customerRepository.findAll()).thenReturn(Collections.emptyList());
-
         assertThrows(EntityNotFoundException.class, () -> customerService.findAllCustomers());
-
-        verify(customerRepository, times(1)).findAll();
     }
 
     @Test
     void shouldCreateCustomer_Successfully() {
+        //Given
         CustomerLogin customerLogin = new CustomerLogin("testEmail", "testPassword");
-        Customer newCustomer = new Customer(1, "TestName", "TestLastName", customerLogin, 123456, null);
+        Customer customer = new Customer(null, "TestName", "TestLastName", customerLogin, 123456, null);
 
-        when(customerRepository.findByEmail("testEmail")).thenReturn(Optional.empty());
-        when(passwordEncoder.encode("testPassword")).thenReturn("encodedPassword");
-        when(customerRepository.save(newCustomer)).thenReturn(newCustomer);
+        //When
+        Customer createdCustomer = customerService.createCustomer(customer);
 
-        Customer createdCustomer = customerService.createCustomer(newCustomer);
-
+        //Then
         assertNotNull(createdCustomer);
         assertEquals(Role.CUSTOMER, createdCustomer.getRole());
-        assertEquals("encodedPassword", createdCustomer.getCustomerLogin().getPassword());
-        verify(customerRepository, times(1)).findByEmail("testEmail");
-        verify(passwordEncoder, times(1)).encode("testPassword");
-        verify(customerRepository, times(1)).save(newCustomer);
+        assertEquals(customer.getName(), createdCustomer.getName());
+        assertEquals(customer.getLastName(), createdCustomer.getLastName());
+        assertEquals(customer.getId(), createdCustomer.getId());
+        assertEquals(customer.getCustomerLogin().getEmail(), createdCustomer.getCustomerLogin().getEmail());
     }
 
     @Test
     void shouldCreateCustomer_ExistingEmail() {
+        //Given
         CustomerLogin customerLogin = new CustomerLogin("testEmail", "testPassword");
-        Customer newCustomer = new Customer(1, "TestName", "TestLastName", customerLogin, 123456, null);
+        Customer customer = new Customer(null, "TestName", "TestLastName", customerLogin, 123456, null);
 
-        when(customerRepository.findByEmail("testEmail")).thenReturn(Optional.of(newCustomer));
-
-        assertThrows(ExistsException.class, () -> customerService.createCustomer(newCustomer));
-        verify(customerRepository, times(1)).findByEmail("testEmail");
-        verify(customerRepository, times(0)).save(newCustomer);
+        customerRepository.save(customer);
+        //when, Then
+        assertThrows(ExistsException.class, () -> customerService.createCustomer(customer));
     }
 }

@@ -35,24 +35,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 public class CommonControllerTest {
-    @Autowired
-    private MockMvc mockMvc;
     @MockBean
     CategoryServiceImpl categoryService;
     @MockBean
     BookServiceImpl bookService;
-    @MockBean
-    CustomerServiceImpl customerService;
-    @MockBean
-    OrderServiceImpl orderService;
-    @MockBean
-    BasketServiceImpl basketService;
     @Autowired
     WebApplicationContext context;
-    @MockBean
-    private PasswordEncoder passwordEncoder;
-    @MockBean
-    private HelpJwt helpJwt;
+    @Autowired
+    private MockMvc mockMvc;
 
     @BeforeEach
     public void setup() {
@@ -60,11 +50,6 @@ public class CommonControllerTest {
                 .webAppContextSetup(context)
                 .apply(springSecurity())
                 .build();
-    }
-
-    @Retention(RetentionPolicy.RUNTIME)
-    @WithMockUser(username = "customer", roles = {"CUSTOMER"})
-    public @interface WithMockCustomer {
     }
 
     @WithMockCustomer
@@ -176,5 +161,11 @@ public class CommonControllerTest {
                         .content("{\"title\":\"1testTitle\"}")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
+    }
+
+    @Retention(RetentionPolicy.RUNTIME)
+    @WithMockUser(username = "customer", roles = {"CUSTOMER"})
+    public @interface WithMockCustomer {
+
     }
 }

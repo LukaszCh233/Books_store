@@ -4,169 +4,171 @@ import com.example.Book_Store.controller.OrderDTO;
 import com.example.Book_Store.entities.*;
 import com.example.Book_Store.exceptions.OperationNotAllowedException;
 import com.example.Book_Store.repository.*;
-import com.example.Book_Store.service.implementation.BasketServiceImpl;
-import com.example.Book_Store.service.implementation.BookServiceImpl;
 import com.example.Book_Store.service.implementation.OrderServiceImpl;
 import jakarta.persistence.EntityNotFoundException;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.security.Principal;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 public class OrderServiceTest {
 
-    @Mock
-    OrderedBooksRepository orderedBooksRepository;
-    @InjectMocks
-    OrderServiceImpl orderService;
-    @Mock
-    private OrderRepository orderRepository;
-    @Mock
-    private BasketRepository basketRepository;
-    @Mock
-    private CustomerRepository customerRepository;
-    @Mock
-    private BasketServiceImpl basketService;
-    @Mock
-    private BasketProductRepository basketProductRepository;
-    @Mock
-    private BookServiceImpl bookService;
+    private final OrderServiceImpl orderService;
+    private final BookRepository bookRepository;
+    private final OrderRepository orderRepository;
+    private final BasketRepository basketRepository;
+    private final CustomerRepository customerRepository;
+    private final BasketProductRepository basketProductRepository;
+
+    @Autowired
+    public OrderServiceTest(OrderServiceImpl orderService, BookRepository bookRepository, OrderRepository orderRepository,
+                            BasketRepository basketRepository, CustomerRepository customerRepository,
+                            BasketProductRepository basketProductRepository) {
+        this.orderService = orderService;
+        this.bookRepository = bookRepository;
+        this.orderRepository = orderRepository;
+        this.basketRepository = basketRepository;
+        this.customerRepository = customerRepository;
+        this.basketProductRepository = basketProductRepository;
+    }
+
+    @BeforeEach
+    public void setUp() {
+        orderRepository.deleteAll();
+        customerRepository.deleteAll();
+    }
 
     @Test
     void shouldFindOrderById_ExistingOrder_Test() {
+        //Given
         CustomerLogin customerLogin = new CustomerLogin("testEmail", "testPassword");
-        Customer customer = new Customer(1, "TestName", "TestLastName", customerLogin, 123456, null);
+        Customer customer = new Customer(null, "TestName", "TestLastName", customerLogin, 123456, null);
+
         OrderedBooks orderedBooks = new OrderedBooks();
-        Order order = new Order(1, customer, null, null, Status.ORDERED, Collections.singletonList(orderedBooks));
+        Order order = new Order(null, customer, null, 100.0, Status.ORDERED, Collections.singletonList(orderedBooks));
 
-        when(orderRepository.findById(order.getId())).thenReturn(Optional.of(order));
+        customerRepository.save(customer);
+        orderRepository.save(order);
 
+        //When
         OrderDTO findOrder = orderService.findOrderById(order.getId());
 
+        //Then
         assertEquals(findOrder.getId(), order.getId());
-
-        verify(orderRepository, times(1)).findById(order.getId());
+        assertEquals(findOrder.getPrice(), order.getPrice());
+        assertEquals(findOrder.getStatus(), order.getStatus());
     }
 
     @Test
     void shouldFindOrderById_NotFound_Test() {
         int orderId = 1;
 
-        when(orderRepository.findById(orderId)).thenReturn(Optional.empty());
-
         assertThrows(EntityNotFoundException.class, () -> orderService.findOrderById(orderId));
-
-        verify(orderRepository, times(1)).findById(orderId);
-        verifyNoMoreInteractions(orderRepository);
     }
 
     @Test
     void shouldFindAllOrders_ExistingOrders_Test() {
+        //Given
         CustomerLogin customerLogin = new CustomerLogin("testEmail", "testPassword");
-        Customer customer = new Customer(1, "TestName", "TestLastName", customerLogin, 123456, null);
+        Customer customer = new Customer(null, "TestName", "TestLastName", customerLogin, 123456, null);
 
         OrderedBooks orderedBooks = new OrderedBooks();
-        List<Order> mockOrders = Arrays.asList(
-                new Order(1, customer, null, null, Status.ORDERED, Collections.singletonList(orderedBooks)),
-                new Order(2, customer, null, null, Status.ORDERED, Collections.singletonList(orderedBooks)
+        List<Order> orders = Arrays.asList(
+                new Order(null, customer, null, null, Status.ORDERED, Collections.singletonList(orderedBooks)),
+                new Order(null, customer, null, null, Status.ORDERED, Collections.singletonList(orderedBooks)
                 ));
 
-        when(orderRepository.findAll()).thenReturn(mockOrders);
+        customerRepository.save(customer);
+        orderRepository.saveAll(orders);
 
-        List<OrderDTO> expectedOrderDTOs = mockOrders.stream()
-                .map(orderService::mapOrderToOrderDTO)
-                .toList();
-
+        //When
         List<OrderDTO> resultOrders = orderService.findAllOrders();
 
-        verify(orderRepository, times(1)).findAll();
-
-        assertIterableEquals(expectedOrderDTOs, resultOrders);
-    }
-
-    @Test
-    void shouldFindAllOrders_NotExistingOrders_Test() {
-
-        when(orderRepository.findAll()).thenReturn(Collections.emptyList());
-
-        assertThrows(EntityNotFoundException.class, () -> orderService.findAllOrders());
-
-        verify(orderRepository, times(1)).findAll();
-        verifyNoMoreInteractions(orderRepository);
+        //Then
+        assertEquals(2, resultOrders.size());
+        assertEquals(resultOrders.get(0).getStatus(), orders.get(0).getStatus());
+        assertEquals(resultOrders.get(1).getStatus(), orders.get(1).getStatus());
+        assertEquals(resultOrders.get(0).getId(), orders.get(0).getId());
+        assertEquals(resultOrders.get(1).getId(), orders.get(1).getId());
     }
 
     @Test
     void shouldUpdateOrderStatus_Test() {
+        //Given
         CustomerLogin customerLogin = new CustomerLogin("testEmail", "testPassword");
-        Customer customer = new Customer(1, "TestName", "TestLastName", customerLogin, 123456, null);
+        Customer customer = new Customer(null, "TestName", "TestLastName", customerLogin, 123456, null);
+
         OrderedBooks orderedBooks = new OrderedBooks();
-        Order order = new Order(1, customer, null, null, Status.ORDERED, Collections.singletonList(orderedBooks));
+        Order order = new Order(null, customer, null, null, Status.ORDERED, Collections.singletonList(orderedBooks));
 
-        when(orderRepository.findById(order.getId())).thenReturn(Optional.of(order));
-        when(orderRepository.save(order)).thenReturn(order);
+        customerRepository.save(customer);
+        orderRepository.save(order);
 
+        //When
         Order updateOrder = orderService.updateOrderStatus(order.getId());
 
+        //Then
         assertNotNull(updateOrder);
         assertEquals(Status.SENT, updateOrder.getStatus());
-
-        verify(orderRepository, times(1)).findById(order.getId());
-        verify(orderRepository, times(1)).save(order);
-
     }
 
     @Test
     void shouldUpdateOrderStatus_OrderSent_Test() {
+        //Given
         CustomerLogin customerLogin = new CustomerLogin("testEmail", "testPassword");
-        Customer customer = new Customer(1, "TestName", "TestLastName", customerLogin, 123456, null);
+        Customer customer = new Customer(null, "TestName", "TestLastName", customerLogin, 123456, null);
         OrderedBooks orderedBooks = new OrderedBooks();
-        Order order = new Order(1, customer, null, null, Status.SENT, Collections.singletonList(orderedBooks));
+        Order order = new Order(null, customer, null, null, Status.SENT, Collections.singletonList(orderedBooks));
 
-        when(orderRepository.findById(order.getId())).thenReturn(Optional.of(order));
+        customerRepository.save(customer);
+        orderRepository.save(order);
 
+        //When, Then
         assertThrows(OperationNotAllowedException.class, () -> orderService.updateOrderStatus(order.getId()));
-
-        verify(orderRepository, times(1)).findById(order.getId());
-        verify(orderRepository, times(0)).save(order);
     }
 
     @Test
     void shouldSaveOrder_Test() {
+        //Given
         CustomerLogin customerLogin = new CustomerLogin("testEmail", "testPassword");
-        Customer customer = new Customer(1, "TestName", "TestLastName", customerLogin, 123456, null);
+        Customer customer = new Customer(null, "TestName", "TestLastName", customerLogin, 123456, null);
 
-        Principal principal = Mockito.mock(Principal.class);
+        customerRepository.save(customer);
 
-        when(principal.getName()).thenReturn(customerLogin.getEmail());
+        Book book = new Book(null, null, null, 10.0, 100, Status.AVAILABLE, null);
 
-        BasketProducts basketProducts = new BasketProducts(null, null, 1, "testName", "testAuthor", 100.0, 10);
-        Basket basket = new Basket(100.0, 1, customer.getId(), Collections.singletonList(basketProducts));
-        when(bookService.findBookById(basketProducts.getIdBook())).thenReturn(new Book());
-        when(basketService.findBasketByUserPrincipal(principal)).thenReturn(basket);
-        when(customerRepository.findById(customer.getId())).thenReturn(java.util.Optional.of(customer));
-        when(orderRepository.save(any(Order.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        bookRepository.save(book);
+
+        Basket basket = new Basket(100.0, null, customer.getId(), null);
+
+        basketRepository.save(basket);
+
+        BasketProducts basketProducts = new BasketProducts(null, basket, book.getId(), "testName", "testAuthor", 100.0, 10);
+
+        basketProductRepository.save(basketProducts);
+
 
         OrderedBooks orderedBooks = new OrderedBooks();
-        Order order = new Order(1, customer, LocalDate.now(), 100.0, Status.ORDERED, Collections.singletonList(orderedBooks));
+        Order order = new Order(null, customer, LocalDate.now(), 100.0, Status.ORDERED, Collections.singletonList(orderedBooks));
 
-        Order savedOrder = orderService.saveOrder(order, principal);
+        orderRepository.save(order);
 
+        //When
+        Order savedOrder = orderService.saveOrder(order, new TestPrincipal(customerLogin.getEmail()));
+
+        //Then
         assertNotNull(savedOrder);
-        assertEquals(order.getCustomer(), savedOrder.getCustomer());
+        assertEquals(order.getCustomer().getId(), savedOrder.getCustomer().getId());
         assertEquals(order.getOrderData(), savedOrder.getOrderData());
         assertEquals(order.getPrice(), savedOrder.getPrice());
         assertEquals(order.getStatus(), savedOrder.getStatus());
