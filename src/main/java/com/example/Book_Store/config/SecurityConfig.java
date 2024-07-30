@@ -1,6 +1,6 @@
 package com.example.Book_Store.config;
 
-import com.example.Book_Store.entities.Role;
+import com.example.Book_Store.enums.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,7 +29,6 @@ public class SecurityConfig {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
         this.point = point;
         this.passwordEncoder = passwordEncoder;
-
     }
 
     @Bean
@@ -63,8 +62,6 @@ public class SecurityConfig {
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
-
     }
-
 }
 

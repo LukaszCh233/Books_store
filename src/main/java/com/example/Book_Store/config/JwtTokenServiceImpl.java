@@ -1,6 +1,6 @@
 package com.example.Book_Store.config;
 
-import com.example.Book_Store.entities.Customer;
+import com.example.Book_Store.user.entity.Customer;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.slf4j.Logger;
@@ -13,7 +13,6 @@ import java.util.Date;
 @Service
 public class JwtTokenServiceImpl {
     private static final Logger logger = LoggerFactory.getLogger(JwtTokenServiceImpl.class);
-
 
     private final SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
     long TOKEN_EXPIRATION_TIME = 3600000;

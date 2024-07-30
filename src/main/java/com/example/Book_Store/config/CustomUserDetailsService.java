@@ -1,9 +1,9 @@
 package com.example.Book_Store.config;
 
-import com.example.Book_Store.entities.Admin;
-import com.example.Book_Store.entities.Customer;
-import com.example.Book_Store.repository.AdminRepository;
-import com.example.Book_Store.repository.CustomerRepository;
+import com.example.Book_Store.user.entity.Admin;
+import com.example.Book_Store.user.entity.Customer;
+import com.example.Book_Store.user.repository.AdminRepository;
+import com.example.Book_Store.user.repository.CustomerRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
