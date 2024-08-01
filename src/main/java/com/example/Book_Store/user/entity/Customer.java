@@ -2,6 +2,8 @@ package com.example.Book_Store.user.entity;
 
 import com.example.Book_Store.enums.Role;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,13 +27,16 @@ public class Customer implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idCustomer")
     private Long id;
+    @NotBlank(message = "Name cannot be blank")
     @Column(name = "name")
     private String name;
+    @NotBlank(message = "Last name cannot be blank")
     @Column(name = "lastName")
     private String lastName;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "email", referencedColumnName = "email")
     private CustomerLogin customerLogin;
+    @NotNull(message = "Number cannot be null")
     @Column(name = "number")
     private int number;
     @Enumerated(EnumType.STRING)
@@ -43,7 +48,6 @@ public class Customer implements UserDetails {
         List<GrantedAuthority> authorities = new ArrayList<>();
 
         authorities.add(new SimpleGrantedAuthority("ROLE_" + role.name()));
-
 
         return authorities;
     }

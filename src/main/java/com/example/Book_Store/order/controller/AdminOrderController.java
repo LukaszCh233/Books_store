@@ -2,7 +2,7 @@ package com.example.Book_Store.order.controller;
 
 import com.example.Book_Store.order.dto.OrderDTO;
 import com.example.Book_Store.order.entity.Order;
-import com.example.Book_Store.order.service.OrderServiceImpl;
+import com.example.Book_Store.order.service.OrderService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,9 +11,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/admin")
 public class AdminOrderController {
-    private final OrderServiceImpl orderService;
+    private final OrderService orderService;
 
-    public AdminOrderController(OrderServiceImpl orderService) {
+    public AdminOrderController(OrderService orderService) {
         this.orderService = orderService;
     }
 
@@ -30,6 +30,7 @@ public class AdminOrderController {
 
         return ResponseEntity.ok(orderDTO);
     }
+
     @PutMapping("/order-send/{id}")
     public ResponseEntity<?> sendOrder(@PathVariable Long id) {
         Order order = orderService.updateOrderStatus(id);

@@ -1,12 +1,13 @@
 package com.example.Book_Store.user.controller;
 
 import com.example.Book_Store.user.dto.AdminDTO;
-import com.example.Book_Store.user.entity.Admin;
-import com.example.Book_Store.user.service.AdminService;
 import com.example.Book_Store.user.dto.CustomerDTO;
+import com.example.Book_Store.user.entity.Admin;
 import com.example.Book_Store.user.entity.Customer;
-import com.example.Book_Store.user.service.CustomerService;
 import com.example.Book_Store.user.entity.LoginRequest;
+import com.example.Book_Store.user.service.AdminService;
+import com.example.Book_Store.user.service.CustomerService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -27,7 +28,7 @@ public class AccessController {
     }
 
     @PostMapping("/customer-register")
-    ResponseEntity<CustomerDTO> registerCustomer(@RequestBody Customer customer) {
+    ResponseEntity<CustomerDTO> registerCustomer(@Valid @RequestBody Customer customer) {
         CustomerDTO customerDTO = customerService.createCustomer(customer);
 
         return ResponseEntity.ok(customerDTO);
@@ -41,7 +42,7 @@ public class AccessController {
     }
 
     @PostMapping("/admin-register")
-    ResponseEntity<AdminDTO> registerAdmin(@RequestBody Admin admin) {
+    ResponseEntity<AdminDTO> registerAdmin(@Valid @RequestBody Admin admin) {
         AdminDTO createAdmin = adminService.createAdmin(admin);
 
         return new ResponseEntity<>(createAdmin, HttpStatus.OK);

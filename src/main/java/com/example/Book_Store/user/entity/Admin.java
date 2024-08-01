@@ -2,6 +2,9 @@ package com.example.Book_Store.user.entity;
 
 import com.example.Book_Store.enums.Role;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -23,10 +26,16 @@ public class Admin implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idAdmin")
     private Long id;
+    @NotBlank(message = "Name cannot be blank")
     @Column(name = "name")
     private String name;
-    @Column(name = "email")
+    @NotBlank(message = "Email cannot be blank")
+    @Email(message = "Email should be valid")
+    @Column(name = "email", unique = true, nullable = false)
     private String email;
+
+    @NotBlank(message = "Password cannot be blank")
+    @Size(min = 6, message = "Password must be at least 6 characters")
     @Column(name = "password")
     private String password;
     @Enumerated(EnumType.STRING)

@@ -2,6 +2,8 @@ package com.example.Book_Store.book.entity;
 
 import com.example.Book_Store.enums.Status;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,14 +20,19 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
+    @NotBlank(message = "Title cannot be blank")
     @Column(name = "title")
     private String title;
+    @NotBlank(message = "Author cannot be blank")
     @Column(name = "author")
     private String author;
+    @NotNull(message = "Price cannot be null")
     @Column(name = "price")
     private double price;
+    @NotNull(message = "Quantity cannot be null")
     @Column(name = "quantity")
     private Long quantity;
+    @NotNull(message = "Status cannot be null")
     @Column(name = "status")
     private Status status;
     @ManyToOne
