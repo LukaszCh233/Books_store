@@ -1,12 +1,9 @@
 package com.example.Book_Store.order.service;
 
 import com.example.Book_Store.basket.entity.Basket;
-import com.example.Book_Store.basket.entity.BasketProducts;
-import com.example.Book_Store.basket.service.BasketServiceImpl;
+import com.example.Book_Store.basket.service.BasketService;
 import com.example.Book_Store.book.entity.Book;
-import com.example.Book_Store.book.service.BookServiceImpl;
-import com.example.Book_Store.user.entity.Customer;
-import com.example.Book_Store.user.repository.CustomerRepository;
+import com.example.Book_Store.book.service.BookService;
 import com.example.Book_Store.enums.Status;
 import com.example.Book_Store.exceptions.OperationNotAllowedException;
 import com.example.Book_Store.mapper.MapperEntity;
@@ -15,6 +12,8 @@ import com.example.Book_Store.order.entity.Order;
 import com.example.Book_Store.order.entity.OrderedBooks;
 import com.example.Book_Store.order.repository.OrderRepository;
 import com.example.Book_Store.order.repository.OrderedBooksRepository;
+import com.example.Book_Store.user.entity.Customer;
+import com.example.Book_Store.user.repository.CustomerRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -24,20 +23,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 @Service
-public class OrderServiceImpl {
+public class OrderService {
 
     private final OrderRepository orderRepository;
-    private final BasketServiceImpl basketService;
+    private final BasketService basketService;
     private final CustomerRepository customerRepository;
     private final OrderedBooksRepository orderedBooksRepository;
-    private final BookServiceImpl bookService;
+    private final BookService bookService;
     private final MapperEntity mapperEntity;
 
-    public OrderServiceImpl(OrderRepository orderRepository, BasketServiceImpl basketService,
-                            CustomerRepository customerRepository, OrderedBooksRepository orderedBooksRepository,
-                            BookServiceImpl bookService, MapperEntity mapperEntity) {
+    public OrderService(OrderRepository orderRepository, BasketService basketService,
+                        CustomerRepository customerRepository, OrderedBooksRepository orderedBooksRepository,
+                        BookService bookService, MapperEntity mapperEntity) {
         this.orderRepository = orderRepository;
         this.basketService = basketService;
         this.customerRepository = customerRepository;
@@ -59,7 +57,6 @@ public class OrderServiceImpl {
         return mapperEntity.mapOrdersToOrdersDTO(orders);
     }
 
-
     public Order updateOrderStatus(Long id) {
         Order order = orderRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Order not found"));
 
@@ -70,8 +67,7 @@ public class OrderServiceImpl {
         return orderRepository.save(order);
     }
 
-
-    public void saveOrder(Order order, Principal principal) {
+    public void saveOrder(Principal principal) {
         Basket basket = basketService.findBasketByUserPrincipal(principal);
 
         if (basket.getBasketProducts() == null || basket.getBasketProducts().isEmpty()) {
@@ -80,12 +76,15 @@ public class OrderServiceImpl {
         Customer customer = customerRepository.findById(basket.getUserId())
                 .orElseThrow(() -> new EntityNotFoundException("Customer not found"));
 
+        Order order = new Order();
         order.setCustomer(customer);
         order.setOrderData(LocalDate.now());
         order.setOrderedBooks(new ArrayList<>());
 
-        double totalPrice = basket.getBasketProducts().stream().mapToDouble(BasketProducts::getPrice)
+        double totalPrice = basket.getBasketProducts().stream().mapToDouble(bp -> bp.getPrice() * bp.getQuantity())
                 .sum();
+        totalPrice = Math.round(totalPrice * 100.0) / 100.0;
+        basket.setTotalPrice(totalPrice);
         order.setPrice(totalPrice);
         orderRepository.save(order);
 

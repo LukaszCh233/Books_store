@@ -1,14 +1,14 @@
 package com.example.Book_Store.user.service;
 
-import com.example.Book_Store.user.dto.AdminDTO;
-import com.example.Book_Store.user.entity.Admin;
-import com.example.Book_Store.user.repository.AdminRepository;
 import com.example.Book_Store.config.HelpJwt;
 import com.example.Book_Store.enums.Role;
 import com.example.Book_Store.exceptions.ExistsException;
 import com.example.Book_Store.exceptions.IncorrectPasswordException;
 import com.example.Book_Store.mapper.MapperEntity;
+import com.example.Book_Store.user.dto.AdminDTO;
+import com.example.Book_Store.user.entity.Admin;
 import com.example.Book_Store.user.entity.LoginRequest;
+import com.example.Book_Store.user.repository.AdminRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -38,6 +38,7 @@ public class AdminService {
 
         return mapperEntity.mapAdminToAdminDTO(adminRepository.save(admin));
     }
+
     public String adminAuthorization(LoginRequest loginRequest) {
         Admin registeredAdmin = adminRepository.findByEmail(loginRequest.getEmail()).orElseThrow(()
                 -> new EntityNotFoundException("User not exists"));

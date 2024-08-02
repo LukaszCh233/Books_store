@@ -9,11 +9,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class BookServiceImpl {
+public class BookService {
     private final BookRepository bookRepository;
     private final CategoryRepository categoryRepository;
 
-    public BookServiceImpl(BookRepository bookRepository, CategoryRepository categoryRepository) {
+    public BookService(BookRepository bookRepository, CategoryRepository categoryRepository) {
         this.bookRepository = bookRepository;
         this.categoryRepository = categoryRepository;
     }
@@ -39,7 +39,7 @@ public class BookServiceImpl {
         return books;
     }
 
-    public List<Book> findByCategoryId(Integer id) {
+    public List<Book> findByCategoryId(Long id) {
         List<Book> books = bookRepository.findByCategoryId(id);
         if (books.isEmpty()) {
             throw new EntityNotFoundException("book list is empty");

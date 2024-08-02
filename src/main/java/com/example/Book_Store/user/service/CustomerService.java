@@ -1,20 +1,19 @@
 package com.example.Book_Store.user.service;
 
 import com.example.Book_Store.config.HelpJwt;
-import com.example.Book_Store.user.dto.CustomerDTO;
-import com.example.Book_Store.user.entity.Customer;
 import com.example.Book_Store.enums.Role;
 import com.example.Book_Store.exceptions.ExistsException;
-import com.example.Book_Store.user.repository.CustomerRepository;
 import com.example.Book_Store.exceptions.IncorrectPasswordException;
 import com.example.Book_Store.mapper.MapperEntity;
+import com.example.Book_Store.user.dto.CustomerDTO;
+import com.example.Book_Store.user.entity.Customer;
 import com.example.Book_Store.user.entity.LoginRequest;
+import com.example.Book_Store.user.repository.CustomerRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CustomerService {
@@ -50,6 +49,7 @@ public class CustomerService {
 
         return mapperEntity.mapCustomerToCustomerDTO(customerRepository.save(customer));
     }
+
     public String customerAuthorization(LoginRequest loginRequest) {
         Customer registeredUser = customerRepository.findByEmail(loginRequest.getEmail()).orElseThrow(()
                 -> new EntityNotFoundException("User not exists"));

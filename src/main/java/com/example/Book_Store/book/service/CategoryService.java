@@ -1,8 +1,8 @@
 package com.example.Book_Store.book.service;
 
 import com.example.Book_Store.book.entity.Book;
-import com.example.Book_Store.book.repository.BookRepository;
 import com.example.Book_Store.book.entity.Category;
+import com.example.Book_Store.book.repository.BookRepository;
 import com.example.Book_Store.book.repository.CategoryRepository;
 import com.example.Book_Store.exceptions.ExistsException;
 import com.example.Book_Store.exceptions.OperationNotAllowedException;
@@ -13,16 +13,16 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CategoryServiceImpl {
+public class CategoryService {
     private final CategoryRepository categoryRepository;
     private final BookRepository bookRepository;
 
-    public CategoryServiceImpl(CategoryRepository categoryRepository, BookRepository bookRepository) {
+    public CategoryService(CategoryRepository categoryRepository, BookRepository bookRepository) {
         this.categoryRepository = categoryRepository;
         this.bookRepository = bookRepository;
     }
 
-    public Category findCategoryById(Integer id) {
+    public Category findCategoryById(Long id) {
         return categoryRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Category not found"));
     }
@@ -32,7 +32,7 @@ public class CategoryServiceImpl {
                 .orElseThrow(() -> new EntityNotFoundException("Category not found"));
     }
 
-    public void deleteCategoryById(Integer id) {
+    public void deleteCategoryById(Long id) {
         findCategoryById(id);
         List<Book> categoryBooks = bookRepository.findByCategoryId(id);
         if (!categoryBooks.isEmpty())
@@ -65,7 +65,7 @@ public class CategoryServiceImpl {
         categoryRepository.deleteAll();
     }
 
-    public Category updateCategory(Integer id, Category updatedCategory) {
+    public Category updateCategory(Long id, Category updatedCategory) {
         Category presentCategory = findCategoryById(id);
 
         presentCategory.setName(updatedCategory.getName());

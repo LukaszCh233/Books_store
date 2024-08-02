@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 @Service
-public class BasketServiceImpl {
+public class BasketService {
 
     private final BasketRepository basketRepository;
     private final CustomerRepository customerRepository;
@@ -28,9 +28,9 @@ public class BasketServiceImpl {
     private final BasketProductsRepository basketProductsRepository;
     private final MapperEntity mapperEntity;
 
-    public BasketServiceImpl(BasketRepository basketRepository, CustomerRepository customerRepository,
-                             BookRepository bookRepository, BasketProductsRepository basketProductsRepository,
-                             MapperEntity mapperEntity) {
+    public BasketService(BasketRepository basketRepository, CustomerRepository customerRepository,
+                         BookRepository bookRepository, BasketProductsRepository basketProductsRepository,
+                         MapperEntity mapperEntity) {
         this.basketRepository = basketRepository;
         this.customerRepository = customerRepository;
         this.bookRepository = bookRepository;
@@ -58,6 +58,7 @@ public class BasketServiceImpl {
                     return newBasket;
                 });
         basketRepository.save(basket);
+
         BasketProducts basketProducts = new BasketProducts();
         basketProducts.setBasket(basket);
         basketProducts.setIdBook(selectedBook.getId());
@@ -69,7 +70,6 @@ public class BasketServiceImpl {
 
         basketProductsRepository.save(basketProducts);
         basketRepository.save(basket);
-
     }
 
     public BasketDTO findBasketDTOByUserPrincipal(Principal principal) {
@@ -88,26 +88,17 @@ public class BasketServiceImpl {
     }
 
     public void deleteBasketByPrincipal(Principal principal) {
-
         Basket basket = findBasketByUserPrincipal(principal);
 
         basketRepository.deleteById(basket.getIdBasket());
     }
 
-    public Basket updateBasket(Long productId, Long quantity, Principal principal) {
+    public Basket updateBasketProductQuantity(Long productId, Long quantity, Principal principal) {
         Basket basket = findBasketByUserPrincipal(principal);
 
-        BasketProducts basketProducts = Optional.ofNullable(basketProductsRepository.findBasketProductById(productId))
+        BasketProducts basketProduct = Optional.ofNullable(basketProductsRepository.findBasketProductById(productId))
                 .orElseThrow(() -> new EntityNotFoundException("Book not found"));
 
-        updateBasketProductQuantity(basketProducts, quantity);
-        handleZeroOrNegativeQuantity(basketProducts);
-        basket.updateTotalPrice(basket);
-
-        return basketRepository.save(basket);
-    }
-
-    private void updateBasketProductQuantity(BasketProducts basketProduct, Long quantity) {
         Book selectedBook = bookRepository.findById(basketProduct.getIdBook())
                 .orElseThrow(() -> new EntityNotFoundException("Not found Book"));
 
@@ -116,7 +107,13 @@ public class BasketServiceImpl {
         }
         basketProduct.setQuantity(quantity);
 
-        basketProductsRepository.save(basketProduct);
+        if (quantity <= 0) {
+            basket.getBasketProducts().remove(basketProduct);
+            basketProductsRepository.delete(basketProduct);
+        }
+        basket.updateTotalPrice(basket);
+
+        return basketRepository.save(basket);
     }
 
     private void handleZeroOrNegativeQuantity(BasketProducts basketProduct) {
@@ -124,7 +121,6 @@ public class BasketServiceImpl {
             basketProductsRepository.deleteById(basketProduct.getId());
         }
     }
-
 }
 
 

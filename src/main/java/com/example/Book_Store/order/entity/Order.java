@@ -1,7 +1,7 @@
 package com.example.Book_Store.order.entity;
 
-import com.example.Book_Store.user.entity.Customer;
 import com.example.Book_Store.enums.Status;
+import com.example.Book_Store.user.entity.Customer;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

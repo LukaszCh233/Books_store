@@ -31,6 +31,7 @@ public class Basket {
             double totalPrice = basket.getBasketProducts().stream()
                     .mapToDouble(product -> product.getPrice() * product.getQuantity())
                     .sum();
+            totalPrice = Math.round(totalPrice * 100.0) / 100.0;
             basket.setTotalPrice(totalPrice);
         }
     }
