@@ -5,10 +5,10 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: User12345678
       MYSQL_DATABASE: Books_store
+    ports:
+      - "3307:3306"
     volumes:
       - db_data:/var/lib/mysql
-    ports:
-      - "3307:3307"
 
   app:
     build: .
@@ -18,7 +18,7 @@ services:
     depends_on:
       - db
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/books_store
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/Books_store
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: User12345678
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
