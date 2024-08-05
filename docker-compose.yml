@@ -1,0 +1,27 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: User12345678
+      MYSQL_DATABASE: Books_store
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3307:3307"
+
+  app:
+    build: .
+    container_name: java_app
+    ports:
+      - "8085:8085"
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/books_store
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: User12345678
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+
+volumes:
+  db_data:
