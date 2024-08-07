@@ -23,6 +23,12 @@ public class AdminOrderController {
 
         return ResponseEntity.ok(orders);
     }
+    @GetMapping
+    private ResponseEntity<List<OrderDTO>> displaySentOrders() {
+        List<OrderDTO> orders = orderService.findAllSentOrders();
+
+        return ResponseEntity.ok(orders);
+    }
 
     @GetMapping("/order/{id}")
     public ResponseEntity<OrderDTO> displayOrder(@PathVariable Long id) {

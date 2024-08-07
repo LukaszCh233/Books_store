@@ -56,6 +56,13 @@ public class OrderService {
         }
         return mapperEntity.mapOrdersToOrdersDTO(orders);
     }
+    public List<OrderDTO> findAllSentOrders() {
+        List<Order> orders = orderRepository.findByStatus(Status.SENT);
+        if (orders.isEmpty()) {
+            throw new EntityNotFoundException("Not found orders");
+        }
+        return mapperEntity.mapOrdersToOrdersDTO(orders);
+    }
 
     public Order updateOrderStatus(Long id) {
         Order order = orderRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Order not found"));
@@ -63,6 +70,7 @@ public class OrderService {
         if (order.getStatus() == Status.SENT) {
             throw new OperationNotAllowedException("Order with this ID has already been sent");
         }
+
         order.setStatus(Status.SENT);
         return orderRepository.save(order);
     }

@@ -10,6 +10,7 @@ import com.example.Book_Store.book.repository.CategoryRepository;
 import com.example.Book_Store.enums.Role;
 import com.example.Book_Store.enums.Status;
 import com.example.Book_Store.order.dto.OrderDTO;
+import com.example.Book_Store.order.entity.Order;
 import com.example.Book_Store.order.repository.OrderRepository;
 import com.example.Book_Store.order.service.OrderService;
 import com.example.Book_Store.user.entity.Customer;
@@ -22,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,6 +63,17 @@ public class OrderServiceTest {
         Assertions.assertEquals(orderDTOList.get(0).status(), Status.ORDERED);
     }
 
+    @Test
+    public void whenUpdateOrderStatusToSentOrderShouldBeInSentOrdersList() {
+       Order order = newOrder();
+
+        orderService.updateOrderStatus(order.getId());
+
+        List<OrderDTO> sentOrders = orderService.findAllSentOrders();
+
+        Assertions.assertEquals(sentOrders.size(),1);
+    }
+
     private void newBasket() {
         Customer customer = new Customer();
         customer.setName("name");
@@ -96,5 +109,21 @@ public class OrderServiceTest {
 
         basket.getBasketProducts().add(basketProducts);
         basketRepository.save(basket);
+    }
+
+    private Order newOrder() {
+        Customer customer = new Customer();
+        customer.setName("name");
+        customer.setLastName("lastName");
+        customer.setCustomerLogin(new CustomerLogin("customer@example.com", "password"));
+        customer.setNumber(123456);
+        customer.setRole(Role.CUSTOMER);
+        customerRepository.save(customer);
+
+        Order order = new Order();
+        order.setOrderData(LocalDate.now());
+        order.setStatus(Status.ORDERED);
+        order.setCustomer(customer);
+        return orderRepository.save(order);
     }
 }

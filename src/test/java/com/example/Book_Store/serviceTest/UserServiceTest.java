@@ -1,6 +1,7 @@
 package com.example.Book_Store.serviceTest;
 
 import com.example.Book_Store.enums.Role;
+import com.example.Book_Store.order.repository.OrderRepository;
 import com.example.Book_Store.user.dto.CustomerDTO;
 import com.example.Book_Store.user.entity.Admin;
 import com.example.Book_Store.user.entity.Customer;
@@ -33,12 +34,16 @@ public class UserServiceTest {
     CustomerRepository customerRepository;
     @Autowired
     AdminRepository adminRepository;
+    @Autowired
+    OrderRepository orderRepository;
 
     @BeforeEach
     public void setUp() {
+        orderRepository.deleteAll();
         adminRepository.deleteAll();
         customerRepository.deleteAll();
     }
+
     @Test
     public void whenCustomerAuthorizationIsCorrectShouldGenerateToken_test() {
         newCustomer("customer@example.com", "customerPassword");
@@ -59,6 +64,16 @@ public class UserServiceTest {
         Assertions.assertNotNull(token);
     }
 
+    @Test
+    public void createdCustomerShouldBeFindICustomersList_test() {
+        newCustomer("customer@example.com", "password");
+
+        List<CustomerDTO> customerList = customerService.findAllCustomers();
+
+        Assertions.assertEquals(customerList.size(), 1);
+        Assertions.assertEquals(customerList.get(0).email(), "customer@example.com");
+    }
+
     private void newCustomer(String email, String password) {
         Customer customer = new Customer();
         customer.setName("name");
@@ -67,15 +82,6 @@ public class UserServiceTest {
         customer.setRole(Role.CUSTOMER);
 
         customerRepository.save(customer);
-    }
-    @Test
-    public void createdUserShouldBeFindInUsersList_test() {
-        newCustomer("customer@example.com", "password");
-
-        List<CustomerDTO> customerList = customerService.findAllCustomers();
-
-        Assertions.assertEquals(customerList.size(), 1);
-        Assertions.assertEquals(customerList.get(0).email(), "customer@example.com");
     }
 
     private void newAdmin(String email, String password) {

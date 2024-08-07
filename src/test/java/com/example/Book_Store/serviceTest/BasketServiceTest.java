@@ -3,7 +3,6 @@ package com.example.Book_Store.serviceTest;
 import com.example.Book_Store.basket.dto.BasketDTO;
 import com.example.Book_Store.basket.entity.Basket;
 import com.example.Book_Store.basket.entity.BasketProducts;
-import com.example.Book_Store.basket.repository.BasketProductsRepository;
 import com.example.Book_Store.basket.repository.BasketRepository;
 import com.example.Book_Store.basket.service.BasketService;
 import com.example.Book_Store.book.entity.Book;
@@ -39,10 +38,7 @@ public class BasketServiceTest {
     @Autowired
     BasketRepository basketRepository;
     @Autowired
-    BasketProductsRepository basketProductsRepository;
-    @Autowired
     OrderRepository orderRepository;
-
 
     @BeforeEach
     public void setUp() {
@@ -52,9 +48,8 @@ public class BasketServiceTest {
         bookRepository.deleteAll();
     }
 
-
     @Test
-    public void shouldDisplayBasketWithYourBooksWhenAddBookToBasket_test() {
+    public void shouldDisplayBasketWithYourBooksWhenAddBookToBasket() {
         newCustomer("customer@example.com");
         Book book = newBook("title");
 
@@ -66,7 +61,7 @@ public class BasketServiceTest {
     }
 
     @Test
-    public void whenUpdateBasketProductQuantityPriceShouldBeUpdate_test() {
+    public void whenUpdateBasketProductQuantityPriceShouldBeUpdate() {
         Customer customer = newCustomer("customer@example.com");
         Basket basket = newBasket(10L, 10.0, customer);
 
@@ -75,6 +70,17 @@ public class BasketServiceTest {
         Assertions.assertEquals(5, updateQuantity.getBasketProducts().get(0).getQuantity());
         Assertions.assertEquals(50, updateQuantity.getTotalPrice());
     }
+
+    @Test
+    public void whenUpdateBasketProductQuantityIsZeroProductShouldBeDeletedFromBasket() {
+        Customer customer = newCustomer("customer@example.com");
+        Basket basket = newBasket(10L, 10.0, customer);
+
+        Basket updateQuantity = basketService.updateBasketProductQuantity(basket.getBasketProducts().get(0).getId(), 0L, new TestPrincipal("customer@example.com"));
+
+        Assertions.assertEquals(updateQuantity.getBasketProducts().size(), 0);
+    }
+
 
     private Book newBook(String title) {
         Category category = new Category(null, "category");

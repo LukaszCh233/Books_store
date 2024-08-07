@@ -29,10 +29,8 @@ public class Book {
     @NotNull(message = "Price cannot be null")
     @Column(name = "price")
     private double price;
-    @NotNull(message = "Quantity cannot be null")
     @Column(name = "quantity")
     private Long quantity;
-    @NotNull(message = "Status cannot be null")
     @Column(name = "status")
     private Status status;
     @ManyToOne

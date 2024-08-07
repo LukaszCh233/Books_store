@@ -1,55 +1,91 @@
   # Books_store
-Welcome to the Books Store, is an online book store project which allows the store to be managed by both the administrator and the customer.
+Welcome to the Books Store, an online platform that enables the
+management and purchase of books by both administrators and customers.
 
 # About
-Books store is a project that allows registration and login of administrators and customers.
+Books Store is a project developed in Java and Spring Boot, offering
+two modes of use: one for bookstore owners (administrators) and
+the other for customers.
 
-Admin functions :
-- Add categories and books
-- Update and delete categories, books
-- Display caktegories, books, orders, registered customers
-- Send orders
+### Admin Functions:
 
-Customer functions:
-- Add books to basket
-- Display books, basket 
-- Delete and update basket
-- Order books
+**Register/Login:**
+- Access the admin panel through the login page
+
+**Category Management:**
+- Add new categories
+- Update existing categories
+- Delete categories
+
+**Book Management:**
+- Add new books
+- Update existing books
+- Delete books
+
+**Display Information:**
+- View all categories
+- View all books
+- View all orders
+- View all registered customers
+
+**Order Management:**
+- Process and send orders to customers
+
+### Customer Functions:
+**Register/Login:**
+- Sign up or log in to access your account
+
+**Shopping:**
+- View all categories
+- View all books
+- Browse and view available books
+- Add books to the basket
+- View basket contents
+- Update quantities of books in the basket
+- Remove books from the basket
+- Place orders for books
     
 # Technologies used:
-- Java 17
-- Spring Boot
-- Lombok
-- Spring Security
-- Hibernate
-- JSON Web Token
-- log4j
-- Spring Data REST
-- Database MySQL/H2
+- **Java 17**: The programming language used for development.
+- **Spring Boot**: Framework for building the application.
+- **Spring Data JPA**: For database interactions.
+    - **Spring Security**: For securing the application.
+    - **Spring Boot Web**: For building web applications.
+    - **Spring Boot Starter Test**: For testing the application.
+- **Lombok**: To reduce boilerplate code by generating getters, setters, etc.
+- **Hibernate**: ORM framework used with Spring Data JPA.
+- **JSON Web Token (JWT)**: For authentication and authorization.
+- **MySQL**: The relational database management system used.
+- **JUnit**: For unit testing.
+- **Spring Data REST WebMVC**: For creating RESTful APIs.
+- **Maven**
+- **IntelliJ IDEA**
+- **Postman**
 
 # Installation
 
 ## Prerequisites
 Before you begin, ensure you have the following installed on your machine:
-- Java 17: [Download and Install Java](https://adoptopenjdk.net/)
-- MySQL: [Download and Install MySQL](https://dev.mysql.com/downloads/installer/)
-- Maven: https://maven.apache.org/download.cgi
-- Git: https://git-scm.com/downloads
-- Postman: https://www.postman.com/downloads/
+- **Postman**: https://www.postman.com/downloads/
+- **Docker**: [Install Docker](https://docs.docker.com/get-docker/)
+- **Docker Compose**: [Install Docker Compose](https://docs.docker.com/compose/install/)
 
-## Clone the Repository
-git clone https://github.com/LukaszCh233/Books_store.git
-cd Books_store
+## How to Run
 
-## Configure Database
+### 1. Clone the Repository
+
 ```bash
-spring.datasource.url=jdbc:mysql://localhost:3306/books_store
-spring.datasource.username=your_username
-spring.datasource.password=your_password
-server.port=8085
-
+git clone https://github.com/LukaszCh233/Books_store.git
+cd quiz-world
 ```
-1. Open MySQL MySQL Workbench
-2. Login to the administrator user of MySql
-3. Use your username and password from configuration
-4. Create database books_store
+
+### 2. Build and Start the Containers
+
+```bash
+docker-compose up --build
+```
+### 3. Stopping the Containers
+
+```bash
+docker-compose down
+```

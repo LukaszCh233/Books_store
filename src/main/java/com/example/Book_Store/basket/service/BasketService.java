@@ -13,6 +13,7 @@ import com.example.Book_Store.mapper.MapperEntity;
 import com.example.Book_Store.user.entity.Customer;
 import com.example.Book_Store.user.repository.CustomerRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
@@ -93,6 +94,7 @@ public class BasketService {
         basketRepository.deleteById(basket.getIdBasket());
     }
 
+    @Transactional
     public Basket updateBasketProductQuantity(Long productId, Long quantity, Principal principal) {
         Basket basket = findBasketByUserPrincipal(principal);
 
@@ -105,12 +107,11 @@ public class BasketService {
         if (selectedBook.getQuantity() < quantity) {
             throw new NotEnoughBooksException("There are not enough books available");
         }
-        basketProduct.setQuantity(quantity);
 
         if (quantity <= 0) {
             basket.getBasketProducts().remove(basketProduct);
-            basketProductsRepository.delete(basketProduct);
         }
+        basketProduct.setQuantity(quantity);
         basket.updateTotalPrice(basket);
 
         return basketRepository.save(basket);

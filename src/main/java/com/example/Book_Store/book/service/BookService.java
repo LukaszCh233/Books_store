@@ -3,6 +3,7 @@ package com.example.Book_Store.book.service;
 import com.example.Book_Store.book.entity.Book;
 import com.example.Book_Store.book.repository.BookRepository;
 import com.example.Book_Store.book.repository.CategoryRepository;
+import com.example.Book_Store.enums.Status;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -88,6 +89,10 @@ public class BookService {
         existingBook.setAuthor(book.getAuthor());
         existingBook.setPrice(book.getPrice());
         existingBook.setQuantity(book.getQuantity());
+
+        if (existingBook.getQuantity() == 0) {
+            existingBook.setStatus(Status.LACK);
+        }
         return bookRepository.save(existingBook);
     }
 }
