@@ -1,17 +1,21 @@
 package com.example.Book_Store.mapper;
 
-import com.example.Book_Store.basket.dto.BasketDTO;
-import com.example.Book_Store.basket.dto.BasketProductsDTO;
-import com.example.Book_Store.basket.entity.Basket;
-import com.example.Book_Store.basket.entity.BasketProducts;
-import com.example.Book_Store.order.dto.OrderDTO;
-import com.example.Book_Store.order.dto.OrderedBookDTO;
-import com.example.Book_Store.order.entity.Order;
-import com.example.Book_Store.order.entity.OrderedBooks;
-import com.example.Book_Store.user.dto.AdminDTO;
-import com.example.Book_Store.user.dto.CustomerDTO;
-import com.example.Book_Store.user.entity.Admin;
-import com.example.Book_Store.user.entity.Customer;
+import com.example.Book_Store.account.admin.Admin;
+import com.example.Book_Store.account.admin.AdminDTO;
+import com.example.Book_Store.account.customer.Customer;
+import com.example.Book_Store.account.customer.CustomerDTO;
+import com.example.Book_Store.store.basket.dto.BasketDTO;
+import com.example.Book_Store.store.basket.dto.BasketProductsDTO;
+import com.example.Book_Store.store.basket.entity.Basket;
+import com.example.Book_Store.store.basket.entity.BasketProducts;
+import com.example.Book_Store.store.book.dto.BookDTO;
+import com.example.Book_Store.store.book.entity.Book;
+import com.example.Book_Store.store.bookCategory.dto.BookCategoryDTO;
+import com.example.Book_Store.store.bookCategory.entity.BookCategory;
+import com.example.Book_Store.store.order.dto.OrderDTO;
+import com.example.Book_Store.store.order.dto.OrderedBookDTO;
+import com.example.Book_Store.store.order.entity.Order;
+import com.example.Book_Store.store.order.entity.OrderedBooks;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -46,8 +50,7 @@ public class MapperEntity {
 
     public CustomerDTO mapCustomerToCustomerDTO(Customer customer) {
         return new CustomerDTO(customer.getId(), customer.getName(), customer.getLastName(),
-                customer.getCustomerLogin().getEmail(), customer.getNumber());
-
+                customer.getEmail(), customer.getNumber());
     }
 
     public List<CustomerDTO> mapCustomersToCustomersDTO(List<Customer> customers) {
@@ -76,6 +79,27 @@ public class MapperEntity {
     public List<OrderDTO> mapOrdersToOrdersDTO(List<Order> orderList) {
         return orderList.stream()
                 .map(this::mapOrderToOrderDTO)
+                .collect(Collectors.toList());
+    }
+
+    public BookCategoryDTO mapBookCategoryToBookCategoryDTO(BookCategory bookCategory) {
+        return new BookCategoryDTO(bookCategory.getName());
+    }
+
+    public List<BookCategoryDTO> mapBookCategoryListToBookCategoryListDTO(List<BookCategory> bookCategoryList) {
+        return bookCategoryList.stream()
+                .map(this::mapBookCategoryToBookCategoryDTO)
+                .collect(Collectors.toList());
+    }
+
+    public BookDTO mapBookToBookDTO(Book book) {
+        return new BookDTO(book.getTitle(), book.getAuthor(), book.getPrice(), book.getQuantity(),
+                book.getBookCategory().getName(), book.getStatus());
+    }
+
+    public List<BookDTO> mapBookListToBookListDTO(List<Book> bookList) {
+        return bookList.stream()
+                .map(this::mapBookToBookDTO)
                 .collect(Collectors.toList());
     }
 }

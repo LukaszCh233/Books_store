@@ -1,11 +1,10 @@
 package com.example.Book_Store.repositoryTest;
 
-import com.example.Book_Store.enums.Role;
-import com.example.Book_Store.user.entity.Admin;
-import com.example.Book_Store.user.entity.Customer;
-import com.example.Book_Store.user.entity.CustomerLogin;
-import com.example.Book_Store.user.repository.AdminRepository;
-import com.example.Book_Store.user.repository.CustomerRepository;
+import com.example.Book_Store.account.Role;
+import com.example.Book_Store.account.admin.Admin;
+import com.example.Book_Store.account.customer.Customer;
+import com.example.Book_Store.account.admin.AdminRepository;
+import com.example.Book_Store.account.customer.CustomerRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -61,11 +60,10 @@ public class UserRepositoryTest {
     }
 
     private void newCustomer(String name, String email) {
-        CustomerLogin customerLogin = new CustomerLogin(email, "password");
-
         Customer customer = new Customer();
         customer.setName(name);
-        customer.setCustomerLogin(customerLogin);
+        customer.setEmail(email);
+        customer.setPassword("password");
         customer.setRole(Role.ADMIN);
         customer.setLastName("customer");
         customer.setNumber(123456);

@@ -1,10 +1,10 @@
 package com.example.Book_Store.repositoryTest;
 
-import com.example.Book_Store.book.entity.Book;
-import com.example.Book_Store.book.repository.BookRepository;
-import com.example.Book_Store.book.entity.Category;
-import com.example.Book_Store.book.repository.CategoryRepository;
-import com.example.Book_Store.enums.Status;
+import com.example.Book_Store.store.book.entity.Book;
+import com.example.Book_Store.store.bookCategory.entity.BookCategory;
+import com.example.Book_Store.store.book.repository.BookRepository;
+import com.example.Book_Store.store.bookCategory.repository.BookCategoryRepository;
+import com.example.Book_Store.store.Status;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,12 +20,12 @@ public class BookRepositoryTest {
     @Autowired
     BookRepository bookRepository;
     @Autowired
-    CategoryRepository categoryRepository;
+    BookCategoryRepository bookCategoryRepository;
 
     @BeforeEach
     public void setUp() {
         bookRepository.deleteAll();
-        categoryRepository.deleteAll();
+        bookCategoryRepository.deleteAll();
     }
 
     @Test
@@ -41,10 +41,10 @@ public class BookRepositoryTest {
 
     @Test
     public void findBooksByCategoryId_test() {
-        Category category = newCategory("testCategory");
-        newBookWithCategory("test", category);
+        BookCategory bookCategory = newCategory("testCategory");
+        newBookWithCategory("test", bookCategory);
 
-        List<Book> bookList = bookRepository.findByCategoryId(category.getId());
+        List<Book> bookList = bookRepository.findByBookCategoryId(bookCategory.getId());
 
         Assertions.assertEquals(bookList.size(), 1);
         Assertions.assertEquals(bookList.get(0).getTitle(), "test");
@@ -52,20 +52,20 @@ public class BookRepositoryTest {
 
     @Test
     public void findBooksByCategoryName_test() {
-        Category category = newCategory("testCategory");
-        newBookWithCategory("test", category);
+        BookCategory bookCategory = newCategory("testCategory");
+        newBookWithCategory("test", bookCategory);
 
-        List<Book> bookList = bookRepository.findByCategoryName("testCategory");
+        List<Book> bookList = bookRepository.findByBookCategoryName("testCategory");
 
         Assertions.assertEquals(bookList.size(), 1);
         Assertions.assertEquals(bookList.get(0).getTitle(), "test");
     }
 
     private void newBook(String title) {
-        Category category = new Category(null, "category");
-        categoryRepository.save(category);
+        BookCategory bookCategory = new BookCategory(null, "bookCategory");
+        bookCategoryRepository.save(bookCategory);
         Book book = new Book();
-        book.setCategory(category);
+        book.setBookCategory(bookCategory);
         book.setTitle(title);
         book.setAuthor("test");
         book.setPrice(100.0);
@@ -74,21 +74,21 @@ public class BookRepositoryTest {
         bookRepository.save(book);
     }
 
-    private void newBookWithCategory(String title, Category category) {
+    private void newBookWithCategory(String title, BookCategory bookCategory) {
         Book book = new Book();
         book.setTitle(title);
         book.setAuthor("test");
         book.setTitle(title);
         book.setAuthor("test");
-        book.setCategory(category);
+        book.setBookCategory(bookCategory);
         book.setPrice(100.0);
         book.setQuantity(1L);
         book.setStatus(Status.AVAILABLE);
         bookRepository.save(book);
     }
 
-    private Category newCategory(String name) {
-        Category category = new Category(null, name);
-        return categoryRepository.save(category);
+    private BookCategory newCategory(String name) {
+        BookCategory bookCategory = new BookCategory(null, name);
+        return bookCategoryRepository.save(bookCategory);
     }
 }

@@ -1,21 +1,20 @@
 package com.example.Book_Store.serviceTest;
 
-import com.example.Book_Store.basket.entity.Basket;
-import com.example.Book_Store.basket.entity.BasketProducts;
-import com.example.Book_Store.basket.repository.BasketRepository;
-import com.example.Book_Store.book.entity.Book;
-import com.example.Book_Store.book.entity.Category;
-import com.example.Book_Store.book.repository.BookRepository;
-import com.example.Book_Store.book.repository.CategoryRepository;
-import com.example.Book_Store.enums.Role;
-import com.example.Book_Store.enums.Status;
-import com.example.Book_Store.order.dto.OrderDTO;
-import com.example.Book_Store.order.entity.Order;
-import com.example.Book_Store.order.repository.OrderRepository;
-import com.example.Book_Store.order.service.OrderService;
-import com.example.Book_Store.user.entity.Customer;
-import com.example.Book_Store.user.entity.CustomerLogin;
-import com.example.Book_Store.user.repository.CustomerRepository;
+import com.example.Book_Store.store.basket.entity.Basket;
+import com.example.Book_Store.store.basket.entity.BasketProducts;
+import com.example.Book_Store.store.basket.repository.BasketRepository;
+import com.example.Book_Store.store.book.entity.Book;
+import com.example.Book_Store.store.bookCategory.entity.BookCategory;
+import com.example.Book_Store.store.book.repository.BookRepository;
+import com.example.Book_Store.store.bookCategory.repository.BookCategoryRepository;
+import com.example.Book_Store.account.Role;
+import com.example.Book_Store.store.Status;
+import com.example.Book_Store.store.order.dto.OrderDTO;
+import com.example.Book_Store.store.order.entity.Order;
+import com.example.Book_Store.store.order.repository.OrderRepository;
+import com.example.Book_Store.store.order.service.OrderService;
+import com.example.Book_Store.account.customer.Customer;
+import com.example.Book_Store.account.customer.CustomerRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -39,7 +38,7 @@ public class OrderServiceTest {
     @Autowired
     BookRepository bookRepository;
     @Autowired
-    CategoryRepository categoryRepository;
+    BookCategoryRepository bookCategoryRepository;
     @Autowired
     OrderRepository orderRepository;
 
@@ -78,16 +77,17 @@ public class OrderServiceTest {
         Customer customer = new Customer();
         customer.setName("name");
         customer.setLastName("lastName");
-        customer.setCustomerLogin(new CustomerLogin("customer@example.com", "password"));
+        customer.setEmail("customer@example.com");
+        customer.setPassword("password");
         customer.setNumber(123456);
         customer.setRole(Role.CUSTOMER);
         customerRepository.save(customer);
 
-        Category category = new Category(null, "category");
-        categoryRepository.save(category);
+        BookCategory bookCategory = new BookCategory(null, "bookCategory");
+        bookCategoryRepository.save(bookCategory);
 
         Book book = new Book();
-        book.setCategory(category);
+        book.setBookCategory(bookCategory);
         book.setTitle("title");
         book.setAuthor("test");
         book.setPrice(10);
@@ -115,7 +115,8 @@ public class OrderServiceTest {
         Customer customer = new Customer();
         customer.setName("name");
         customer.setLastName("lastName");
-        customer.setCustomerLogin(new CustomerLogin("customer@example.com", "password"));
+        customer.setEmail("customer@example.com");
+        customer.setPassword("password");
         customer.setNumber(123456);
         customer.setRole(Role.CUSTOMER);
         customerRepository.save(customer);

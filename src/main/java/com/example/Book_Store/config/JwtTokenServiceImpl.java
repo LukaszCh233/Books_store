@@ -1,6 +1,6 @@
 package com.example.Book_Store.config;
 
-import com.example.Book_Store.user.entity.Customer;
+import com.example.Book_Store.account.customer.Customer;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.slf4j.Logger;
@@ -20,7 +20,7 @@ public class JwtTokenServiceImpl {
     public String generateJwtToken(Customer customer) {
 
         return Jwts.builder()
-                .setSubject(customer.getCustomerLogin().getEmail())
+                .setSubject(customer.getEmail())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION_TIME))
                 .signWith(key)

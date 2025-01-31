@@ -1,20 +1,19 @@
 package com.example.Book_Store.serviceTest;
 
-import com.example.Book_Store.basket.dto.BasketDTO;
-import com.example.Book_Store.basket.entity.Basket;
-import com.example.Book_Store.basket.entity.BasketProducts;
-import com.example.Book_Store.basket.repository.BasketRepository;
-import com.example.Book_Store.basket.service.BasketService;
-import com.example.Book_Store.book.entity.Book;
-import com.example.Book_Store.book.entity.Category;
-import com.example.Book_Store.book.repository.BookRepository;
-import com.example.Book_Store.book.repository.CategoryRepository;
-import com.example.Book_Store.enums.Role;
-import com.example.Book_Store.enums.Status;
-import com.example.Book_Store.order.repository.OrderRepository;
-import com.example.Book_Store.user.entity.Customer;
-import com.example.Book_Store.user.entity.CustomerLogin;
-import com.example.Book_Store.user.repository.CustomerRepository;
+import com.example.Book_Store.store.basket.dto.BasketDTO;
+import com.example.Book_Store.store.basket.entity.Basket;
+import com.example.Book_Store.store.basket.entity.BasketProducts;
+import com.example.Book_Store.store.basket.repository.BasketRepository;
+import com.example.Book_Store.store.basket.service.BasketService;
+import com.example.Book_Store.store.book.entity.Book;
+import com.example.Book_Store.store.bookCategory.entity.BookCategory;
+import com.example.Book_Store.store.book.repository.BookRepository;
+import com.example.Book_Store.store.bookCategory.repository.BookCategoryRepository;
+import com.example.Book_Store.account.Role;
+import com.example.Book_Store.store.Status;
+import com.example.Book_Store.store.order.repository.OrderRepository;
+import com.example.Book_Store.account.customer.Customer;
+import com.example.Book_Store.account.customer.CustomerRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,7 +29,7 @@ public class BasketServiceTest {
     @Autowired
     BasketService basketService;
     @Autowired
-    CategoryRepository categoryRepository;
+    BookCategoryRepository bookCategoryRepository;
     @Autowired
     BookRepository bookRepository;
     @Autowired
@@ -83,11 +82,11 @@ public class BasketServiceTest {
 
 
     private Book newBook(String title) {
-        Category category = new Category(null, "category");
-        categoryRepository.save(category);
+        BookCategory bookCategory = new BookCategory(null, "bookCategory");
+        bookCategoryRepository.save(bookCategory);
 
         Book book = new Book();
-        book.setCategory(category);
+        book.setBookCategory(bookCategory);
         book.setTitle(title);
         book.setAuthor("author");
         book.setPrice(10.0);
@@ -100,7 +99,8 @@ public class BasketServiceTest {
         Customer customer = new Customer();
         customer.setName("name");
         customer.setLastName("lastName");
-        customer.setCustomerLogin(new CustomerLogin(email, "password"));
+        customer.setEmail(email);
+        customer.setPassword("password");
         customer.setNumber(123456);
         customer.setRole(Role.CUSTOMER);
 
@@ -108,11 +108,11 @@ public class BasketServiceTest {
     }
 
     private Basket newBasket(Long quantity, double price, Customer customer) {
-        Category category = new Category(null, "category");
-        categoryRepository.save(category);
+        BookCategory bookCategory = new BookCategory(null, "bookCategory");
+        bookCategoryRepository.save(bookCategory);
 
         Book book = new Book();
-        book.setCategory(category);
+        book.setBookCategory(bookCategory);
         book.setTitle("title");
         book.setAuthor("test");
         book.setPrice(price);
